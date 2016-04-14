@@ -8,6 +8,6 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new MainClass(), config);
-		//olkhovyk created main class
+		//olkhovyk created main class n
 	}
 }

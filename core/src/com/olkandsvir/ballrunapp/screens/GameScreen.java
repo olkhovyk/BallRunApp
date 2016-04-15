@@ -24,10 +24,20 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     * Рисуем игру.
+     * @param delta    переменная, которая позволит в дальнейшем правильно
+     *                 отображать игру при изменении fps.
+     */
     @Override
     public void render(float delta) {
+
+        //контроль за изменением fps (пока придется поверить на слово)
         runTime += delta;
+
+        //запускаем метод render из GameRenderer
         renderer.render(runTime);
+
     }
 
     @Override

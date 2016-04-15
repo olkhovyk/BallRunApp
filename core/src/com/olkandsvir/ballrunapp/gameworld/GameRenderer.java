@@ -15,10 +15,6 @@ import com.olkandsvir.ballrunapp.gameobject.Ball;
  */
 public class GameRenderer {
 
-    public static final int BALL_WIDTH = 75;
-    public static final int BALL_HEIGHT = 75;
-    private Ball ball;
-
     //камера для игры
     private OrthographicCamera camera;
 
@@ -29,15 +25,19 @@ public class GameRenderer {
     private int height = BallRunGame.HEIGHT;
     private int width = BallRunGame.WIDTH;
 
-    //текстура фона
+    //текстуры
     private Texture background;
-
     private Texture ballTexture;
+
+    //игровой мяч
+    private Ball ball;
 
     //конструктор
     public GameRenderer() {
+
         //инициализируем камеру
         camera = new OrthographicCamera();
+
         //первый параметр устанавливает (0;0) координату в левый верхний угол
         //второй и третий отвечает за ширину и высоту
         camera.setToOrtho(true, width, height);
@@ -55,8 +55,7 @@ public class GameRenderer {
      * Иницализируем игровые объекты.
      */
     private void initGameObjects() {
-        //TO DO
-        ball = new Ball(width / 2 - BALL_WIDTH / 2, (int) (height /1.2));
+        ball = new Ball(width / 2, (int) (height /1.2));
 
     }
 
@@ -64,9 +63,11 @@ public class GameRenderer {
      * Инициализируем дополнительные ресурсы.
      */
     private void initAssets() {
+
         //загружаем картинку фона
         background = AssetsLoader.background;
 
+        //загружаем картинку для мячика
         ballTexture = AssetsLoader.ball;
 
     }
@@ -95,7 +96,8 @@ public class GameRenderer {
         batcher.enableBlending();
 
         //рисуем мяч
-        batcher.draw(ballTexture, ball.getPosition().x, ball.getPosition().y, BALL_WIDTH, BALL_HEIGHT);
+        batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
+                ball.getDiameter(), ball.getDiameter());
 
         //закрываем пакет
         batcher.end();

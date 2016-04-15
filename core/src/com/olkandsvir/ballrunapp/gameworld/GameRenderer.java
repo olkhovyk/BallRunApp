@@ -8,12 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.olkandsvir.ballrunapp.BallRunGame;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
+import com.olkandsvir.ballrunapp.gameobject.Ball;
 
 /**
  * For rendering the world of the game.
  * @since 15.04.2016
  */
 public class GameRenderer {
+
+    private Ball ball;
 
     //камера для игры
     private OrthographicCamera camera;
@@ -50,6 +53,8 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         //TO DO
+        ball = new Ball(50, 300);
+
     }
 
     /**
@@ -80,6 +85,8 @@ public class GameRenderer {
 
         //рисуем фон
         batcher.draw(background, 0, 0);
+        //рисуем мяч
+        batcher.draw(ball.getBall(), ball.getPosition().x, ball.getPosition().y);
 
         //закрываем пакет
         batcher.end();

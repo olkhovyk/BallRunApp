@@ -54,7 +54,7 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         //TO DO
-        ball = new Ball(50, 300);
+        ball = new Ball(width / 2, (int) (height /1.2));
 
     }
 
@@ -93,7 +93,7 @@ public class GameRenderer {
         batcher.enableBlending();
 
         //рисуем мяч
-        batcher.draw(ballTexture, ball.getPosition().x, ball.getPosition().y);
+        batcher.draw(ballTexture, ball.getPosition().x, ball.getPosition().y, 75 ,75);
 
         //закрываем пакет
         batcher.end();

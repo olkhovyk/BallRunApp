@@ -15,6 +15,8 @@ import com.olkandsvir.ballrunapp.gameobject.Ball;
  */
 public class GameRenderer {
 
+    public static final int BALL_WIDTH = 75;
+    public static final int BALL_HEIGHT = 75;
     private Ball ball;
 
     //камера для игры
@@ -54,7 +56,7 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         //TO DO
-        ball = new Ball(width / 2, (int) (height /1.2));
+        ball = new Ball(width / 2 - BALL_WIDTH / 2, (int) (height /1.2));
 
     }
 
@@ -93,7 +95,7 @@ public class GameRenderer {
         batcher.enableBlending();
 
         //рисуем мяч
-        batcher.draw(ballTexture, ball.getPosition().x, ball.getPosition().y, 75 ,75);
+        batcher.draw(ballTexture, ball.getPosition().x, ball.getPosition().y, BALL_WIDTH, BALL_HEIGHT);
 
         //закрываем пакет
         batcher.end();

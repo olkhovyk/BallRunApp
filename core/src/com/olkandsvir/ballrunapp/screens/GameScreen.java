@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        //контроль за изменением fps (пока придется поверить на слово)
+        //контроль за изменением fps
         runTime += delta;
 
         //запускаем метод render из GameRenderer

@@ -15,6 +15,7 @@ public class AssetsLoader {
     public static void load() {
         background = new Texture(Gdx.files.internal("data/back.png"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         ball = new Texture(Gdx.files.internal("data/circle.png"));
         ball.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
@@ -22,6 +23,7 @@ public class AssetsLoader {
 
     public static void dispose() {
         background.dispose();
+        ball.dispose();
 
     }
 

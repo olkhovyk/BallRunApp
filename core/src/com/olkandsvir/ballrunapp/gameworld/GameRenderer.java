@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.olkandsvir.ballrunapp.BallRunGame;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
@@ -30,6 +29,8 @@ public class GameRenderer {
 
     //текстура фона
     private Texture background;
+
+    private Texture ballTexture;
 
     //конструктор
     public GameRenderer() {
@@ -64,6 +65,8 @@ public class GameRenderer {
         //загружаем картинку фона
         background = AssetsLoader.background;
 
+        ballTexture = AssetsLoader.ball;
+
     }
 
     /**
@@ -85,8 +88,12 @@ public class GameRenderer {
 
         //рисуем фон
         batcher.draw(background, 0, 0);
+
+        //добавляем прозрачность, она нужна мячику
+        batcher.enableBlending();
+
         //рисуем мяч
-        batcher.draw(ball.getBall(), ball.getPosition().x, ball.getPosition().y);
+        batcher.draw(ballTexture, ball.getPosition().x, ball.getPosition().y);
 
         //закрываем пакет
         batcher.end();

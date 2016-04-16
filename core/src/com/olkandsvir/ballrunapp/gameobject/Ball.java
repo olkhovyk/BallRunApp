@@ -35,8 +35,8 @@ public class Ball {
         position.x += dx * 0.3;
         position.y += dy * 0.3;
 
-        if(getPosition().x <= 0 - diameter){
-            position.x = 0 - diameter;
+        if(getPosition().x <= diameter / 2){
+            position.x = diameter / 2;
         }
 
         if(getPosition().y <= 0){

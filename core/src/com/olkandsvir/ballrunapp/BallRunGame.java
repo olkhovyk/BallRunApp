@@ -10,20 +10,22 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
  */
 public class BallRunGame extends Game {
 
-	public static final int WIDTH = 1080;
-	public static final int HEIGHT = 1920;
+//	public static final int WIDTH = 1080;
+//	public static final int HEIGHT = 1920;
 	public static final String TITLE = "BallRun";
+    private GameScreen screen;
 	
 	@Override
 	public void create () {
         AssetsLoader.load();
-        setScreen(new GameScreen());
+        setScreen(screen);
 
 	}
 
     public void dispose() {
         super.dispose();
         AssetsLoader.dispose();
+        screen.dispose();
 
     }
 

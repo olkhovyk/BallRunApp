@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.olkandsvir.ballrunapp.BallRunGame;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 
@@ -22,11 +21,8 @@ public class GameRenderer {
     private SpriteBatch batcher;
 
     //высота и ширина игрового поля
-    private int height = Gdx.graphics.getHeight();
-    private int width = Gdx.graphics.getWidth();
-    public static final int H = Gdx.graphics.getHeight();
-    public static final int W = Gdx.graphics.getWidth();
-
+    public static final int GAME_HEIGHT = Gdx.graphics.getHeight();
+    public static final int GAME_WIDTH = Gdx.graphics.getWidth();
 
     //текстуры
     private Texture background;
@@ -43,7 +39,7 @@ public class GameRenderer {
 
         //первый параметр устанавливает (0;0) координату в левый верхний угол
         //второй и третий отвечает за ширину и высоту
-        camera.setToOrtho(true, W, H);
+        camera.setToOrtho(true, GAME_WIDTH, GAME_HEIGHT);
 
         //инициализируем пакет для рисования
         batcher = new SpriteBatch();
@@ -54,19 +50,11 @@ public class GameRenderer {
 
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
     /**
      * Иницализируем игровые объекты.
      */
     private void initGameObjects() {
-        ball = new Ball(W / 2, (int) (W /1.2));
+        ball = new Ball(GAME_WIDTH / 2, (int) (GAME_HEIGHT /1.2));
 
     }
 
@@ -120,8 +108,8 @@ public class GameRenderer {
 
     }
 
-/*    public void dispose() {
+    public void dispose() {
         batcher.dispose();
     }
-*/
+
 }

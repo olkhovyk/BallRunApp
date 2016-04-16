@@ -12,8 +12,8 @@ public class DesktopLauncher {
 
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = BallRunGame.WIDTH;
-		config.height = BallRunGame.HEIGHT;
+		config.width = 320;
+		config.height = 568;
 		config.title = BallRunGame.TITLE;
 		new LwjglApplication(new BallRunGame(), config);
 

@@ -2,8 +2,6 @@ package com.olkandsvir.ballrunapp.gameobject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.olkandsvir.ballrunapp.BallRunGame;
-import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
 
 /**
@@ -11,13 +9,12 @@ import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
  * @since 15.04.2016
  */
 public class Ball {
-    GameRenderer renderer;
     private Vector2 position;
     private int diameter;
 
     public Ball(int x, int y) {
         position = new Vector2(x, y);
-        this.diameter = GameRenderer.W / 5;
+        this.diameter = GameRenderer.GAME_WIDTH / 6;
 
     }
 
@@ -26,18 +23,15 @@ public class Ball {
 
     }
 
-    public void setPosition(Vector2 position) {
-        this.position = position;
-    }
-
     public int getDiameter() {
         return diameter;
+
     }
 
     //Метод, изменяющий позицию шарика
     public void move(){
         float dx = Gdx.input.getX() - getPosition().x;
-        float dy = Gdx.input.getY() - getPosition().y;
+        float dy = Gdx.input.getY() - getPosition().y - getDiameter() / 2;
         position.x += dx * 0.3;
         position.y += dy * 0.3;
 
@@ -49,12 +43,12 @@ public class Ball {
             position.y = 0;
         }
 
-        if (getPosition().x >= GameRenderer.W - diameter / 2){
-            position.x = GameRenderer.W - diameter / 2;
+        if (getPosition().x >= GameRenderer.GAME_WIDTH - diameter / 2){
+            position.x = GameRenderer.GAME_WIDTH - diameter / 2;
         }
 
-        if(getPosition().y >= GameRenderer.H - diameter){
-            position.y = GameRenderer.H - diameter;
+        if(getPosition().y >= GameRenderer.GAME_HEIGHT - diameter){
+            position.y = GameRenderer.GAME_HEIGHT - diameter;
         }
 
     }

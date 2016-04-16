@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.olkandsvir.ballrunapp.BallRunGame;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
@@ -32,8 +31,6 @@ public class GameRenderer {
 
     //игровой мяч
     private Ball ball;
-
-
 
     //конструктор
     public GameRenderer() {
@@ -75,14 +72,12 @@ public class GameRenderer {
 
     }
 
-
     /**
      * Рендерим все, что нам нужно.
      * @param runTime    переменная, которая позволит в дальнейшем правильно
      *                   отображать игру при изменении fps.
      */
     public void render(float runTime) {
-
 
         //устанавливаем черный фон
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -112,11 +107,10 @@ public class GameRenderer {
             ball.move();
         }
 
-
     }
 
-
-
-
-
+/*    public void dispose() {
+        batcher.dispose();
+    }
+*/
 }

@@ -18,6 +18,7 @@ public class BallRunGame extends Game {
 	@Override
 	public void create () {
         AssetsLoader.load();
+        screen = new GameScreen();
         setScreen(screen);
 
 	}

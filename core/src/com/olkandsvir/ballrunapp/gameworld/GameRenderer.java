@@ -22,8 +22,11 @@ public class GameRenderer {
     private SpriteBatch batcher;
 
     //высота и ширина игрового поля
-    private int height = BallRunGame.HEIGHT;
-    private int width = BallRunGame.WIDTH;
+    private int height = Gdx.graphics.getHeight();
+    private int width = Gdx.graphics.getWidth();
+    public static final int H = Gdx.graphics.getHeight();
+    public static final int W = Gdx.graphics.getWidth();
+
 
     //текстуры
     private Texture background;
@@ -40,7 +43,7 @@ public class GameRenderer {
 
         //первый параметр устанавливает (0;0) координату в левый верхний угол
         //второй и третий отвечает за ширину и высоту
-        camera.setToOrtho(true, width, height);
+        camera.setToOrtho(true, W, H);
 
         //инициализируем пакет для рисования
         batcher = new SpriteBatch();
@@ -51,11 +54,19 @@ public class GameRenderer {
 
     }
 
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     /**
      * Иницализируем игровые объекты.
      */
     private void initGameObjects() {
-        ball = new Ball(width / 2, (int) (height /1.2));
+        ball = new Ball(W / 2, (int) (W /1.2));
 
     }
 

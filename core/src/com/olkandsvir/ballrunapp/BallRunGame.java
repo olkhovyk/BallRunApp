@@ -10,8 +10,8 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
  */
 public class BallRunGame extends Game {
 
-	public static final int WIDTH = 480;
-	public static final int HEIGHT = 800;
+	public static final int WIDTH = 1080;
+	public static final int HEIGHT = 1920;
 	public static final String TITLE = "BallRun";
 	
 	@Override

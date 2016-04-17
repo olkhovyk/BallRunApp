@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
+import com.olkandsvir.ballrunapp.gameobject.Barrier;
+import com.olkandsvir.ballrunapp.screens.GameScreen;
 
 /**
  * For rendering the world of the game.
@@ -14,22 +16,26 @@ import com.olkandsvir.ballrunapp.gameobject.Ball;
  */
 public class GameRenderer {
 
+    //высота и ширина игрового поля
+    public static final int GAME_HEIGHT = Gdx.graphics.getHeight();
+    public static final int GAME_WIDTH = Gdx.graphics.getWidth();
+
     //камера для игры
     private OrthographicCamera camera;
 
     //рисует картинки для игры
     private SpriteBatch batcher;
 
-    //высота и ширина игрового поля
-    public static final int GAME_HEIGHT = Gdx.graphics.getHeight();
-    public static final int GAME_WIDTH = Gdx.graphics.getWidth();
-
     //текстуры
     private Texture background;
     private Texture ballTexture;
+    private Texture barrierTexture;
 
     //игровой мяч
     private Ball ball;
+
+    //препятствие
+    private Barrier barrier;
 
     //конструктор
     public GameRenderer() {
@@ -55,6 +61,7 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         ball = new Ball(GAME_WIDTH / 2, (int) (GAME_HEIGHT /1.2));
+        barrier = new Barrier(0, GAME_HEIGHT / 2, GAME_WIDTH / 3, GAME_HEIGHT / 10, 0);
 
     }
 
@@ -68,6 +75,9 @@ public class GameRenderer {
 
         //загружаем картинку для мячика
         ballTexture = AssetsLoader.ball;
+
+        //загружаем картинку для препятствий
+        barrierTexture = AssetsLoader.barrier;
 
     }
 
@@ -97,6 +107,12 @@ public class GameRenderer {
         //рисуем мяч
         batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
                 ball.getDiameter(), ball.getDiameter());
+
+        //рисуем препятствие
+        batcher.draw(barrierTexture, barrier.getPosition().x, barrier.getPosition().y,
+                barrier.getWidth(), barrier.getHeight());
+        batcher.draw(barrierTexture, barrier.getPosition().x + barrier.getWidth() + Barrier.GAP_WIDTH,
+                barrier.getPosition().y, GAME_WIDTH - barrier.getWidth() - Barrier.GAP_WIDTH, barrier.getHeight());
 
         //закрываем пакет
         batcher.end();

@@ -28,7 +28,9 @@ public class Ball {
 
     }
 
-    //Метод, изменяющий позицию шарика
+    /**
+     * Двигаем мячик.
+     */
     public void move(){
         float dx = Gdx.input.getX() - getPosition().x;
         float dy = Gdx.input.getY() - getPosition().y - getDiameter() / 2;

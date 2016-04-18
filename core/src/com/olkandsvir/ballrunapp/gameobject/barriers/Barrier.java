@@ -30,6 +30,9 @@ public class Barrier {
             scrolledBottom = true;
         }
 
+        part.rectangle.setPosition(position.x, position.y);
+
+
     }
 
     public void reset(float newY) {

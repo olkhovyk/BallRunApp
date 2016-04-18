@@ -113,6 +113,7 @@ public class GameRenderer {
             batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
                 barrier.getPart().getWidth(), barrier.getHeight());
         }
+
      /*   batcher.draw(barrierTexture, barrier1.getPart().getX(), barrier1.getPosition().y,
                 barrier1.getPart().getWidth(), barrier1.getHeight());
 

@@ -112,7 +112,7 @@ public class GameRenderer {
         batcher.draw(background, 0, 0);
 
         //рисуем препятствия
-        for(Barrier barrier :handler.b){
+        for(Barrier barrier :handler.getB()){
             batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
                     barrier.getPart().getWidth(), barrier.getHeight());
         }

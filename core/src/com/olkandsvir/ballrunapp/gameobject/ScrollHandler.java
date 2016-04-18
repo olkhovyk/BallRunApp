@@ -10,7 +10,7 @@ import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
  */
 public class ScrollHandler {
     public static final int ARRAY_SIZE = 100;
-    public Array<Barrier> b;
+    private Array<Barrier> b;
     public static final int SCROLL_SPEED = GameRenderer.GAME_HEIGHT / 2;
     public static final int BARRIER_GAP = 4 * GameRenderer.GAME_HEIGHT / 10;
 
@@ -43,5 +43,7 @@ public class ScrollHandler {
         } */
     }
 
-
+    public Array<Barrier> getB() {
+        return b;
+    }
 }

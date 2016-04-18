@@ -22,14 +22,12 @@ public class AssetsLoader {
 
         barrier = new Texture(Gdx.files.internal("data/rect.png"));
         barrier.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
     }
 
     public static void dispose() {
         background.dispose();
         ball.dispose();
         barrier.dispose();
-
     }
 
 }

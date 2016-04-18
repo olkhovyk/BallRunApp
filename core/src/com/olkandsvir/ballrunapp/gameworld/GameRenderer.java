@@ -16,6 +16,7 @@ import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
  */
 public class GameRenderer {
 
+
     //высота и ширина игрового поля
     public static final int GAME_HEIGHT = Gdx.graphics.getHeight();
     public static final int GAME_WIDTH = Gdx.graphics.getWidth();
@@ -111,14 +112,18 @@ public class GameRenderer {
         batcher.draw(background, 0, 0);
 
         //рисуем препятствия
-        batcher.draw(barrierTexture, barrier1.getPart().getX(), barrier1.getPosition().y,
+        for(Barrier barrier :handler.b){
+            batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
+                    barrier.getPart().getWidth(), barrier.getHeight());
+        }
+     /*   batcher.draw(barrierTexture, barrier1.getPart().getX(), barrier1.getPosition().y,
                 barrier1.getPart().getWidth(), barrier1.getHeight());
 
         batcher.draw(barrierTexture, barrier2.getPart().getX(), barrier2.getPosition().y,
                 barrier2.getPart().getWidth(), barrier2.getHeight());
 
         batcher.draw(barrierTexture, barrier3.getPart().getX(), barrier3.getPosition().y,
-                barrier3.getPart().getWidth(), barrier3.getHeight());
+                barrier3.getPart().getWidth(), barrier3.getHeight()); */
 
         //добавляем прозрачность, она нужна мячику
         batcher.enableBlending();

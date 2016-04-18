@@ -29,6 +29,7 @@ public class Barrier {
         if(position.y > GameRenderer.GAME_HEIGHT) {
             scrolledBottom = true;
         }
+
     }
 
     public void reset(float newY) {

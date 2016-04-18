@@ -18,8 +18,8 @@ public class BarrierPart {
         LEFT, MID, RIGHT
     }
 
-    public BarrierPart(float y, int height, partOrientation orientation) {
-/*        double random = Math.random() * 3;
+    public BarrierPart(float y, int height) {
+        double random = Math.random() * 3;
         if(random < 1.0) {
             orientation = partOrientation.LEFT;
         } else if (random < 2.0) {
@@ -27,10 +27,9 @@ public class BarrierPart {
         } else if (random <= 3.0) {
             orientation = partOrientation.RIGHT;
         }
-*/
+
         width = GameRenderer.GAME_WIDTH / 3;
         this.height = height;
-        this.orientation = orientation;
 
         if (orientation == partOrientation.LEFT) {
             position = new Vector2(0, y);

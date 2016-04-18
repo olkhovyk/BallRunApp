@@ -15,10 +15,10 @@ public class Barrier {
     private int height;
     private boolean scrolledBottom;
 
-    public Barrier(float x, float y, int height, float scrollSpeed){
+    public Barrier(float x, float y, int height, float scrollSpeed, BarrierPart.partOrientation orientation){
         position = new Vector2(x, y);
         this.height = height;
-        this.part = new BarrierPart(y, height);
+        this.part = new BarrierPart(y, height, orientation);
         this.speed = new Vector2(0, scrollSpeed);
         scrolledBottom = false;
     }
@@ -42,6 +42,10 @@ public class Barrier {
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public void setY(float y) {
+        this.position.y = y;
     }
 
     public BarrierPart getPart() {

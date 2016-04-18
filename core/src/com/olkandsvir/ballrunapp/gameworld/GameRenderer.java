@@ -71,8 +71,6 @@ public class GameRenderer {
       //  barrier1 = handler.getBarrier1();
       //  barrier2 = handler.getBarrier2();
        // barrier3 = handler.getBarrier3();
-
-
     }
 
     /**
@@ -88,7 +86,6 @@ public class GameRenderer {
 
         //загружаем картинку для препятствий
         barrierTexture = AssetsLoader.barrier;
-
     }
 
     /**
@@ -112,7 +109,7 @@ public class GameRenderer {
         batcher.draw(background, 0, 0);
 
         //рисуем препятствия
-        for(Barrier barrier :handler.getB()){
+        for(Barrier barrier : handler.getBarriers()){
             batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
                     barrier.getPart().getWidth(), barrier.getHeight());
         }

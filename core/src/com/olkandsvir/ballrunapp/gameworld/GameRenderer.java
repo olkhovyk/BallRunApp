@@ -67,9 +67,11 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         ball = new Ball(GAME_WIDTH / 2, (int) (GAME_HEIGHT /1.2));
-        barrier1 = handler.getBarrier1();
-        barrier2 = handler.getBarrier2();
-        barrier3 = handler.getBarrier3();
+      //  barrier1 = handler.getBarrier1();
+      //  barrier2 = handler.getBarrier2();
+       // barrier3 = handler.getBarrier3();
+
+
     }
 
     /**

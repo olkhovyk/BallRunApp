@@ -109,10 +109,14 @@ public class GameRenderer {
         batcher.draw(background, 0, 0);
 
         //рисуем препятствия
-        for(Barrier barrier : handler.getBarriers()){
+      /*  for(Barrier barrier : handler.getBarriers()){
             batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
                     barrier.getPart().getWidth(), barrier.getHeight());
-        }
+        } */
+        int x = (int) (Math.random() * 3);
+        batcher.draw(barrierTexture, handler.getBarriers().get(x).getPart().getX(),
+                handler.getBarriers().get(x).getPosition().y, handler.getBarriers().get(x).getPart().getWidth(),
+                handler.getBarriers().get(x).getHeight());
      /*   batcher.draw(barrierTexture, barrier1.getPart().getX(), barrier1.getPosition().y,
                 barrier1.getPart().getWidth(), barrier1.getHeight());
 

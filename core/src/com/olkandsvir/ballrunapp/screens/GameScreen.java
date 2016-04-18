@@ -1,6 +1,7 @@
 package com.olkandsvir.ballrunapp.screens;
 
 import com.badlogic.gdx.Screen;
+import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
 
 /**
@@ -10,12 +11,14 @@ import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
 public class GameScreen implements Screen {
 
     private GameRenderer renderer;
+    private ScrollHandler handler;
 
     private float runTime;
 
     public GameScreen() {
-        renderer = new GameRenderer();
 
+        this.handler = new ScrollHandler();
+        renderer = new GameRenderer(handler);
     }
 
     @Override
@@ -37,6 +40,8 @@ public class GameScreen implements Screen {
         //запускаем метод render из GameRenderer
         renderer.render(runTime);
 
+        //передвигаем препятствия
+        handler.update(delta);
     }
 
     @Override
@@ -62,6 +67,5 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         renderer.dispose();
-
     }
 }

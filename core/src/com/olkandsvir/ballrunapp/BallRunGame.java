@@ -18,14 +18,12 @@ public class BallRunGame extends Game {
         AssetsLoader.load();
         screen = new GameScreen();
         setScreen(screen);
-
 	}
 
     public void dispose() {
         super.dispose();
         AssetsLoader.dispose();
         screen.dispose();
-
     }
 
 }

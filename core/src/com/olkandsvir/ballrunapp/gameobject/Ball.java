@@ -14,7 +14,7 @@ public class Ball {
 
     public Ball(int x, int y) {
         position = new Vector2(x, y);
-        this.diameter = GameRenderer.GAME_WIDTH / 6;
+        this.diameter = GameRenderer.GAME_WIDTH / 7;
 
     }
 

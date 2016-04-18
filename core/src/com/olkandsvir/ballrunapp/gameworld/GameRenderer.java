@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
+import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
 
 /**
@@ -38,8 +39,13 @@ public class GameRenderer {
     private Barrier barrier2;
     private Barrier barrier3;
 
+    //отвечает за движение препятствий
+    private ScrollHandler handler;
+
     //конструктор
-    public GameRenderer() {
+    public GameRenderer(ScrollHandler handler) {
+
+        this.handler = handler;
 
         //инициализируем камеру
         camera = new OrthographicCamera();
@@ -54,7 +60,6 @@ public class GameRenderer {
 
         initGameObjects();
         initAssets();
-
     }
 
     /**
@@ -62,10 +67,9 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         ball = new Ball(GAME_WIDTH / 2, (int) (GAME_HEIGHT /1.2));
-        barrier1 = new Barrier(0, GAME_HEIGHT / 4, GAME_HEIGHT / 10);
-        barrier2 = new Barrier(0, GAME_HEIGHT / 2, GAME_HEIGHT / 10);
-        barrier3 = new Barrier(0, 3 * GAME_HEIGHT / 4, GAME_HEIGHT / 10);
-
+        barrier1 = handler.getBarrier1();
+        barrier2 = handler.getBarrier2();
+        barrier3 = handler.getBarrier3();
     }
 
     /**
@@ -104,13 +108,6 @@ public class GameRenderer {
         //рисуем фон
         batcher.draw(background, 0, 0);
 
-        //добавляем прозрачность, она нужна мячику
-        batcher.enableBlending();
-
-        //рисуем мяч
-        batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
-                ball.getDiameter(), ball.getDiameter());
-
         //рисуем препятствия
         batcher.draw(barrierTexture, barrier1.getPart().getX(), barrier1.getPosition().y,
                 barrier1.getPart().getWidth(), barrier1.getHeight());
@@ -121,6 +118,13 @@ public class GameRenderer {
         batcher.draw(barrierTexture, barrier3.getPart().getX(), barrier3.getPosition().y,
                 barrier3.getPart().getWidth(), barrier3.getHeight());
 
+        //добавляем прозрачность, она нужна мячику
+        batcher.enableBlending();
+
+        //рисуем мяч
+        batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
+                ball.getDiameter(), ball.getDiameter());
+
         //закрываем пакет
         batcher.end();
 
@@ -128,12 +132,10 @@ public class GameRenderer {
         if(Gdx.input.isTouched()){
             ball.move();
         }
-
     }
 
     public void dispose() {
         batcher.dispose();
-
     }
 
 }

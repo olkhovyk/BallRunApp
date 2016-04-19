@@ -14,7 +14,6 @@ public class BarrierPart {
     private int width;
     private int height;
     private Vector2 position;
-    public Rectangle rectangle;
 
     public enum partOrientation {
         LEFT, MID, RIGHT
@@ -40,8 +39,6 @@ public class BarrierPart {
         } else {
             position = new Vector2(2 * GameRenderer.GAME_WIDTH / 3, y);
         }
-        rectangle = new Rectangle(position.x, position.y, width, height);
-
     }
 
     public int getWidth() {

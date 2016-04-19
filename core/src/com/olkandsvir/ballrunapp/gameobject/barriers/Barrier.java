@@ -29,6 +29,10 @@ public class Barrier {
         if(position.y > GameRenderer.GAME_HEIGHT) {
             scrolledBottom = true;
         }
+
+        part.rectangle.setPosition(position.x, position.y);
+
+
     }
 
     public int getHeight() {

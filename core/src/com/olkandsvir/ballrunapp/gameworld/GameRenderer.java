@@ -16,7 +16,6 @@ import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
  */
 public class GameRenderer {
 
-
     //высота и ширина игрового поля
     public static final int GAME_HEIGHT = Gdx.graphics.getHeight();
     public static final int GAME_WIDTH = Gdx.graphics.getWidth();
@@ -34,11 +33,6 @@ public class GameRenderer {
 
     //игровой мяч
     private Ball ball;
-
-    //препятствия
-    private Barrier barrier1;
-    private Barrier barrier2;
-    private Barrier barrier3;
 
     //отвечает за движение препятствий
     private ScrollHandler handler;
@@ -68,10 +62,7 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         ball = new Ball(GAME_WIDTH / 2, (int) (GAME_HEIGHT /1.2));
-      //  barrier1 = handler.getBarrier1();
-      //  barrier2 = handler.getBarrier2();
-       // barrier3 = handler.getBarrier3();
-    }
+   }
 
     /**
      * Инициализируем дополнительные ресурсы.
@@ -109,18 +100,10 @@ public class GameRenderer {
         batcher.draw(background, 0, 0);
 
         //рисуем препятствия
-        for(Barrier barrier : handler.getB()){
+        for(Barrier barrier : handler.getBarriers()){
             batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
                 barrier.getPart().getWidth(), barrier.getHeight());
         }
-     /*   batcher.draw(barrierTexture, barrier1.getPart().getX(), barrier1.getPosition().y,
-                barrier1.getPart().getWidth(), barrier1.getHeight());
-
-        batcher.draw(barrierTexture, barrier2.getPart().getX(), barrier2.getPosition().y,
-                barrier2.getPart().getWidth(), barrier2.getHeight());
-
-        batcher.draw(barrierTexture, barrier3.getPart().getX(), barrier3.getPosition().y,
-                barrier3.getPart().getWidth(), barrier3.getHeight()); */
 
         //добавляем прозрачность, она нужна мячику
         batcher.enableBlending();

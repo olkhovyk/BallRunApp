@@ -15,17 +15,14 @@ public class Ball {
     public Ball(int x, int y) {
         position = new Vector2(x, y);
         this.diameter = GameRenderer.GAME_WIDTH / 7;
-
     }
 
     public Vector2 getPosition() {
         return position;
-
     }
 
     public int getDiameter() {
         return diameter;
-
     }
 
     /**
@@ -52,6 +49,5 @@ public class Ball {
         if(getPosition().y >= GameRenderer.GAME_HEIGHT - diameter){
             position.y = GameRenderer.GAME_HEIGHT - diameter;
         }
-
     }
 }

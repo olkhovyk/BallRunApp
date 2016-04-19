@@ -31,11 +31,6 @@ public class Barrier {
         }
     }
 
-    public void reset(float newY) {
-        position.y = newY;
-        scrolledBottom = false;
-    }
-
     public int getHeight() {
         return height;
     }

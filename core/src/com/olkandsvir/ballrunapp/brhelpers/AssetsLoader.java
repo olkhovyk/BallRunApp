@@ -44,6 +44,10 @@ public class AssetsLoader {
         background.dispose();
         ball.dispose();
         barrier.dispose();
+        buttonStart.dispose();
+        buttonStartPressed.dispose();
+        buttonExit.dispose();
+        buttonExitPressed.dispose();
     }
 
 }

@@ -1,10 +1,12 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
@@ -37,6 +39,9 @@ public class GameRenderer {
     //отвечает за движение препятствий
     private ScrollHandler handler;
 
+    //ДЛЯ ТЕСТОВ!
+    private ShapeRenderer shapeRenderer;
+
     //конструктор
     public GameRenderer(ScrollHandler handler) {
 
@@ -48,6 +53,10 @@ public class GameRenderer {
         //первый параметр устанавливает (0;0) координату в левый верхний угол
         //второй и третий отвечает за ширину и высоту
         camera.setToOrtho(true, GAME_WIDTH, GAME_HEIGHT);
+
+        //ДЛЯ ТЕСТОВ!
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(camera.combined);
 
         //инициализируем пакет для рисования
         batcher = new SpriteBatch();
@@ -94,7 +103,10 @@ public class GameRenderer {
         batcher.begin();
 
         //убираем прозрачность, полезно для производительности
-        batcher.disableBlending();
+ //       batcher.disableBlending();
+
+        //ДЛЯ ТЕСТОВ, ПОТОМ УДАЛИТЬ!
+        batcher.enableBlending();
 
         //рисуем фон
         batcher.draw(background, 0, 0);
@@ -103,6 +115,15 @@ public class GameRenderer {
         for(Barrier barrier : handler.getBarriers()){
             batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
                 barrier.getPart().getWidth(), barrier.getHeight());
+
+            //ДЛЯ ТЕСТОВ!
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.rect(barrier.getPart().getRectangle().getX(),
+                    barrier.getPart().getRectangle().getY(),
+                    barrier.getPart().getRectangle().getWidth(),
+                    barrier.getPart().getRectangle().getHeight());
+            shapeRenderer.end();
         }
 
         //добавляем прозрачность, она нужна мячику
@@ -115,14 +136,25 @@ public class GameRenderer {
         //закрываем пакет
         batcher.end();
 
+        //ДЛЯ ТЕСТОВ!
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.circle(ball.getBoundingCircle().x, ball.getBoundingCircle().y, ball.getBoundingCircle().radius);
+        shapeRenderer.end();
+
         //Перемещение шарика по касанию
         if(Gdx.input.isTouched()){
             ball.move();
         }
     }
 
+    public Ball getBall() {
+        return ball;
+    }
+
     public void dispose() {
         batcher.dispose();
+        shapeRenderer.dispose();
     }
 
 }

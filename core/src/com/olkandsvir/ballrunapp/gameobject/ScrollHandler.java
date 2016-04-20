@@ -1,9 +1,10 @@
 package com.olkandsvir.ballrunapp.gameobject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
 import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
+
+import java.util.Iterator;
 
 /**
  * Responsible for moving Barriers.
@@ -33,11 +34,18 @@ public class ScrollHandler {
                 barriers.add(new Barrier(0, barriers.get(barriers.size - 1).getPosition().y - BARRIER_GAP, GameRenderer.GAME_HEIGHT / 10, SCROLL_SPEED));
             }
         }
-
-        Gdx.app.log("barriers.size", Integer.toString(barriers.size));
     }
 
     public Array<Barrier> getBarriers() {
         return barriers;
+    }
+
+    public boolean collides(Ball ball) {
+        for (int i = 0; i < barriers.size; i++) {
+            if(barriers.get(i).collides(ball)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

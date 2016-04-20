@@ -14,12 +14,15 @@ public class BarrierPart {
     private int width;
     private int height;
     private Vector2 position;
+    private Vector2 speed;
+
+    private Rectangle rectangle;
 
     public enum partOrientation {
         LEFT, MID, RIGHT
     }
 
-    public BarrierPart(float y, int height) {
+    public BarrierPart(float y, int height, Vector2 speed) {
         double random = Math.random() * 3;
         if(random < 1.0) {
             orientation = partOrientation.LEFT;
@@ -31,6 +34,7 @@ public class BarrierPart {
 
         width = GameRenderer.GAME_WIDTH / 3;
         this.height = height;
+        this.speed = speed;
 
         if (orientation == partOrientation.LEFT) {
             position = new Vector2(0, y);
@@ -39,14 +43,32 @@ public class BarrierPart {
         } else {
             position = new Vector2(2 * GameRenderer.GAME_WIDTH / 3, y);
         }
+
+        rectangle = new Rectangle(position.x, position.y, width, height);
+    }
+
+    public void update(float delta) {
+        position.add(speed.cpy().scl(delta));
+        rectangle.set(position.x, position.y, width, height);
     }
 
     public int getWidth() {
         return width;
     }
 
+    public int getHeight() {
+        return height;
+    }
+
     public float getX() {
         return position.x;
     }
 
+    public float getY() {
+        return position.y;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 }

@@ -1,8 +1,11 @@
 package com.olkandsvir.ballrunapp.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
+import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
 
 /**
  * For showing all object of the game on a screen of a device.
@@ -12,6 +15,9 @@ public class GameScreen implements Screen {
 
     private GameRenderer renderer;
     private ScrollHandler handler;
+    Ball ball;
+
+    public static int collisions = 0;
 
     private float runTime;
 
@@ -19,6 +25,7 @@ public class GameScreen implements Screen {
 
         this.handler = new ScrollHandler();
         renderer = new GameRenderer(handler);
+        ball = renderer.getBall();
     }
 
     @Override
@@ -42,6 +49,11 @@ public class GameScreen implements Screen {
 
         //передвигаем препятствия
         handler.update(delta);
+
+        if(handler.collides(ball)) {
+            collisions++;
+            Gdx.app.log("Collided", Integer.toString(collisions));
+        }
     }
 
     @Override

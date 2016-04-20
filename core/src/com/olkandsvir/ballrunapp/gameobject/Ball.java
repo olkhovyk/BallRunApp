@@ -1,6 +1,7 @@
 package com.olkandsvir.ballrunapp.gameobject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
 
@@ -12,9 +13,13 @@ public class Ball {
     private Vector2 position;
     private int diameter;
 
+    private Circle boundingCircle;
+
     public Ball(int x, int y) {
         position = new Vector2(x, y);
         this.diameter = GameRenderer.GAME_WIDTH / 7;
+
+        boundingCircle = new Circle(x, y + diameter / 2, diameter / 2);
     }
 
     public Vector2 getPosition() {
@@ -34,6 +39,8 @@ public class Ball {
         position.x += dx * 0.3;
         position.y += dy * 0.3;
 
+        boundingCircle.setPosition(position.x, position.y + diameter / 2);
+
         if(getPosition().x <= diameter / 2){
             position.x = diameter / 2;
         }
@@ -49,5 +56,9 @@ public class Ball {
         if(getPosition().y >= GameRenderer.GAME_HEIGHT - diameter){
             position.y = GameRenderer.GAME_HEIGHT - diameter;
         }
+    }
+
+    public Circle getBoundingCircle() {
+        return boundingCircle;
     }
 }

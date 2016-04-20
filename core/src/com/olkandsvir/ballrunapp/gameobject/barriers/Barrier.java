@@ -1,9 +1,8 @@
 package com.olkandsvir.ballrunapp.gameobject.barriers;
 
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
-import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
+import com.olkandsvir.ballrunapp.screens.GameScreen;
 
 /**
  * Lines with obstacles.
@@ -29,9 +28,17 @@ public class Barrier {
         position.add(speed.cpy().scl(delta));
         part.update(delta);
 
-        if(position.y > GameRenderer.GAME_HEIGHT) {
+        if(position.y > GameScreen.SCREEN_HEIGHT) {
             scrolledBottom = true;
         }
+    }
+
+    public boolean isScrolledBottom() {
+        return scrolledBottom;
+    }
+
+    public boolean collides(Ball ball) {
+        return part.collides(ball);
     }
 
     public int getHeight() {
@@ -44,15 +51,5 @@ public class Barrier {
 
     public BarrierPart getPart() {
         return part;
-    }
-
-    public boolean isScrolledBottom() {
-        return scrolledBottom;
-    }
-
-    public boolean collides(Ball ball) {
-        return (part.getX() < ball.getPosition().x + ball.getDiameter() || part.getX() + part.getWidth() > ball.getPosition().x
-                && part.getY() > ball.getPosition().y + ball.getDiameter() || part.getY() + part.getHeight() < ball.getPosition().y)
-                && (Intersector.overlaps(ball.getBoundingCircle(), part.getRectangle()));
     }
 }

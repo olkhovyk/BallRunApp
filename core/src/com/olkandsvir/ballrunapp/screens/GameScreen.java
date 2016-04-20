@@ -2,10 +2,8 @@ package com.olkandsvir.ballrunapp.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.olkandsvir.ballrunapp.gameobject.Ball;
-import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
-import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
+import com.olkandsvir.ballrunapp.gameworld.GameWorld;
 
 /**
  * For showing all object of the game on a screen of a device.
@@ -13,19 +11,18 @@ import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
  */
 public class GameScreen implements Screen {
 
-    private GameRenderer renderer;
-    private ScrollHandler handler;
-    Ball ball;
+    //высота и ширина игрового поля
+    public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+    public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
 
-    public static int collisions = 0;
+    private GameWorld world;
+    private GameRenderer renderer;
 
     private float runTime;
 
     public GameScreen() {
-
-        this.handler = new ScrollHandler();
-        renderer = new GameRenderer(handler);
-        ball = renderer.getBall();
+        world = new GameWorld();
+        renderer = new GameRenderer(world);
     }
 
     @Override
@@ -48,12 +45,7 @@ public class GameScreen implements Screen {
         renderer.render(runTime);
 
         //передвигаем препятствия
-        handler.update(delta);
-
-        if(handler.collides(ball)) {
-            collisions++;
-            Gdx.app.log("Collided", Integer.toString(collisions));
-        }
+        world.update(delta);
     }
 
     @Override

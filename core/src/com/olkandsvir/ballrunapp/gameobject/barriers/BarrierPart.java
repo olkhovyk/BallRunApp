@@ -1,8 +1,10 @@
 package com.olkandsvir.ballrunapp.gameobject.barriers;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
+import com.olkandsvir.ballrunapp.gameobject.Ball;
+import com.olkandsvir.ballrunapp.screens.GameScreen;
 
 /**
  * A dangerous part of Barriers.
@@ -15,7 +17,6 @@ public class BarrierPart {
     private int height;
     private Vector2 position;
     private Vector2 speed;
-
     private Rectangle rectangle;
 
     public enum partOrientation {
@@ -32,16 +33,16 @@ public class BarrierPart {
             orientation = partOrientation.RIGHT;
         }
 
-        width = GameRenderer.GAME_WIDTH / 3;
+        width = GameScreen.SCREEN_WIDTH / 3;
         this.height = height;
         this.speed = speed;
 
         if (orientation == partOrientation.LEFT) {
             position = new Vector2(0, y);
         } else if (orientation == partOrientation.MID) {
-            position = new Vector2(GameRenderer.GAME_WIDTH / 3, y);
+            position = new Vector2(GameScreen.SCREEN_WIDTH / 3, y);
         } else {
-            position = new Vector2(2 * GameRenderer.GAME_WIDTH / 3, y);
+            position = new Vector2(2 * GameScreen.SCREEN_WIDTH / 3, y);
         }
 
         rectangle = new Rectangle(position.x, position.y, width, height);
@@ -52,20 +53,18 @@ public class BarrierPart {
         rectangle.set(position.x, position.y, width, height);
     }
 
+    public boolean collides(Ball ball) {
+        return (position.x < ball.getPosition().x + ball.getDiameter() || position.x + width > ball.getPosition().x
+                && position.y > ball.getPosition().y + ball.getDiameter() || position.y + height < ball.getPosition().y)
+                && (Intersector.overlaps(ball.getBoundingCircle(), rectangle));
+    }
+
     public int getWidth() {
         return width;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
     public float getX() {
         return position.x;
-    }
-
-    public float getY() {
-        return position.y;
     }
 
     public Rectangle getRectangle() {

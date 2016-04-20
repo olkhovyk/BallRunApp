@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
+import com.olkandsvir.ballrunapp.screens.GameScreen;
 
 /**
  * For rendering the world of the game.
@@ -18,9 +20,8 @@ import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
  */
 public class GameRenderer {
 
-    //высота и ширина игрового поля
-    public static final int GAME_HEIGHT = Gdx.graphics.getHeight();
-    public static final int GAME_WIDTH = Gdx.graphics.getWidth();
+    //игровой мир
+    private final GameWorld world;
 
     //камера для игры
     private OrthographicCamera camera;
@@ -36,6 +37,9 @@ public class GameRenderer {
     //игровой мяч
     private Ball ball;
 
+    //препятствия
+    private Array<Barrier> barriers;
+
     //отвечает за движение препятствий
     private ScrollHandler handler;
 
@@ -43,16 +47,17 @@ public class GameRenderer {
     private ShapeRenderer shapeRenderer;
 
     //конструктор
-    public GameRenderer(ScrollHandler handler) {
+    public GameRenderer(GameWorld world) {
 
-        this.handler = handler;
+        //создаем игровой мир
+        this.world = world;
 
         //инициализируем камеру
         camera = new OrthographicCamera();
 
         //первый параметр устанавливает (0;0) координату в левый верхний угол
         //второй и третий отвечает за ширину и высоту
-        camera.setToOrtho(true, GAME_WIDTH, GAME_HEIGHT);
+        camera.setToOrtho(true, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
 
         //ДЛЯ ТЕСТОВ!
         shapeRenderer = new ShapeRenderer();
@@ -70,7 +75,9 @@ public class GameRenderer {
      * Иницализируем игровые объекты.
      */
     private void initGameObjects() {
-        ball = new Ball(GAME_WIDTH / 2, (int) (GAME_HEIGHT /1.2));
+        ball = world.getBall();
+        handler = world.getHandler();
+        barriers = handler.getBarriers();
    }
 
     /**
@@ -102,6 +109,7 @@ public class GameRenderer {
         //запускаем пакет рисования
         batcher.begin();
 
+        //ВЕРНУТЬ ПО ОКОНЧАНИИ ТЕСТОВ!
         //убираем прозрачность, полезно для производительности
  //       batcher.disableBlending();
 
@@ -112,7 +120,7 @@ public class GameRenderer {
         batcher.draw(background, 0, 0);
 
         //рисуем препятствия
-        for(Barrier barrier : handler.getBarriers()){
+        for(Barrier barrier : barriers){
             batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
                 barrier.getPart().getWidth(), barrier.getHeight());
 
@@ -142,14 +150,6 @@ public class GameRenderer {
         shapeRenderer.circle(ball.getBoundingCircle().x, ball.getBoundingCircle().y, ball.getBoundingCircle().radius);
         shapeRenderer.end();
 
-        //Перемещение шарика по касанию
-        if(Gdx.input.isTouched()){
-            ball.move();
-        }
-    }
-
-    public Ball getBall() {
-        return ball;
     }
 
     public void dispose() {

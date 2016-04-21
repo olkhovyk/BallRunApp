@@ -1,6 +1,7 @@
 package com.olkandsvir.ballrunapp.brhelpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -16,6 +17,8 @@ public class AssetsLoader {
     public static Texture buttonStartPressed;
     public static Texture buttonExit;
     public static Texture buttonExitPressed;
+
+    public static Preferences preferences;
 
     public static void load() {
         background = new Texture(Gdx.files.internal("data/back.png"));
@@ -38,6 +41,13 @@ public class AssetsLoader {
 
         buttonExitPressed = new Texture(Gdx.files.internal("data/btnExitPressed.png"));
         buttonExitPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+
+        preferences = Gdx.app.getPreferences("BallRunApp");
+
+        if (!preferences.contains("highScore")) {
+            preferences.putInteger("highScore", 0);
+        }
     }
 
     public static void dispose() {
@@ -48,6 +58,15 @@ public class AssetsLoader {
         buttonStartPressed.dispose();
         buttonExit.dispose();
         buttonExitPressed.dispose();
+    }
+
+    public static void setHighScore(int val) {
+        preferences.putInteger("highScore", val);
+        preferences.flush();
+    }
+
+    public static int getHighScore() {
+        return preferences.getInteger("highScore");
     }
 
 }

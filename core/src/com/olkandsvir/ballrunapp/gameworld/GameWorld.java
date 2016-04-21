@@ -1,6 +1,7 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
+import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
@@ -16,13 +17,10 @@ public class GameWorld {
 
     private int score;
 
-    //ДЛЯ ТЕСТОВ!
-    public static int collisions = 0;
-
     private GameState currentGameState;
 
     public enum GameState {
-        READY, RUNNING, GAMEOVER, HIGHSCORE
+        MENU, READY, RUNNING, GAMEOVER, HIGHSCORE
     }
 
     public GameWorld() {
@@ -30,11 +28,7 @@ public class GameWorld {
         this.handler = new ScrollHandler(this);
         score = 0;
 
-        //ПОСЛЕ ТЕСТОВ ВЕРНУТЬ!
-//        currentGameState = GameState.READY;
-
-        //ДЛЯ ТЕСТОВ!
-        currentGameState = GameState.RUNNING;
+        currentGameState = GameState.READY;
     }
 
     public void update(float delta) {
@@ -65,25 +59,36 @@ public class GameWorld {
 
         handler.update(delta);
 
-        //Перемещение шарика по касанию
-        if(Gdx.input.isTouched()){
+        //ПЕРЕНЕСТИ ОКОНЧАТЛЕЬНО В InputHandler
+        if(Gdx.input.isTouched()) {
             ball.onClick();
         }
 
         if(handler.collides(ball)) {
+            handler.stop();
+            currentGameState = GameState.GAMEOVER;
 
-            //ДЛЯ ТЕСТОВ!
-            collisions++;
-            Gdx.app.log("Collided", Integer.toString(collisions));
+            if (score > AssetsLoader.getHighScore()) {
+                AssetsLoader.setHighScore(score);
+                currentGameState = GameState.HIGHSCORE;
+            }
         }
 
     }
 
     public void addScore() {
         score++;
+    }
 
-        //ДЛЯ ТЕСТОВ!
-        Gdx.app.log("Score", Integer.toString(score));
+    public void start() {
+        currentGameState = GameState.RUNNING;
+    }
+
+    public void restart() {
+        currentGameState = GameState.READY;
+        score = 0;
+        ball.onRestart();
+        handler.onRestart();
     }
 
     public boolean isReady() {

@@ -41,10 +41,6 @@ public class ScrollHandler {
         }
     }
 
-    public Array<Barrier> getBarriers() {
-        return barriers;
-    }
-
     public boolean collides(Ball ball) {
         for (int i = 0; i < barriers.size; i++) {
             if(barriers.get(i).collides(ball)) {
@@ -53,4 +49,25 @@ public class ScrollHandler {
         }
         return false;
     }
+
+    public void stop() {
+        for (Barrier barrier : barriers) {
+            barrier.stop();
+        }
+    }
+
+    public void onRestart() {
+        barriers.clear();
+        for (int i = 0; i < ARRAY_SIZE; i++) {
+            if(i == 0){
+                barriers.add(new Barrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
+            }
+            else barriers.add(new Barrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
+        }
+    }
+
+    public Array<Barrier> getBarriers() {
+        return barriers;
+    }
+
 }

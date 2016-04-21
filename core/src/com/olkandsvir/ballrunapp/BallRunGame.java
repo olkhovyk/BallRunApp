@@ -11,19 +11,19 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
 public class BallRunGame extends Game {
 
 	public static final String TITLE = "BallRun";
-    private GameScreen screen;
+    private GameScreen gameScreen;
 	
 	@Override
 	public void create () {
         AssetsLoader.load();
-        screen = new GameScreen();
-        setScreen(screen);
+        gameScreen = new GameScreen();
+        setScreen(gameScreen);
 	}
 
     public void dispose() {
         super.dispose();
         AssetsLoader.dispose();
-        screen.dispose();
+        gameScreen.dispose();
     }
 
 }

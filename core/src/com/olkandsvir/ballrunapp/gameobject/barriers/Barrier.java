@@ -41,6 +41,10 @@ public class Barrier {
         return part.collides(ball);
     }
 
+    public void stop() {
+        speed.y = 0;
+    }
+
     public int getHeight() {
         return height;
     }
@@ -52,4 +56,5 @@ public class Barrier {
     public BarrierPart getPart() {
         return part;
     }
+
 }

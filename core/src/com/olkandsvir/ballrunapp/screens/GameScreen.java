@@ -2,6 +2,7 @@ package com.olkandsvir.ballrunapp.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
 
@@ -11,7 +12,7 @@ import com.olkandsvir.ballrunapp.gameworld.GameWorld;
  */
 public class GameScreen implements Screen {
 
-    //высота и ширина игрового поля
+    //высота и ширина экрана
     public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
     public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
 
@@ -23,6 +24,8 @@ public class GameScreen implements Screen {
     public GameScreen() {
         world = new GameWorld();
         renderer = new GameRenderer(world);
+
+        Gdx.input.setInputProcessor(new InputHandler(world));
     }
 
     @Override

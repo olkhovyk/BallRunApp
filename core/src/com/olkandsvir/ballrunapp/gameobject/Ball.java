@@ -31,8 +31,6 @@ public class Ball {
         position.x += dx * 0.3;
         position.y += dy * 0.3;
 
-        boundingCircle.setPosition(position.x, position.y + diameter / 2);
-
         if(position.x <= diameter / 2){
             position.x = diameter / 2;
         }
@@ -48,6 +46,17 @@ public class Ball {
         if(position.y >= GameScreen.SCREEN_HEIGHT - diameter){
             position.y = GameScreen.SCREEN_HEIGHT - diameter;
         }
+
+        boundingCircle.setPosition(position.x, position.y + diameter / 2);
+    }
+
+    public void onRestart() {
+        setPosition(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
+    }
+
+    private void setPosition(int x, int y) {
+        position.x = x;
+        position.y = y;
     }
 
     public Vector2 getPosition() {
@@ -61,4 +70,5 @@ public class Ball {
     public Circle getBoundingCircle() {
         return boundingCircle;
     }
+
 }

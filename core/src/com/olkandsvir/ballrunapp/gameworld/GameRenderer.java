@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -19,7 +20,7 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
  * @since 15.04.2016
  */
 public class GameRenderer {
-
+    BitmapFont font;
     //игровой мир
     private final GameWorld world;
 
@@ -66,6 +67,12 @@ public class GameRenderer {
         //инициализируем пакет для рисования
         batcher = new SpriteBatch();
         batcher.setProjectionMatrix(camera.combined);
+        //инициализируем пакет для рисования счета
+        //true - чтоб рисовалось с (0,0) и не было перевернуто
+        font = new BitmapFont(true);
+        font.setColor(0,0,0,1);
+        font.getData().setScale((float) 1.3, (float) 1.3);
+
 
         initGameObjects();
         initAssets();
@@ -109,6 +116,7 @@ public class GameRenderer {
         //запускаем пакет рисования
         batcher.begin();
 
+
         //ВЕРНУТЬ ПО ОКОНЧАНИИ ТЕСТОВ!
         //убираем прозрачность, полезно для производительности
  //       batcher.disableBlending();
@@ -118,6 +126,9 @@ public class GameRenderer {
 
         //рисуем фон
         batcher.draw(background, 0, 0);
+
+        //рисуем счет
+        font.draw(batcher, "Score: " + world.getScore(), 0, 0);
 
         //рисуем препятствия
         for(Barrier barrier : barriers){
@@ -141,6 +152,9 @@ public class GameRenderer {
         batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
                 ball.getDiameter(), ball.getDiameter());
 
+
+
+
         //закрываем пакет
         batcher.end();
 
@@ -155,6 +169,7 @@ public class GameRenderer {
     public void dispose() {
         batcher.dispose();
         shapeRenderer.dispose();
+        font.dispose();
     }
 
 }

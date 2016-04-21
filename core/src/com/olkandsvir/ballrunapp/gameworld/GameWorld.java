@@ -110,4 +110,7 @@ public class GameWorld {
         return handler;
     }
 
+    public int getScore() {
+        return score;
+    }
 }

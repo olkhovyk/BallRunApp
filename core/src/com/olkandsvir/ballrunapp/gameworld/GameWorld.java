@@ -28,13 +28,14 @@ public class GameWorld {
         this.handler = new ScrollHandler(this);
         score = 0;
 
-        currentGameState = GameState.READY;
+        currentGameState = GameState.MENU;
     }
 
     public void update(float delta) {
 
         switch (currentGameState) {
             case READY:
+            case MENU:
                 updateReady(delta);
                 break;
 
@@ -78,6 +79,11 @@ public class GameWorld {
 
     public void addScore() {
         score++;
+    }
+
+
+    public void ready() {
+        currentGameState = GameState.READY;
     }
 
     public void start() {

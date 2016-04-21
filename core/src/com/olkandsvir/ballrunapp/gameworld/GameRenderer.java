@@ -8,10 +8,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
+import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
+import com.olkandsvir.ballrunapp.ui.SimpleButton;
+
+import java.util.List;
 
 /**
  * For rendering the world of the game.
@@ -45,11 +49,17 @@ public class GameRenderer {
     //шрифт
     BitmapFont font;
 
+    //Кнопки меню
+    private List<SimpleButton> buttons;
+
     //конструктор
     public GameRenderer(GameWorld world) {
 
         //создаем игровой мир
         this.world = world;
+
+        //кнопки меню
+        this.buttons = ((InputHandler) Gdx.input.getInputProcessor()).getButtons();
 
         //инициализируем камеру
         camera = new OrthographicCamera();
@@ -122,6 +132,15 @@ public class GameRenderer {
         font.draw(batcher, "Score: " + world.getScore(), 0, 0);
     }
 
+    /**
+     * Рисуем меню.
+     */
+    public void drawIfMenu() {
+        for(SimpleButton button : buttons) {
+            button.draw(batcher);
+        }
+    }
+
     private void drawIfReady() {
         font.draw(batcher, "Touch to start!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
     }
@@ -173,8 +192,9 @@ public class GameRenderer {
 
         drawScore();
 
-
-        if (world.isReady()) {
+        if(world.isMenu()) {
+            drawIfMenu();
+        } else if (world.isReady()) {
             drawIfReady();
         } else {
             if (world.isGameOver() || world.isHighScore()) {

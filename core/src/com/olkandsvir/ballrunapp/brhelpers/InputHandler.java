@@ -3,6 +3,11 @@ package com.olkandsvir.ballrunapp.brhelpers;
 import com.badlogic.gdx.InputProcessor;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
+import com.olkandsvir.ballrunapp.screens.GameScreen;
+import com.olkandsvir.ballrunapp.ui.SimpleButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Process inputs from users.
@@ -12,10 +17,22 @@ public class InputHandler implements InputProcessor {
 
     private GameWorld world;
     private Ball ball;
+    private List<SimpleButton> buttons;
+    private SimpleButton startButton;
 
     public InputHandler(GameWorld world) {
         this.world = world;
         this.ball = world.getBall();
+
+        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 2,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
+        buttons = new ArrayList<SimpleButton>();
+        buttons.add(startButton);
+    }
+
+    public List<SimpleButton> getButtons() {
+        return buttons;
     }
 
     @Override
@@ -35,14 +52,14 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (world.isReady()) {
+        if (world.isMenu()) {
+            startButton.isTouchDown(screenX, screenY);
+        /* } else if(world.isRunning()) {
+            СТРАННО СЕБЯ ВЕДЕТ ...
+            ball.onClick(); */
+        } else if (world.isReady()) {
             world.start();
-        }
-
-// СТРАННО СЕБЯ ВЕДЕТ ...
-//        ball.onClick();
-
-        if (world.isGameOver() || world.isHighScore()) {
+        } else if (world.isGameOver() || world.isHighScore()) {
             world.restart();
         }
 
@@ -51,6 +68,13 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (world.isMenu()) {
+            if (startButton.isTouchUp(screenX, screenY)) {
+                world.ready();
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -58,7 +82,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
 // СТРАННО СЕБЯ ВЕДЕТ ...
 //        ball.onClick();
-        return true;
+        return false;
     }
 
     @Override

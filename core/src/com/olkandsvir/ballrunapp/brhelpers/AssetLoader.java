@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
  * Responsible for using assets in the game.
  * @since 15.04.2014
  */
-public class AssetsLoader {
+public class AssetLoader {
 
     public static Texture background;
     public static Texture ball;

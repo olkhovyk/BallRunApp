@@ -1,14 +1,13 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
+import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
@@ -88,14 +87,62 @@ public class GameRenderer {
     private void initAssets() {
 
         //загружаем картинку фона
-        background = AssetsLoader.background;
+        background = AssetLoader.background;
 
         //загружаем картинку для мячика
-        ballTexture = AssetsLoader.ball;
+        ballTexture = AssetLoader.ball;
 
         //загружаем картинку для препятствий
-        barrierTexture = AssetsLoader.barrier;
+        barrierTexture = AssetLoader.barrier;
     }
+
+
+    /**
+     * Рисуем препятствия
+     */
+    private void drawBarriers() {
+        for(Barrier barrier : barriers){
+            batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
+                    barrier.getPart().getWidth(), barrier.getHeight());
+        }
+    }
+
+    /**
+     * Рисуем мячик
+     */
+    private void drawBall() {
+        batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
+                ball.getDiameter(), ball.getDiameter());
+    }
+
+    /**
+     * Рисуем счет
+     */
+    private void drawScore() {
+        font.draw(batcher, "Score: " + world.getScore(), 0, 0);
+    }
+
+    private void drawIfReady() {
+        font.draw(batcher, "Touch to start!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
+    }
+
+    private void drawIfGameOver() {
+        if (world.isGameOver()) {
+            font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
+            font.draw(batcher, "High Score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 20);
+            String highScore = AssetLoader.getHighScore() + "";
+            font.draw(batcher, highScore, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 8 / 20);
+        } else {
+            font.draw(batcher, "Congratulations!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
+            font.draw(batcher, "High Score!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 20);
+        }
+
+        font.draw(batcher, "Your score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 9 / 20);
+        String score = world.getScore() + "";
+        font.draw(batcher, score, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 10 / 20);
+        font.draw(batcher, "Try again?", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 11 / 20);
+    }
+
 
     /**
      * Рендерим все, что нам нужно.
@@ -117,51 +164,22 @@ public class GameRenderer {
         //рисуем фон
         batcher.draw(background, 0, 0);
 
-        //рисуем препятствия
-        for(Barrier barrier : barriers){
-            batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
-                barrier.getPart().getWidth(), barrier.getHeight());
-        }
+        drawBarriers();
 
         //добавляем прозрачность, она нужна мячику
         batcher.enableBlending();
 
-        //рисуем мяч
-        batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
-                ball.getDiameter(), ball.getDiameter());
+        drawBall();
 
-        //рисуем счет
-        font.draw(batcher, "Score: " + world.getScore(), 0, 0);
+        drawScore();
+
 
         if (world.isReady()) {
-            font.draw(batcher, "Touch to start!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
+            drawIfReady();
         } else {
-
             if (world.isGameOver() || world.isHighScore()) {
-
-                if (world.isGameOver()) {
-                    font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
-
-                    font.draw(batcher, "High Score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 20);
-
-                    String highScore = AssetsLoader.getHighScore() + "";
-
-                    font.draw(batcher, highScore, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 8 / 20);
-                } else {
-                    font.draw(batcher, "Congratulations!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
-
-                    font.draw(batcher, "High Score!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 20);
-                }
-
-                font.draw(batcher, "Your score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 9 / 20);
-
-                String score = world.getScore() + "";
-
-                font.draw(batcher, score, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 10 / 20);
-
-                font.draw(batcher, "Try again?", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 11 / 20);
+                drawIfGameOver();
             }
-
         }
 
         //закрываем пакет

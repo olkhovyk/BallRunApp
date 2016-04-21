@@ -1,7 +1,7 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
-import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
+import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
@@ -68,8 +68,8 @@ public class GameWorld {
             handler.stop();
             currentGameState = GameState.GAMEOVER;
 
-            if (score > AssetsLoader.getHighScore()) {
-                AssetsLoader.setHighScore(score);
+            if (score > AssetLoader.getHighScore()) {
+                AssetLoader.setHighScore(score);
                 currentGameState = GameState.HIGHSCORE;
             }
         }
@@ -89,6 +89,10 @@ public class GameWorld {
         score = 0;
         ball.onRestart();
         handler.onRestart();
+    }
+
+    public boolean isMenu() {
+        return  currentGameState == GameState.MENU;
     }
 
     public boolean isReady() {

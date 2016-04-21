@@ -1,7 +1,7 @@
 package com.olkandsvir.ballrunapp;
 
 import com.badlogic.gdx.Game;
-import com.olkandsvir.ballrunapp.brhelpers.AssetsLoader;
+import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 
 /**
@@ -15,14 +15,14 @@ public class BallRunGame extends Game {
 	
 	@Override
 	public void create () {
-        AssetsLoader.load();
+        AssetLoader.load();
         gameScreen = new GameScreen();
         setScreen(gameScreen);
 	}
 
     public void dispose() {
         super.dispose();
-        AssetsLoader.dispose();
+        AssetLoader.dispose();
         gameScreen.dispose();
     }
 

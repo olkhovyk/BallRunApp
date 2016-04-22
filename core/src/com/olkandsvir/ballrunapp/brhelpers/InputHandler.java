@@ -80,6 +80,7 @@ public class InputHandler implements InputProcessor {
             } else if (exitButton.isTouchUp(screenX, screenY)) {
                 //TO DO
                 //exit
+                //System.exit(0);
                 return true;
             }
         }

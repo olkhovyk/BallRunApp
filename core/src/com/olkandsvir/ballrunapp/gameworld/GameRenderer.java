@@ -190,16 +190,14 @@ public class GameRenderer {
 
         drawBall();
 
-        drawScore();
-
         if(world.isMenu()) {
             drawIfMenu();
         } else if (world.isReady()) {
             drawIfReady();
-        } else {
-            if (world.isGameOver() || world.isHighScore()) {
+        } else if (world.isRunning()) {
+            drawScore();
+        } else if (world.isGameOver() || world.isHighScore()) {
                 drawIfGameOver();
-            }
         }
 
         //закрываем пакет

@@ -18,17 +18,21 @@ public class InputHandler implements InputProcessor {
     private GameWorld world;
     private Ball ball;
     private List<SimpleButton> buttons;
-    private SimpleButton startButton;
+    private SimpleButton startButton, exitButton;
 
     public InputHandler(GameWorld world) {
         this.world = world;
         this.ball = world.getBall();
 
-        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 2,
+        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 4,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
+        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 2,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
         buttons = new ArrayList<SimpleButton>();
         buttons.add(startButton);
+        buttons.add(exitButton);
     }
 
     public List<SimpleButton> getButtons() {
@@ -54,6 +58,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (world.isMenu()) {
             startButton.isTouchDown(screenX, screenY);
+            exitButton.isTouchDown(screenX, screenY);
         /* } else if(world.isRunning()) {
             СТРАННО СЕБЯ ВЕДЕТ ...
             ball.onClick(); */
@@ -71,6 +76,10 @@ public class InputHandler implements InputProcessor {
         if (world.isMenu()) {
             if (startButton.isTouchUp(screenX, screenY)) {
                 world.ready();
+                return true;
+            } else if (exitButton.isTouchUp(screenX, screenY)) {
+                //TO DO
+                //exit
                 return true;
             }
         }

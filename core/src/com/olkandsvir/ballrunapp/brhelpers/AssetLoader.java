@@ -17,6 +17,10 @@ public class AssetLoader {
     public static Texture buttonStartPressed;
     public static Texture buttonExit;
     public static Texture buttonExitPressed;
+    public static Texture buttonPause;
+    public static Texture buttonPausePressed;
+    public static Texture buttonResume;
+    public static Texture buttonResumePressed;
 
     public static Preferences preferences;
 
@@ -42,6 +46,17 @@ public class AssetLoader {
         buttonExitPressed = new Texture(Gdx.files.internal("data/btnExitPressed.png"));
         buttonExitPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+        buttonPause = new Texture(Gdx.files.internal("data/btnPause.png"));
+        buttonPause.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonPausePressed = new Texture(Gdx.files.internal("data/btnPausePressed.png"));
+        buttonPausePressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonResume = new Texture(Gdx.files.internal("data/btnResume.png"));
+        buttonResume.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonResumePressed = new Texture(Gdx.files.internal("data/btnResumePressed.png"));
+        buttonResumePressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         preferences = Gdx.app.getPreferences("BallRunApp");
 
@@ -58,6 +73,10 @@ public class AssetLoader {
         buttonStartPressed.dispose();
         buttonExit.dispose();
         buttonExitPressed.dispose();
+        buttonPause.dispose();
+        buttonPausePressed.dispose();
+        buttonResume.dispose();
+        buttonResumePressed.dispose();
     }
 
     public static void setHighScore(int val) {

@@ -20,7 +20,7 @@ public class GameWorld {
     private GameState currentGameState;
 
     public enum GameState {
-        MENU, READY, RUNNING, GAMEOVER, HIGHSCORE
+        MENU, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
     }
 
     public GameWorld() {
@@ -40,6 +40,7 @@ public class GameWorld {
                 break;
 
             case RUNNING:
+            case PAUSE:
                 updateRunning(delta);
                 break;
 
@@ -58,20 +59,24 @@ public class GameWorld {
             delta = .15f;
         }
 
-        handler.update(delta);
+        if(!isPaused()) {
+            handler.update(delta);
 
-        //ПЕРЕНЕСТИ ОКОНЧАТЛЕЬНО В InputHandler
-        if(Gdx.input.isTouched()) {
-            ball.onClick();
-        }
+            //ПЕРЕНЕСТИ ОКОНЧАТЕЛЬНО В InputHandler
+            if (Gdx.input.isTouched() &&
+                    !((Gdx.input.getX() > GameScreen.SCREEN_WIDTH * 4 / 5) && (Gdx.input.getY() < GameScreen.SCREEN_HEIGHT * 8 / 9))) {
+                ball.onClick();
+            }
 
-        if(handler.collides(ball)) {
-            handler.stop();
-            currentGameState = GameState.GAMEOVER;
 
-            if (score > AssetLoader.getHighScore()) {
-                AssetLoader.setHighScore(score);
-                currentGameState = GameState.HIGHSCORE;
+            if (handler.collides(ball)) {
+                handler.stop();
+                currentGameState = GameState.GAMEOVER;
+
+                if (score > AssetLoader.getHighScore()) {
+                    AssetLoader.setHighScore(score);
+                    currentGameState = GameState.HIGHSCORE;
+                }
             }
         }
     }
@@ -87,6 +92,15 @@ public class GameWorld {
     public void start() {
         currentGameState = GameState.RUNNING;
     }
+
+    public void pause() {
+        currentGameState = GameState.PAUSE;
+    }
+
+    public void resume() {
+        currentGameState = GameState.RUNNING;
+    }
+
 
     public void restart() {
         currentGameState = GameState.READY;
@@ -105,6 +119,10 @@ public class GameWorld {
 
     public boolean isRunning() {
         return currentGameState == GameState.RUNNING;
+    }
+
+    public boolean isPaused() {
+        return currentGameState == GameState.PAUSE;
     }
 
     public boolean isGameOver() {

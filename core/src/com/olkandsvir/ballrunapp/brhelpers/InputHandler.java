@@ -19,7 +19,7 @@ public class InputHandler implements InputProcessor {
     private GameWorld world;
     private Ball ball;
     private List<SimpleButton> buttons;
-    private SimpleButton startButton, exitButton;
+    private SimpleButton startButton, exitButton, pauseButton, resumeButton;
 
     public InputHandler(GameWorld world) {
         this.world = world;
@@ -34,10 +34,24 @@ public class InputHandler implements InputProcessor {
         buttons = new ArrayList<SimpleButton>();
         buttons.add(startButton);
         buttons.add(exitButton);
+        pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
+                GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
+                AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
+        resumeButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
+                GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
+                AssetLoader.buttonResume, AssetLoader.buttonResumePressed);
     }
 
     public List<SimpleButton> getButtons() {
         return buttons;
+    }
+
+    public SimpleButton getPauseButton() {
+        return pauseButton;
+    }
+
+    public SimpleButton getResumeButton() {
+        return resumeButton;
     }
 
     @Override
@@ -60,9 +74,12 @@ public class InputHandler implements InputProcessor {
         if (world.isMenu()) {
             startButton.isTouchDown(screenX, screenY);
             exitButton.isTouchDown(screenX, screenY);
-        /* } else if(world.isRunning()) {
-            СТРАННО СЕБЯ ВЕДЕТ ...
+         } else if(world.isRunning()) {
+            /* СТРАННО СЕБЯ ВЕДЕТ ...
             ball.onClick(); */
+            pauseButton.isTouchDown(screenX, screenY);
+        } else if(world.isPaused()) {
+            resumeButton.isTouchDown(screenX, screenY);
         } else if (world.isReady()) {
             world.start();
         } else if (world.isGameOver() || world.isHighScore()) {
@@ -80,6 +97,16 @@ public class InputHandler implements InputProcessor {
                 return true;
             } else if (exitButton.isTouchUp(screenX, screenY)) {
                 Gdx.app.exit();
+                return true;
+            }
+        } else if (world.isRunning()) {
+            if (pauseButton.isTouchUp(screenX, screenY)) {
+                world.pause();
+                return true;
+            }
+        } else if(world.isPaused()) {
+            if(resumeButton.isTouchUp(screenX, screenY)) {
+                world.resume();
                 return true;
             }
         }

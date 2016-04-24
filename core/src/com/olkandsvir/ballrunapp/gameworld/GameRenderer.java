@@ -52,14 +52,15 @@ public class GameRenderer {
     //Кнопки меню
     private List<SimpleButton> buttons;
 
+    //кнопки паузы и продолжения
+    private SimpleButton pauseButton;
+    private SimpleButton resumeButton;
+
     //конструктор
     public GameRenderer(GameWorld world) {
 
         //создаем игровой мир
         this.world = world;
-
-        //кнопки меню
-        this.buttons = ((InputHandler) Gdx.input.getInputProcessor()).getButtons();
 
         //инициализируем камеру
         camera = new OrthographicCamera();
@@ -86,10 +87,13 @@ public class GameRenderer {
      * Иницализируем игровые объекты.
      */
     private void initGameObjects() {
+        buttons = ((InputHandler) Gdx.input.getInputProcessor()).getButtons();
+        pauseButton = (((InputHandler) Gdx.input.getInputProcessor()).getPauseButton());
+        resumeButton = (((InputHandler)Gdx.input.getInputProcessor()).getResumeButton());
         ball = world.getBall();
         handler = world.getHandler();
         barriers = handler.getBarriers();
-   }
+    }
 
     /**
      * Инициализируем дополнительные ресурсы.
@@ -105,7 +109,6 @@ public class GameRenderer {
         //загружаем картинку для препятствий
         barrierTexture = AssetLoader.barrier;
     }
-
 
     /**
      * Рисуем препятствия
@@ -132,6 +135,14 @@ public class GameRenderer {
         font.draw(batcher, "Score: " + world.getScore(), 0, 0);
     }
 
+    private void drawPause() {
+        pauseButton.draw(batcher);
+    }
+
+    private void drawResume() {
+        resumeButton.draw(batcher);
+    }
+
     /**
      * Рисуем меню.
      */
@@ -143,6 +154,15 @@ public class GameRenderer {
 
     private void drawIfReady() {
         font.draw(batcher, "Touch to start!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
+    }
+
+    private void drawIfRunning() {
+        drawScore();
+        if(world.isRunning()) {
+            drawPause();
+        } else {
+            drawResume();
+        }
     }
 
     private void drawIfGameOver() {
@@ -194,10 +214,10 @@ public class GameRenderer {
             drawIfMenu();
         } else if (world.isReady()) {
             drawIfReady();
-        } else if (world.isRunning()) {
-            drawScore();
+        } else if (world.isRunning() || world.isPaused()) {
+            drawIfRunning();
         } else if (world.isGameOver() || world.isHighScore()) {
-                drawIfGameOver();
+            drawIfGameOver();
         }
 
         //закрываем пакет

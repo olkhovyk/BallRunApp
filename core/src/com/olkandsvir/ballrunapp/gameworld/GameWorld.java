@@ -1,7 +1,7 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
@@ -20,7 +20,8 @@ public class GameWorld {
 
     private GameState currentGameState;
 
-    private Sound backgroundMusic;
+    private Music backgroundMusic;
+    private Music menuMusic;
 
     public enum GameState {
         MENU, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
@@ -29,10 +30,14 @@ public class GameWorld {
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
         this.handler = new ScrollHandler(this);
-        this.backgroundMusic = AssetLoader.soundBackground;
+        this.backgroundMusic = AssetLoader.musicBackground;
+        this.menuMusic = AssetLoader.musicMenu;
         score = 0;
 
         currentGameState = GameState.MENU;
+        menuMusic.setLooping(true);
+        backgroundMusic.setLooping(true);
+        menuMusic.play();
     }
 
     public void update(float delta) {
@@ -85,6 +90,8 @@ public class GameWorld {
                 } else {
                     AssetLoader.soundDefeat.play();
                 }
+
+                menuMusic.play();
             }
         }
     }
@@ -99,17 +106,20 @@ public class GameWorld {
 
     public void start() {
         currentGameState = GameState.RUNNING;
-        backgroundMusic.loop();
+        menuMusic.stop();
+        backgroundMusic.play();
     }
 
     public void pause() {
         currentGameState = GameState.PAUSE;
         backgroundMusic.pause();
+        menuMusic.play();
     }
 
     public void resume() {
         currentGameState = GameState.RUNNING;
-        backgroundMusic.resume();
+        menuMusic.stop();
+        backgroundMusic.play();
     }
 
 
@@ -118,7 +128,6 @@ public class GameWorld {
         score = 0;
         ball.onRestart();
         handler.onRestart();
-        backgroundMusic.loop();
     }
 
     public boolean isMenu() {

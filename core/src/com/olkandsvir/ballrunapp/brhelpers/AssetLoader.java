@@ -2,6 +2,7 @@ package com.olkandsvir.ballrunapp.brhelpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -21,6 +22,12 @@ public class AssetLoader {
     public static Texture buttonPausePressed;
     public static Texture buttonResume;
     public static Texture buttonResumePressed;
+
+    public static Sound soundBackground;
+    public static Sound soundScored;
+    public static Sound soundClicked;
+    public static Sound soundDefeat;
+    public static Sound soundHighScore;
 
     public static Preferences preferences;
 
@@ -58,6 +65,12 @@ public class AssetLoader {
         buttonResumePressed = new Texture(Gdx.files.internal("data/btnResumePressed.png"));
         buttonResumePressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+        soundBackground = Gdx.audio.newSound(Gdx.files.internal("data/background.wav"));
+        soundScored = Gdx.audio.newSound(Gdx.files.internal("data/scoreCoin.mp3"));
+        soundClicked = Gdx.audio.newSound(Gdx.files.internal("data/buttonClicked.wav"));
+        soundDefeat = Gdx.audio.newSound(Gdx.files.internal("data/defeat.wav"));
+        soundHighScore = Gdx.audio.newSound(Gdx.files.internal("data/highscore.wav"));
+
         preferences = Gdx.app.getPreferences("BallRunApp");
 
         if (!preferences.contains("highScore")) {
@@ -77,6 +90,11 @@ public class AssetLoader {
         buttonPausePressed.dispose();
         buttonResume.dispose();
         buttonResumePressed.dispose();
+        soundBackground.dispose();
+        soundScored.dispose();
+        soundClicked.dispose();
+        soundDefeat.dispose();
+        soundHighScore.dispose();
     }
 
     public static void setHighScore(int val) {

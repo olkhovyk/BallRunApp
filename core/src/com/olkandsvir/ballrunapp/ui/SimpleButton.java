@@ -3,6 +3,7 @@ package com.olkandsvir.ballrunapp.ui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 
 /**
  * Implementation of Menu Buttons.
@@ -45,8 +46,9 @@ public class SimpleButton {
 
     public boolean isTouchDown(int screenX, int screenY) {
 
-        if (bounds.contains(screenX, screenY)) {
+        if (isClicked(screenX, screenY)) {
             isPressed = true;
+            AssetLoader.soundClicked.play();
             return true;
         }
 
@@ -56,7 +58,7 @@ public class SimpleButton {
     public boolean isTouchUp(int screenX, int screenY) {
 
         // It only counts as a touchUp if the button is in a pressed state.
-        if (bounds.contains(screenX, screenY) && isPressed) {
+        if (isClicked(screenX, screenY) && isPressed) {
             isPressed = false;
             return true;
         }

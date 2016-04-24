@@ -1,8 +1,8 @@
 package com.olkandsvir.ballrunapp.gameobject;
 
 import com.badlogic.gdx.utils.Array;
+import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
-import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 
@@ -36,7 +36,8 @@ public class ScrollHandler {
             barriers.get(i).update(delta);
             if(barriers.get(i).isScrolledBottom()) {
                 world.addScore();
-                speedUp(scrollSpeed / 25);
+                AssetLoader.soundScored.play();
+                speedUp(scrollSpeed / 50);
                 barriers.removeIndex(i);
                 barriers.add(new Barrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
             }

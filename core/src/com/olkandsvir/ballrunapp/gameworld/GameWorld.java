@@ -1,6 +1,7 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
@@ -19,6 +20,8 @@ public class GameWorld {
 
     private GameState currentGameState;
 
+    private Sound backgroundMusic;
+
     public enum GameState {
         MENU, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
     }
@@ -26,6 +29,7 @@ public class GameWorld {
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
         this.handler = new ScrollHandler(this);
+        this.backgroundMusic = AssetLoader.soundBackground;
         score = 0;
 
         currentGameState = GameState.MENU;
@@ -64,18 +68,22 @@ public class GameWorld {
 
             //ПЕРЕНЕСТИ ОКОНЧАТЕЛЬНО В InputHandler
             if (Gdx.input.isTouched() &&
-                    !((Gdx.input.getX() > GameScreen.SCREEN_WIDTH * 4 / 5) && (Gdx.input.getY() < GameScreen.SCREEN_HEIGHT * 8 / 9))) {
+                    !((Gdx.input.getX() > GameScreen.SCREEN_WIDTH * 4 / 5) && (Gdx.input.getY() < GameScreen.SCREEN_HEIGHT / 9))) {
                 ball.onClick();
             }
 
 
             if (handler.collides(ball)) {
+                backgroundMusic.stop();
                 handler.stop();
                 currentGameState = GameState.GAMEOVER;
 
                 if (score > AssetLoader.getHighScore()) {
                     AssetLoader.setHighScore(score);
                     currentGameState = GameState.HIGHSCORE;
+                    AssetLoader.soundHighScore.play();
+                } else {
+                    AssetLoader.soundDefeat.play();
                 }
             }
         }
@@ -91,14 +99,17 @@ public class GameWorld {
 
     public void start() {
         currentGameState = GameState.RUNNING;
+        backgroundMusic.loop();
     }
 
     public void pause() {
         currentGameState = GameState.PAUSE;
+        backgroundMusic.pause();
     }
 
     public void resume() {
         currentGameState = GameState.RUNNING;
+        backgroundMusic.resume();
     }
 
 
@@ -107,6 +118,7 @@ public class GameWorld {
         score = 0;
         ball.onRestart();
         handler.onRestart();
+        backgroundMusic.loop();
     }
 
     public boolean isMenu() {

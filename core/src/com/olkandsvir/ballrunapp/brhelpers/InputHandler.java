@@ -1,5 +1,6 @@
 package com.olkandsvir.ballrunapp.brhelpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
@@ -78,9 +79,7 @@ public class InputHandler implements InputProcessor {
                 world.ready();
                 return true;
             } else if (exitButton.isTouchUp(screenX, screenY)) {
-                //TO DO
-                //exit
-                //System.exit(0);
+                Gdx.app.exit();
                 return true;
             }
         }

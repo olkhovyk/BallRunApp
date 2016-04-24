@@ -74,13 +74,11 @@ public class GameWorld {
                 currentGameState = GameState.HIGHSCORE;
             }
         }
-
     }
 
     public void addScore() {
         score++;
     }
-
 
     public void ready() {
         currentGameState = GameState.READY;

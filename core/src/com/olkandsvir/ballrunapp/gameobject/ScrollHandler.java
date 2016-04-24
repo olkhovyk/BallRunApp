@@ -2,6 +2,7 @@ package com.olkandsvir.ballrunapp.gameobject;
 
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
+import com.olkandsvir.ballrunapp.gameworld.GameRenderer;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 
@@ -35,6 +36,7 @@ public class ScrollHandler {
             barriers.get(i).update(delta);
             if(barriers.get(i).isScrolledBottom()) {
                 world.addScore();
+                speedUp(scrollSpeed / 25);
                 barriers.removeIndex(i);
                 barriers.add(new Barrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
             }
@@ -56,8 +58,16 @@ public class ScrollHandler {
         }
     }
 
+    public void speedUp(int increment) {
+        for (Barrier barrier : barriers) {
+            barrier.speedUp(increment);
+        }
+        scrollSpeed += increment;
+    }
+
     public void onRestart() {
         barriers.clear();
+        scrollSpeed = GameScreen.SCREEN_HEIGHT / 2;
         for (int i = 0; i < ARRAY_SIZE; i++) {
             if(i == 0){
                 barriers.add(new Barrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));

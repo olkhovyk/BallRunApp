@@ -45,6 +45,10 @@ public class Barrier {
         speed.y = 0;
     }
 
+    public void speedUp(int increment) {
+        speed.y += increment;
+    }
+
     public int getHeight() {
         return height;
     }

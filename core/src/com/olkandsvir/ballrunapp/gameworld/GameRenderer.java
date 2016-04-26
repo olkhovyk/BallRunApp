@@ -1,17 +1,21 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
-import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
+import com.olkandsvir.ballrunapp.gameobject.barriers.AbstractBarrier;
+import com.olkandsvir.ballrunapp.gameobject.barriers.BarrierPart;
+import com.olkandsvir.ballrunapp.gameobject.barriers.SuperEasyBarrier;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 import com.olkandsvir.ballrunapp.ui.SimpleButton;
 
@@ -41,7 +45,7 @@ public class GameRenderer {
     private Ball ball;
 
     //препятствия
-    private Array<Barrier> barriers;
+    private Array<AbstractBarrier> barriers;
 
     //отвечает за движение препятствий
     private ScrollHandler handler;
@@ -114,9 +118,11 @@ public class GameRenderer {
      * Рисуем препятствия
      */
     private void drawBarriers() {
-        for(Barrier barrier : barriers){
-            batcher.draw(barrierTexture, barrier.getPart().getX(), barrier.getPosition().y,
-                    barrier.getPart().getWidth(), barrier.getHeight());
+        for(AbstractBarrier barrier : barriers){
+            for(BarrierPart part : barrier.getParts()) {
+                batcher.draw(barrierTexture, part.getX(), barrier.getPosition().y,
+                        part.getWidth(), barrier.getHeight());
+            }
         }
     }
 

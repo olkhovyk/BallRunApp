@@ -13,18 +13,17 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
 public class BarrierPart {
 
     private partOrientation orientation;
-    private Barrier barrier;
+    private AbstractBarrier barrier;
     private int width;
     private int height;
     private Vector2 position;
-    private Vector2 speed;
     private Rectangle rectangle;
 
     public enum partOrientation {
         LEFT, MID, RIGHT
     }
 
-    public BarrierPart(Barrier barrier, float y, int height, Vector2 speed) {
+    public BarrierPart(AbstractBarrier barrier, float y, int height) {
         double random = Math.random() * 3;
         if(random < 1.0) {
             orientation = partOrientation.LEFT;
@@ -37,7 +36,6 @@ public class BarrierPart {
         width = GameScreen.SCREEN_WIDTH / 3;
         this.barrier = barrier;
         this.height = height;
-        this.speed = speed;
 
         if (orientation == partOrientation.LEFT) {
             position = new Vector2(0, y);
@@ -56,13 +54,9 @@ public class BarrierPart {
     }
 
     public boolean collides(Ball ball) {
-        return (position.x < ball.getPosition().x + ball.getDiameter() || position.x + width > ball.getPosition().x
+        return (/*position.x < ball.getPosition().x + ball.getDiameter() || position.x + width > ball.getPosition().x
                 && position.y > ball.getPosition().y + ball.getDiameter() || position.y + height < ball.getPosition().y)
-                && (Intersector.overlaps(ball.getBoundingCircle(), rectangle));
-    }
-
-    public int getWidth() {
-        return width;
+                && (*/Intersector.overlaps(ball.getBoundingCircle(), rectangle));
     }
 
     public void newOrientation() {
@@ -84,8 +78,16 @@ public class BarrierPart {
         }
     }
 
+    public int getWidth() {
+        return width;
+    }
+
     public float getX() {
         return position.x;
+    }
+
+    public partOrientation getOrientation() {
+        return orientation;
     }
 
     public Rectangle getRectangle() {

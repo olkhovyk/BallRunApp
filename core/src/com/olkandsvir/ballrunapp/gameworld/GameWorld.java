@@ -77,7 +77,6 @@ public class GameWorld {
                 ball.onClick();
             }
 
-
             if (handler.collides(ball)) {
                 backgroundMusic.stop();
                 handler.stop();

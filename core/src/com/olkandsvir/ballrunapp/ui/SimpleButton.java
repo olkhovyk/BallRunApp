@@ -57,13 +57,11 @@ public class SimpleButton {
 
     public boolean isTouchUp(int screenX, int screenY) {
 
-        // It only counts as a touchUp if the button is in a pressed state.
         if (isClicked(screenX, screenY) && isPressed) {
             isPressed = false;
             return true;
         }
 
-        // Whenever a finger is released, we will cancel any presses.
         isPressed = false;
         return false;
     }

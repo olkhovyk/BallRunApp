@@ -122,7 +122,6 @@ public class GameWorld {
         backgroundMusic.play();
     }
 
-
     public void restart() {
         currentGameState = GameState.READY;
         score = 0;

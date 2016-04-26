@@ -24,10 +24,11 @@ public class ScrollHandler {
 
         barriers = new Array<Barrier>();
         for(int i = 0; i < ARRAY_SIZE; i++){
-            if(i == 0){
+            if(i == 0) {
                 barriers.add(new Barrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
+            } else {
+                barriers.add(new Barrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
             }
-            else barriers.add(new Barrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
         }
     }
 
@@ -38,8 +39,11 @@ public class ScrollHandler {
                 world.addScore();
                 AssetLoader.soundScored.play();
                 speedUp(scrollSpeed / 50);
-                barriers.removeIndex(i);
-                barriers.add(new Barrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
+                if(i != 0) {
+                    barriers.get(i).moveToLast(barriers.get(i - 1).getPosition().y - barrierGap);
+                } else {
+                    barriers.get(i).moveToLast(barriers.get(barriers.size - 1).getPosition().y - barrierGap);
+                }
             }
         }
     }

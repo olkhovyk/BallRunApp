@@ -20,7 +20,7 @@ public class Barrier {
         position = new Vector2(x, y);
         this.height = height;
         this.speed = new Vector2(0, scrollSpeed);
-        this.part = new BarrierPart(y, height, speed);
+        this.part = new BarrierPart(this, y, height, speed);
         scrolledBottom = false;
     }
 
@@ -35,6 +35,12 @@ public class Barrier {
 
     public boolean isScrolledBottom() {
         return scrolledBottom;
+    }
+
+    public void moveToLast(float newY) {
+        part.newOrientation();
+        this.position.y = (int)newY;
+        scrolledBottom = false;
     }
 
     public boolean collides(Ball ball) {

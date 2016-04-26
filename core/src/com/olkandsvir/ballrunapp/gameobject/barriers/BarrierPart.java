@@ -13,6 +13,7 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
 public class BarrierPart {
 
     private partOrientation orientation;
+    private Barrier barrier;
     private int width;
     private int height;
     private Vector2 position;
@@ -23,7 +24,7 @@ public class BarrierPart {
         LEFT, MID, RIGHT
     }
 
-    public BarrierPart(float y, int height, Vector2 speed) {
+    public BarrierPart(Barrier barrier, float y, int height, Vector2 speed) {
         double random = Math.random() * 3;
         if(random < 1.0) {
             orientation = partOrientation.LEFT;
@@ -34,6 +35,7 @@ public class BarrierPart {
         }
 
         width = GameScreen.SCREEN_WIDTH / 3;
+        this.barrier = barrier;
         this.height = height;
         this.speed = speed;
 
@@ -49,7 +51,7 @@ public class BarrierPart {
     }
 
     public void update(float delta) {
-        position.add(speed.cpy().scl(delta));
+        position.y = barrier.getPosition().y;
         rectangle.set(position.x, position.y, width, height);
     }
 
@@ -61,6 +63,25 @@ public class BarrierPart {
 
     public int getWidth() {
         return width;
+    }
+
+    public void newOrientation() {
+        double random = Math.random() * 3;
+        if(random < 1.0) {
+            orientation = partOrientation.LEFT;
+        } else if (random < 2.0) {
+            orientation = partOrientation.MID;
+        } else if (random <= 3.0) {
+            orientation = partOrientation.RIGHT;
+        }
+
+        if (orientation == partOrientation.LEFT) {
+            position.x = 0;
+        } else if (orientation == partOrientation.MID) {
+            position.x = GameScreen.SCREEN_WIDTH / 3;
+        } else {
+            position.x = 2 * GameScreen.SCREEN_WIDTH / 3;
+        }
     }
 
     public float getX() {

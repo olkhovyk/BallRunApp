@@ -1,13 +1,12 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
@@ -15,11 +14,11 @@ import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameobject.barriers.AbstractBarrier;
 import com.olkandsvir.ballrunapp.gameobject.barriers.BarrierPart;
-import com.olkandsvir.ballrunapp.gameobject.barriers.SuperEasyBarrier;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 import com.olkandsvir.ballrunapp.ui.SimpleButton;
 
 import java.util.List;
+
 
 /**
  * For rendering the world of the game.
@@ -52,6 +51,7 @@ public class GameRenderer {
 
     //шрифт
     BitmapFont font;
+    FreeTypeFontGenerator generator;
 
     //Кнопки меню
     private List<SimpleButton> buttons;
@@ -78,10 +78,22 @@ public class GameRenderer {
         batcher.setProjectionMatrix(camera.combined);
 
         //инициализируем пакет для рисования счета
-        //true - чтоб рисовалось с (0,0) и не было перевернуто
-        font = new BitmapFont(true);
+        font = new BitmapFont();
+        //Инициализируем генератор для вставки своего шрифта
+        generator = new FreeTypeFontGenerator(AssetLoader.fontFile);
+        //Создаем параметры для шрифта
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //Переворачиваем шрифт для правильного отображения
+        parameter.flip = true;
+        //Устанавливаем размер шрифта
+        parameter.size = GameScreen.SCREEN_WIDTH / 22;
+        //Привязываем новый шрифт к BitmapFont
+        font = generator.generateFont(parameter);
+
         font.setColor(0,0,0,1);
         font.getData().setScale((float) 1.3, (float) 1.3);
+        generator.dispose();
+
 
         initGameObjects();
         initAssets();
@@ -233,5 +245,6 @@ public class GameRenderer {
     public void dispose() {
         batcher.dispose();
         font.dispose();
+
     }
 }

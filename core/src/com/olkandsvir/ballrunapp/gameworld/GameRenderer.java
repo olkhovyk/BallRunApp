@@ -245,6 +245,5 @@ public class GameRenderer {
     public void dispose() {
         batcher.dispose();
         font.dispose();
-
     }
 }

@@ -9,7 +9,7 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
  * Line moving down.
  * @since 26.04.2016
  */
-abstract public class AbstractBarrier {
+public class AbstractBarrier {
 
     private Vector2 position;
     private Vector2 speed;

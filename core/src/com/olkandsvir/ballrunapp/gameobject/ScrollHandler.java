@@ -1,5 +1,6 @@
 package com.olkandsvir.ballrunapp.gameobject;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.barriers.AbstractBarrier;
@@ -27,13 +28,10 @@ public class ScrollHandler {
         barriers = new Array<AbstractBarrier>();
         for(int i = 0; i < ARRAY_SIZE; i++){
 
-            //ДЛЯ ТЕСТОВ
             if(i == 0) {
-//                barriers.add(new SuperEasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
-                barriers.add(new EasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
+                barriers.add(new SuperEasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
             } else {
-//                barriers.add(new SuperEasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
-                barriers.add(new EasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
+                barriers.add(new SuperEasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
             }
         }
     }
@@ -41,11 +39,19 @@ public class ScrollHandler {
     public void update(float delta) {
         for (int i = 0; i < barriers.size; i++) {
             barriers.get(i).update(delta);
-//            levelUp();
             if (barriers.get(i).isScrolledBottom()) {
                 world.addScore();
                 AssetLoader.soundScored.play();
                 speedChange(scrollSpeed / 50);
+                if(world.getScore() > 5 && world.getScore() < 11) {
+                    if (i != 0) {
+                        barriers.set(i, new EasyBarrier(0, barriers.get(i - 1).getPosition().y - barrierGap,
+                                barrierHeight, scrollSpeed));
+                    } else {
+                        barriers.set(i, new EasyBarrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap,
+                                barrierHeight, scrollSpeed));
+                    }
+                }
                 if (i != 0) {
                     barriers.get(i).moveToLast(barriers.get(i - 1).getPosition().y - barrierGap);
                 } else {
@@ -77,34 +83,14 @@ public class ScrollHandler {
         scrollSpeed += increment;
     }
 
-    /*
-   public void levelUp() {
-        if(world.getScore() == 5) {
-            for(int i = 0; i < barriers.size; i++) {
-                Gdx.app.log("score", Integer.toString(10) + " " + Integer.toString(i));
-                if (barriers.get(i).isScrolledBottom()) {
-                    if (i != 0) {
-                        barriers.set(i, new EasyBarrier(0, barriers.get(i - 1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
-                    } else {
-                        barriers.set(i, new EasyBarrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
-                    }
-                }
-            }
-        }
-    }
-    */
-
     public void onRestart() {
         barriers.clear();
         scrollSpeed = GameScreen.SCREEN_HEIGHT / 2;
         for (int i = 0; i < ARRAY_SIZE; i++) {
-            //ДЛЯ ТЕСТОВ
             if(i == 0) {
-//                barriers.add(new SuperEasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
-                barriers.add(new EasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
+                barriers.add(new SuperEasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
             } else {
-//                barriers.add(new SuperEasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
-                barriers.add(new EasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
+                barriers.add(new SuperEasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
             }
         }
     }

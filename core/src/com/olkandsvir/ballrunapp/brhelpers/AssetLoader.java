@@ -19,6 +19,8 @@ public class AssetLoader {
     public static Texture barrier;
     public static Texture buttonStart;
     public static Texture buttonStartPressed;
+    public static Texture buttonOptions;
+    public static Texture buttonOptionsPressed;
     public static Texture buttonExit;
     public static Texture buttonExitPressed;
     public static Texture buttonPause;
@@ -35,7 +37,6 @@ public class AssetLoader {
     public static Sound soundHighScore;
 
     public static FileHandle fontFile;
-
 
     public static Preferences preferences;
 
@@ -54,6 +55,12 @@ public class AssetLoader {
 
         buttonStartPressed = new Texture(Gdx.files.internal("data/btnStartPressed.png"));
         buttonStartPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonOptions = new Texture(Gdx.files.internal("data/btnOptions.png"));
+        buttonOptions.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonOptionsPressed = new Texture(Gdx.files.internal("data/btnOptionsPressed.png"));
+        buttonOptionsPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         buttonExit = new Texture(Gdx.files.internal("data/btnExit.png"));
         buttonExit.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -83,7 +90,6 @@ public class AssetLoader {
 
         fontFile = Gdx.files.internal("data/font.ttf");
 
-
         preferences = Gdx.app.getPreferences("BallRunApp");
 
         if (!preferences.contains("highScore")) {
@@ -97,6 +103,8 @@ public class AssetLoader {
         barrier.dispose();
         buttonStart.dispose();
         buttonStartPressed.dispose();
+        buttonOptions.dispose();
+        buttonOptionsPressed.dispose();
         buttonExit.dispose();
         buttonExitPressed.dispose();
         buttonPause.dispose();

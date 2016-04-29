@@ -19,20 +19,24 @@ public class InputHandler implements InputProcessor {
     private GameWorld world;
     private Ball ball;
     private List<SimpleButton> buttons;
-    private SimpleButton startButton, exitButton, pauseButton, resumeButton;
+    private SimpleButton startButton, optionsButton, exitButton, pauseButton, resumeButton;
 
     public InputHandler(GameWorld world) {
         this.world = world;
         this.ball = world.getBall();
 
-        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 4,
+        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 5,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
-        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 2,
+        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 5,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
+        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 5,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
         buttons = new ArrayList<SimpleButton>();
         buttons.add(startButton);
+        buttons.add(optionsButton);
         buttons.add(exitButton);
         pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
                 GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
@@ -73,6 +77,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (world.isMenu()) {
             startButton.isTouchDown(screenX, screenY);
+            optionsButton.isTouchDown(screenX, screenY);
             exitButton.isTouchDown(screenX, screenY);
          } else if(world.isRunning()) {
             /* СТРАННО СЕБЯ ВЕДЕТ ...
@@ -95,7 +100,10 @@ public class InputHandler implements InputProcessor {
             if (startButton.isTouchUp(screenX, screenY)) {
                 world.ready();
                 return true;
-            } else if (exitButton.isTouchUp(screenX, screenY)) {
+            } else if (optionsButton.isTouchUp(screenX, screenY)) {
+                //TO DO OPTIONS
+                return true;
+            } else if(exitButton.isTouchUp(screenX, screenY)) {
                 Gdx.app.exit();
                 return true;
             }

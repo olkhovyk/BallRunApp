@@ -17,7 +17,10 @@ public class BarrierPart {
     private int width;
     private int height;
     private Vector2 position;
+    private Vector2 horizontalSpeed;
     private Rectangle rectangle;
+    private boolean moving;
+    private boolean toTheRight;
 
     public enum partOrientation {
         LEFT, MID, RIGHT
@@ -46,11 +49,18 @@ public class BarrierPart {
         }
 
         rectangle = new Rectangle(position.x, position.y, width, height);
+
+        horizontalSpeed = new Vector2(0, 0);
+        moving = false;
+        toTheRight = false;
     }
 
-    public void update() {
+    public void update(float delta) {
         position.y = barrier.getPosition().y;
         rectangle.set(position.x, position.y, width, height);
+        if(moving && position.y > 0) {
+            moveHorizontally(delta, toTheRight);
+        }
     }
 
     public boolean collides(Ball ball) {
@@ -74,6 +84,54 @@ public class BarrierPart {
         } else {
             position.x = 2 * GameScreen.SCREEN_WIDTH / 3;
         }
+
+        horizontalSpeed.x = 0;
+        moving = false;
+        toTheRight = false;
+    }
+
+    public void moveHorizontally(float delta, boolean toTheRight) {
+        //как определить скорость?
+        horizontalSpeed.x = barrier.getSpeed().y * GameScreen.SCREEN_WIDTH / 750000 * GameScreen.SCREEN_HEIGHT;
+
+        if(orientation == partOrientation.LEFT) {
+            moveLeftPart(delta);
+        } else if (orientation == partOrientation.MID) {
+            moveMidPart(delta, toTheRight);
+        } else if (orientation == partOrientation.RIGHT) {
+            moveRightPart(delta);
+        }
+    }
+
+    public void moveLeftPart(float delta) {
+        if (position.x < GameScreen.SCREEN_WIDTH / 3) {
+            position.add(horizontalSpeed.cpy().scl(delta));
+        }
+    }
+
+    public void moveMidPart(float delta, boolean toTheRight) {
+        if (toTheRight && position.x < 2 * GameScreen.SCREEN_WIDTH / 3) {
+            position.add(horizontalSpeed.cpy().scl(delta));
+        } else if (position.x > 0) {
+            horizontalSpeed.x = - horizontalSpeed.x;
+            position.add(horizontalSpeed.cpy().scl(delta));
+        }
+    }
+
+    public void moveRightPart(float delta) {
+        if (position.x > GameScreen.SCREEN_WIDTH / 3) {
+            horizontalSpeed.x = - horizontalSpeed.x;
+            position.add(horizontalSpeed.cpy().scl(delta));
+        }
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+
+    public void setMoving(boolean moving, boolean toTheRight) {
+        this.moving = moving;
+        this.toTheRight = toTheRight;
     }
 
     public int getWidth() {

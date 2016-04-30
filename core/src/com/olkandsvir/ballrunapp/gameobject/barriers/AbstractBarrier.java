@@ -31,10 +31,6 @@ public class AbstractBarrier {
         if(position.y > GameScreen.SCREEN_HEIGHT) {
             scrolledBottom = true;
         }
-
-        for(BarrierPart part : parts) {
-            part.update(delta);
-        }
     }
 
     public boolean isScrolledBottom() {
@@ -78,5 +74,9 @@ public class AbstractBarrier {
 
     public Array<BarrierPart> getParts() {
         return parts;
+    }
+
+    public Vector2 getSpeed() {
+        return speed;
     }
 }

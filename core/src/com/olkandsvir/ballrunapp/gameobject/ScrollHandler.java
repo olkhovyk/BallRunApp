@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.barriers.AbstractBarrier;
+import com.olkandsvir.ballrunapp.gameobject.barriers.MovingOnePieceBarrier;
+import com.olkandsvir.ballrunapp.gameobject.barriers.MovingTwoPieceBarrier;
 import com.olkandsvir.ballrunapp.gameobject.barriers.StaticTwoPieceBarrier;
 import com.olkandsvir.ballrunapp.gameobject.barriers.StaticOnePieceBarrier;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
@@ -42,8 +44,19 @@ public class ScrollHandler {
             if (barriers.get(i).isScrolledBottom()) {
                 world.addScore();
                 AssetLoader.soundScored.play();
-                speedChange(scrollSpeed / 50);
+                speedChange(scrollSpeed / 100);
+
                 if(world.getScore() > 5 && world.getScore() < 11) {
+                    if (i != 0) {
+                        barriers.set(i, new MovingOnePieceBarrier(0, barriers.get(i - 1).getPosition().y - barrierGap,
+                                barrierHeight, scrollSpeed));
+                    } else {
+                        barriers.set(i, new MovingOnePieceBarrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap,
+                                barrierHeight, scrollSpeed));
+                    }
+                }
+
+                if(world.getScore() > 15 && world.getScore() < 21) {
                     if (i != 0) {
                         barriers.set(i, new StaticTwoPieceBarrier(0, barriers.get(i - 1).getPosition().y - barrierGap,
                                 barrierHeight, scrollSpeed));
@@ -53,11 +66,18 @@ public class ScrollHandler {
                     }
                 }
 
-                //Пока пусть так, чтобы видеть, что работает, потом немного упростить
-                if (world.getScore() % 2 == 0 && 4 * world.getBall().getDiameter() < barrierGap) {
-                    Gdx.app.log("Gap", Integer.toString(barrierGap));
-                    Gdx.app.log("Diameter", Integer.toString(world.getBall().getDiameter()));
-                    gapChange(- barrierGap / 10);
+                if(world.getScore() > 25 && world.getScore() < 31) {
+                    if (i != 0) {
+                        barriers.set(i, new MovingTwoPieceBarrier(0, barriers.get(i - 1).getPosition().y - barrierGap,
+                                barrierHeight, scrollSpeed));
+                    } else {
+                        barriers.set(i, new MovingTwoPieceBarrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap,
+                                barrierHeight, scrollSpeed));
+                    }
+                }
+
+                if (world.getScore() % 5 == 0 && 4 * world.getBall().getDiameter() < barrierGap) {
+                    gapChange(- barrierGap / 25);
                 }
 
                 if (i != 0) {

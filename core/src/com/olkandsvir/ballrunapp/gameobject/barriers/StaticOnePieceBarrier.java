@@ -1,7 +1,5 @@
 package com.olkandsvir.ballrunapp.gameobject.barriers;
 
-import com.badlogic.gdx.utils.Array;
-
 /**
  * Line with one static obstacle.
  * @since 17.04.2016
@@ -12,5 +10,14 @@ public class StaticOnePieceBarrier extends AbstractBarrier {
         super(x, y, height, scrollSpeed);
 
         parts.add(new BarrierPart(this, y, height));
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+
+        for(BarrierPart part : parts) {
+            part.update(delta);
+        }
     }
 }

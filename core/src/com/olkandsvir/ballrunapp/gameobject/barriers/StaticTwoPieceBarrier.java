@@ -1,7 +1,5 @@
 package com.olkandsvir.ballrunapp.gameobject.barriers;
 
-import com.olkandsvir.ballrunapp.gameobject.Ball;
-
 /**
  * Line with two static obstacles.
  * @since 26.04.2016
@@ -18,6 +16,15 @@ public class StaticTwoPieceBarrier extends AbstractBarrier {
             while (parts.get(i).getOrientation() == parts.get(i- 1).getOrientation()) {
                 parts.get(i).newOrientation();
             }
+        }
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+
+        for(BarrierPart part : parts) {
+            part.update(delta);
         }
     }
 

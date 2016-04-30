@@ -18,44 +18,52 @@ public class InputHandler implements InputProcessor {
 
     private GameWorld world;
     private Ball ball;
-    private List<SimpleButton> buttons;
+    private List<SimpleButton> menuButtons;
+    private List<SimpleButton> pauseMenuButtons;
     private SimpleButton startButton, optionsButton, exitButton, pauseButton, resumeButton;
 
     public InputHandler(GameWorld world) {
         this.world = world;
         this.ball = world.getBall();
 
-        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 5,
+        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 7,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
-        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 5,
+        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 7,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
-        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 5,
+        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 7,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
-        buttons = new ArrayList<SimpleButton>();
-        buttons.add(startButton);
-        buttons.add(optionsButton);
-        buttons.add(exitButton);
+
+        menuButtons = new ArrayList<SimpleButton>();
+        menuButtons.add(startButton);
+        menuButtons.add(optionsButton);
+        menuButtons.add(exitButton);
+
         pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
                 GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
                 AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
-        resumeButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
-                GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
+        resumeButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 2,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_WIDTH / 2,
                 AssetLoader.buttonResume, AssetLoader.buttonResumePressed);
+
+        pauseMenuButtons = new ArrayList<SimpleButton>();
+        pauseMenuButtons.add(optionsButton);
+        pauseMenuButtons.add(exitButton);
+        pauseMenuButtons.add(resumeButton);
     }
 
-    public List<SimpleButton> getButtons() {
-        return buttons;
+    public List<SimpleButton> getMenuButtons() {
+        return menuButtons;
+    }
+
+    public List<SimpleButton> getPauseMenuButtons() {
+        return pauseMenuButtons;
     }
 
     public SimpleButton getPauseButton() {
         return pauseButton;
-    }
-
-    public SimpleButton getResumeButton() {
-        return resumeButton;
     }
 
     @Override
@@ -85,6 +93,8 @@ public class InputHandler implements InputProcessor {
             pauseButton.isTouchDown(screenX, screenY);
         } else if(world.isPaused()) {
             resumeButton.isTouchDown(screenX, screenY);
+            optionsButton.isTouchDown(screenX, screenY);
+            exitButton.isTouchDown(screenX, screenY);
         } else if (world.isReady()) {
             world.start();
         } else if (world.isGameOver() || world.isHighScore()) {
@@ -115,6 +125,12 @@ public class InputHandler implements InputProcessor {
         } else if(world.isPaused()) {
             if(resumeButton.isTouchUp(screenX, screenY)) {
                 world.resume();
+                return true;
+            } else if (optionsButton.isTouchUp(screenX, screenY)) {
+                //TO DO OPTIONS
+                return true;
+            } else if(exitButton.isTouchUp(screenX, screenY)) {
+                Gdx.app.exit();
                 return true;
             }
         }

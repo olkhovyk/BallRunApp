@@ -3,12 +3,12 @@ package com.olkandsvir.ballrunapp.gameobject.barriers;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 
 /**
- * Line with two easy obstacles.
+ * Line with two static obstacles.
  * @since 26.04.2016
  */
-public class EasyBarrier extends AbstractBarrier {
+public class StaticTwoPieceBarrier extends AbstractBarrier {
 
-    public EasyBarrier(float x, float y, int height, float scrollSpeed) {
+    public StaticTwoPieceBarrier(float x, float y, int height, float scrollSpeed) {
         super(x, y, height, scrollSpeed);
 
         parts.add(new BarrierPart(this, y, height));

@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.gameobject.barriers.AbstractBarrier;
-import com.olkandsvir.ballrunapp.gameobject.barriers.EasyBarrier;
-import com.olkandsvir.ballrunapp.gameobject.barriers.SuperEasyBarrier;
+import com.olkandsvir.ballrunapp.gameobject.barriers.StaticTwoPieceBarrier;
+import com.olkandsvir.ballrunapp.gameobject.barriers.StaticOnePieceBarrier;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 
@@ -14,11 +14,11 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
  * @since 18.04.2016
  */
 public class ScrollHandler {
-    public static final int ARRAY_SIZE = 5;
+    private static final int ARRAY_SIZE = 5;
     private Array<AbstractBarrier> barriers;
-    public static int barrierHeight = GameScreen.SCREEN_HEIGHT / 10;
-    public static int scrollSpeed = GameScreen.SCREEN_HEIGHT / 2;
-    public static int barrierGap = 4 * GameScreen.SCREEN_HEIGHT / 10;
+    private static int barrierHeight = GameScreen.SCREEN_HEIGHT / 10;
+    private static int scrollSpeed = GameScreen.SCREEN_HEIGHT / 2;
+    private static int barrierGap = 4 * GameScreen.SCREEN_HEIGHT / 10;
 
     private final GameWorld world;
 
@@ -29,9 +29,9 @@ public class ScrollHandler {
         for(int i = 0; i < ARRAY_SIZE; i++){
 
             if(i == 0) {
-                barriers.add(new SuperEasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
+                barriers.add(new StaticOnePieceBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
             } else {
-                barriers.add(new SuperEasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
+                barriers.add(new StaticOnePieceBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
             }
         }
     }
@@ -45,13 +45,21 @@ public class ScrollHandler {
                 speedChange(scrollSpeed / 50);
                 if(world.getScore() > 5 && world.getScore() < 11) {
                     if (i != 0) {
-                        barriers.set(i, new EasyBarrier(0, barriers.get(i - 1).getPosition().y - barrierGap,
+                        barriers.set(i, new StaticTwoPieceBarrier(0, barriers.get(i - 1).getPosition().y - barrierGap,
                                 barrierHeight, scrollSpeed));
                     } else {
-                        barriers.set(i, new EasyBarrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap,
+                        barriers.set(i, new StaticTwoPieceBarrier(0, barriers.get(barriers.size - 1).getPosition().y - barrierGap,
                                 barrierHeight, scrollSpeed));
                     }
                 }
+
+                //Пока пусть так, чтобы видеть, что работает, потом немного упростить
+                if (world.getScore() % 2 == 0 && 4 * world.getBall().getDiameter() < barrierGap) {
+                    Gdx.app.log("Gap", Integer.toString(barrierGap));
+                    Gdx.app.log("Diameter", Integer.toString(world.getBall().getDiameter()));
+                    gapChange(- barrierGap / 10);
+                }
+
                 if (i != 0) {
                     barriers.get(i).moveToLast(barriers.get(i - 1).getPosition().y - barrierGap);
                 } else {
@@ -83,14 +91,19 @@ public class ScrollHandler {
         scrollSpeed += increment;
     }
 
+    public void gapChange(int increment) {
+        barrierGap += increment;
+    }
+
     public void onRestart() {
         barriers.clear();
         scrollSpeed = GameScreen.SCREEN_HEIGHT / 2;
+        barrierGap = 4 * GameScreen.SCREEN_HEIGHT / 10;
         for (int i = 0; i < ARRAY_SIZE; i++) {
             if(i == 0) {
-                barriers.add(new SuperEasyBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
+                barriers.add(new StaticOnePieceBarrier(0, 0 - GameScreen.SCREEN_HEIGHT / 4, barrierHeight, scrollSpeed));
             } else {
-                barriers.add(new SuperEasyBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
+                barriers.add(new StaticOnePieceBarrier(0, barriers.get(i-1).getPosition().y - barrierGap, barrierHeight, scrollSpeed));
             }
         }
     }

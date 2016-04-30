@@ -62,7 +62,7 @@ public class GameWorld {
 
     }
 
-    public void updateRunning(float delta) {
+    private void updateRunning(float delta) {
 
         if (delta > .15f) {
             delta = .15f;

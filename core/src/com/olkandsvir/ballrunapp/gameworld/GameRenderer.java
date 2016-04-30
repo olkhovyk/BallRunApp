@@ -19,7 +19,6 @@ import com.olkandsvir.ballrunapp.ui.SimpleButton;
 
 import java.util.List;
 
-
 /**
  * For rendering the world of the game.
  * @since 15.04.2016
@@ -50,15 +49,15 @@ public class GameRenderer {
     private ScrollHandler handler;
 
     //шрифт
-    BitmapFont font;
-    FreeTypeFontGenerator generator;
+    private BitmapFont font;
+    private FreeTypeFontGenerator generator;
 
     //Кнопки меню
-    private List<SimpleButton> buttons;
+    private List<SimpleButton> menuButtons;
+    private List<SimpleButton> pauseMenuButtons;
 
     //кнопки паузы и продолжения
     private SimpleButton pauseButton;
-    private SimpleButton resumeButton;
 
     //конструктор
     public GameRenderer(GameWorld world) {
@@ -103,9 +102,9 @@ public class GameRenderer {
      * Иницализируем игровые объекты.
      */
     private void initGameObjects() {
-        buttons = ((InputHandler) Gdx.input.getInputProcessor()).getButtons();
+        menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
+        pauseMenuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getPauseMenuButtons();
         pauseButton = (((InputHandler) Gdx.input.getInputProcessor()).getPauseButton());
-        resumeButton = (((InputHandler)Gdx.input.getInputProcessor()).getResumeButton());
         ball = world.getBall();
         handler = world.getHandler();
         barriers = handler.getBarriers();
@@ -157,15 +156,17 @@ public class GameRenderer {
         pauseButton.draw(batcher);
     }
 
-    private void drawResume() {
-        resumeButton.draw(batcher);
+    private void drawPauseMenu() {
+        for (SimpleButton button : pauseMenuButtons) {
+            button.draw(batcher);
+        }
     }
 
     /**
      * Рисуем меню.
      */
-    public void drawIfMenu() {
-        for(SimpleButton button : buttons) {
+    private void drawIfMenu() {
+        for(SimpleButton button : menuButtons) {
             button.draw(batcher);
         }
     }
@@ -179,7 +180,7 @@ public class GameRenderer {
         if(world.isRunning()) {
             drawPause();
         } else {
-            drawResume();
+            drawPauseMenu();
         }
     }
 

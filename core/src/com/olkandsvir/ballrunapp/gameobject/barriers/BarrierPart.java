@@ -48,15 +48,13 @@ public class BarrierPart {
         rectangle = new Rectangle(position.x, position.y, width, height);
     }
 
-    public void update(float delta) {
+    public void update() {
         position.y = barrier.getPosition().y;
         rectangle.set(position.x, position.y, width, height);
     }
 
     public boolean collides(Ball ball) {
-        return (/*position.x < ball.getPosition().x + ball.getDiameter() || position.x + width > ball.getPosition().x
-                && position.y > ball.getPosition().y + ball.getDiameter() || position.y + height < ball.getPosition().y)
-                && (*/Intersector.overlaps(ball.getBoundingCircle(), rectangle));
+        return (Intersector.overlaps(ball.getBoundingCircle(), rectangle));
     }
 
     public void newOrientation() {

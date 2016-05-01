@@ -56,8 +56,9 @@ public class GameRenderer {
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
 
-    //кнопки паузы и продолжения
+    //кнопки
     private SimpleButton pauseButton;
+    private SimpleButton backButton;
 
     //конструктор
     public GameRenderer(GameWorld world) {
@@ -105,6 +106,7 @@ public class GameRenderer {
         menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
         pauseMenuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getPauseMenuButtons();
         pauseButton = (((InputHandler) Gdx.input.getInputProcessor()).getPauseButton());
+        backButton = (((InputHandler) Gdx.input.getInputProcessor()).getBackButton());
         ball = world.getBall();
         handler = world.getHandler();
         barriers = handler.getBarriers();
@@ -171,6 +173,15 @@ public class GameRenderer {
         }
     }
 
+    private void drawIfOptions() {
+        //TO DO
+        backButton.draw(batcher);
+    }
+
+    private void drawIfAuthors() {
+        //TO DO
+    }
+
     private void drawIfReady() {
         font.draw(batcher, "Touch to start!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
     }
@@ -231,6 +242,10 @@ public class GameRenderer {
 
         if(world.isMenu()) {
             drawIfMenu();
+        } else if (world.isOptions()) {
+            drawIfOptions();
+        } else if(world.isAuthors()) {
+            drawIfAuthors();
         } else if (world.isReady()) {
             drawIfReady();
         } else if (world.isRunning() || world.isPaused()) {

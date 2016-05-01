@@ -7,6 +7,8 @@ import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 
+import java.util.Stack;
+
 /**
  * World of Ball and Rectangles.
  * @since 20.04.2016
@@ -23,8 +25,10 @@ public class GameWorld {
     private Music backgroundMusic;
     private Music menuMusic;
 
+    private Stack<GameState> statesStack;
+
     public enum GameState {
-        MENU, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
+        MENU, OPTIONS, AUTHORS, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
     }
 
     public GameWorld() {
@@ -34,7 +38,10 @@ public class GameWorld {
         this.menuMusic = AssetLoader.musicMenu;
         score = 0;
 
+        statesStack = new Stack<GameState>();
+
         currentGameState = GameState.MENU;
+        statesStack.push(currentGameState);
         menuMusic.setLooping(true);
         backgroundMusic.setLooping(true);
         menuMusic.play();
@@ -81,6 +88,7 @@ public class GameWorld {
                 backgroundMusic.stop();
                 handler.stop();
                 currentGameState = GameState.GAMEOVER;
+                statesStack.push(currentGameState);
 
                 if (score > AssetLoader.getHighScore()) {
                     AssetLoader.setHighScore(score);
@@ -99,37 +107,67 @@ public class GameWorld {
         score++;
     }
 
+    public void goToOptions() {
+        currentGameState = GameState.OPTIONS;
+        statesStack.push(currentGameState);
+        if(backgroundMusic.isPlaying()) {
+            backgroundMusic.stop();
+            menuMusic.play();
+        }
+    }
+
     public void ready() {
         currentGameState = GameState.READY;
+        statesStack.push(currentGameState);
     }
 
     public void start() {
         currentGameState = GameState.RUNNING;
+        statesStack.push(currentGameState);
         menuMusic.stop();
         backgroundMusic.play();
     }
 
     public void pause() {
         currentGameState = GameState.PAUSE;
+        statesStack.push(currentGameState);
         backgroundMusic.pause();
         menuMusic.play();
     }
 
     public void resume() {
-        currentGameState = GameState.RUNNING;
+//        currentGameState = GameState.RUNNING;
+        statesStack.pop();
+        currentGameState = statesStack.peek();
         menuMusic.stop();
         backgroundMusic.play();
     }
 
     public void restart() {
-        currentGameState = GameState.READY;
+//        currentGameState = GameState.READY;
+        statesStack.pop();
+        statesStack.pop();
+        currentGameState = statesStack.peek();
         score = 0;
         ball.onRestart();
         handler.onRestart();
     }
 
+    public void back() {
+        statesStack.pop();
+        currentGameState = statesStack.peek();
+    }
+
     public boolean isMenu() {
         return  currentGameState == GameState.MENU;
+    }
+
+    public boolean isOptions() {
+        return currentGameState == GameState.OPTIONS;
+    }
+
+    public boolean isAuthors() {
+        return currentGameState == GameState.AUTHORS;
     }
 
     public boolean isReady() {

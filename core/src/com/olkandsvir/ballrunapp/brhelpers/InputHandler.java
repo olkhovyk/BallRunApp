@@ -20,7 +20,7 @@ public class InputHandler implements InputProcessor {
     private Ball ball;
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
-    private SimpleButton startButton, optionsButton, exitButton, pauseButton, resumeButton;
+    private SimpleButton startButton, optionsButton, exitButton, pauseButton, resumeButton, backButton;
 
     public InputHandler(GameWorld world) {
         this.world = world;
@@ -52,6 +52,10 @@ public class InputHandler implements InputProcessor {
         pauseMenuButtons.add(optionsButton);
         pauseMenuButtons.add(exitButton);
         pauseMenuButtons.add(resumeButton);
+
+        backButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 2,
+                GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
+                AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
     }
 
     public List<SimpleButton> getMenuButtons() {
@@ -64,6 +68,10 @@ public class InputHandler implements InputProcessor {
 
     public SimpleButton getPauseButton() {
         return pauseButton;
+    }
+
+    public SimpleButton getBackButton() {
+        return backButton;
     }
 
     @Override
@@ -87,7 +95,9 @@ public class InputHandler implements InputProcessor {
             startButton.isTouchDown(screenX, screenY);
             optionsButton.isTouchDown(screenX, screenY);
             exitButton.isTouchDown(screenX, screenY);
-         } else if(world.isRunning()) {
+        } else if (world.isOptions()) {
+            backButton.isTouchDown(screenX, screenY);
+        } else if(world.isRunning()) {
             /* СТРАННО СЕБЯ ВЕДЕТ ...
             ball.onClick(); */
             pauseButton.isTouchDown(screenX, screenY);
@@ -112,9 +122,16 @@ public class InputHandler implements InputProcessor {
                 return true;
             } else if (optionsButton.isTouchUp(screenX, screenY)) {
                 //TO DO OPTIONS
+                world.goToOptions();
                 return true;
             } else if(exitButton.isTouchUp(screenX, screenY)) {
                 Gdx.app.exit();
+                return true;
+            }
+        } else if (world.isOptions()) {
+            if(backButton.isTouchUp(screenX, screenY)) {
+                //TO DO BACK
+                world.back();
                 return true;
             }
         } else if (world.isRunning()) {
@@ -128,6 +145,7 @@ public class InputHandler implements InputProcessor {
                 return true;
             } else if (optionsButton.isTouchUp(screenX, screenY)) {
                 //TO DO OPTIONS
+                world.goToOptions();
                 return true;
             } else if(exitButton.isTouchUp(screenX, screenY)) {
                 Gdx.app.exit();

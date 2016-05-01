@@ -26,6 +26,8 @@ public class AssetLoader {
     public static Texture buttonPausePressed;
     public static Texture buttonResume;
     public static Texture buttonResumePressed;
+    public static Texture buttonBack;
+    public static Texture buttonBackPressed;
 
     public static Music musicMenu;
     public static Music musicBackground;
@@ -79,6 +81,12 @@ public class AssetLoader {
         buttonResumePressed = new Texture(Gdx.files.internal("data/btnResumePressed.png"));
         buttonResumePressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+        buttonBack = new Texture(Gdx.files.internal("data/btnBack.png"));
+        buttonBack.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonBackPressed = new Texture(Gdx.files.internal("data/btnBackPressed.png"));
+        buttonBackPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         musicMenu = Gdx.audio.newMusic(Gdx.files.internal("data/sleepingfairy.wav"));
         musicBackground = Gdx.audio.newMusic(Gdx.files.internal("data/background.wav"));
 
@@ -110,6 +118,8 @@ public class AssetLoader {
         buttonPausePressed.dispose();
         buttonResume.dispose();
         buttonResumePressed.dispose();
+        buttonBack.dispose();
+        buttonBackPressed.dispose();
         musicMenu.dispose();
         musicBackground.dispose();
         soundScored.dispose();

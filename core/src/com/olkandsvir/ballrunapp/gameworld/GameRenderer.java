@@ -12,7 +12,7 @@ import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
-import com.olkandsvir.ballrunapp.gameobject.barriers.AbstractBarrier;
+import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
 import com.olkandsvir.ballrunapp.gameobject.barriers.BarrierPart;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 import com.olkandsvir.ballrunapp.ui.SimpleButton;
@@ -43,7 +43,7 @@ public class GameRenderer {
     private Ball ball;
 
     //препятствия
-    private Array<AbstractBarrier> barriers;
+    private Array<Barrier> barriers;
 
     //отвечает за движение препятствий
     private ScrollHandler handler;
@@ -131,7 +131,7 @@ public class GameRenderer {
      * Рисуем препятствия
      */
     private void drawBarriers() {
-        for(AbstractBarrier barrier : barriers){
+        for(Barrier barrier : barriers){
             for(BarrierPart part : barrier.getParts()) {
                 batcher.draw(barrierTexture, part.getX(), barrier.getPosition().y,
                         part.getWidth(), barrier.getHeight());

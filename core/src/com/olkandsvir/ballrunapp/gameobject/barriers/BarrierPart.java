@@ -13,7 +13,7 @@ import com.olkandsvir.ballrunapp.screens.GameScreen;
 public class BarrierPart {
 
     private partOrientation orientation;
-    private AbstractBarrier barrier;
+    private Barrier barrier;
     private int width;
     private int height;
     private Vector2 position;
@@ -26,7 +26,7 @@ public class BarrierPart {
         LEFT, MID, RIGHT
     }
 
-    public BarrierPart(AbstractBarrier barrier, float y, int height) {
+    public BarrierPart(Barrier barrier, float y, int height) {
         double random = Math.random() * 3;
         if(random < 1.0) {
             orientation = partOrientation.LEFT;

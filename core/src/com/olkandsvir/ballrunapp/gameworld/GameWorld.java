@@ -136,18 +136,14 @@ public class GameWorld {
     }
 
     public void resume() {
-//        currentGameState = GameState.RUNNING;
-        statesStack.pop();
-        currentGameState = statesStack.peek();
+        back();
         menuMusic.stop();
         backgroundMusic.play();
     }
 
     public void restart() {
-//        currentGameState = GameState.READY;
         statesStack.pop();
-        statesStack.pop();
-        currentGameState = statesStack.peek();
+        back();
         score = 0;
         ball.onRestart();
         handler.onRestart();

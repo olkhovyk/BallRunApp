@@ -17,23 +17,34 @@ import java.util.Stack;
  */
 public class GameWorld {
 
+    //игровые объекты
     private Ball ball;
     private ScrollHandler handler;
 
+    //счет нынешней игры
     private int score;
 
+    //состояние игры
     private GameState currentGameState;
 
+    //фоновая музыка игры
     private Music backgroundMusic;
     private Music menuMusic;
 
+    //стэк состояний игры
     private Stack<GameState> statesStack;
+
+    //ТЕРБУЕТСЯ ПРОВЕРКА
     public ArrayList<Integer> listScore;
 
+    /**
+     * Перечисление состояний игры.
+     */
     public enum GameState {
         MENU, OPTIONS, AUTHORS, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
     }
 
+    //конструктор
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
         this.handler = new ScrollHandler(this);
@@ -50,10 +61,12 @@ public class GameWorld {
         menuMusic.play();
     }
 
+    //ИЛЬЯ, ПОТЕСТИШЬ!
     public void sortBestResult(){
         Arrays.sort(listScore.toArray());
     }
 
+    //Вызывается для обновления игры
     public void update(float delta) {
 
         switch (currentGameState) {
@@ -72,25 +85,38 @@ public class GameWorld {
         }
     }
 
+    /**
+     * Не уверен в необходимости метода ...
+     * @param delta
+     */
     private void updateReady(float delta) {
 
     }
 
+    /**
+     * Обновляет игру после старта.
+     * @param delta
+     */
     private void updateRunning(float delta) {
 
         if (delta > .15f) {
             delta = .15f;
         }
 
+        //выполняется, когда игра не поставлена на паузу
         if(!isPaused()) {
+
+            //обновляет прокручивателя барьеров
             handler.update(delta);
 
             //ПЕРЕНЕСТИ ОКОНЧАТЕЛЬНО В InputHandler
+            //отвечает за передвижение мяча
             if (Gdx.input.isTouched() &&
                     !((Gdx.input.getX() > GameScreen.SCREEN_WIDTH * 4 / 5) && (Gdx.input.getY() < GameScreen.SCREEN_HEIGHT / 9))) {
                 ball.onClick();
             }
 
+            //проверяет столкновения
             if (handler.collides(ball)) {
                 backgroundMusic.stop();
                 handler.stop();
@@ -110,10 +136,16 @@ public class GameWorld {
         }
     }
 
+    /**
+     * Увеличение счета.
+     */
     public void addScore() {
         score++;
     }
 
+    /**
+     * Переход в настройки.
+     */
     public void goToOptions() {
         currentGameState = GameState.OPTIONS;
         statesStack.push(currentGameState);
@@ -123,11 +155,17 @@ public class GameWorld {
         }
     }
 
+    /**
+     * Переход к готовности игры.
+     */
     public void ready() {
         currentGameState = GameState.READY;
         statesStack.push(currentGameState);
     }
 
+    /**
+     * Старт игры, запуск барьеров.
+     */
     public void start() {
         currentGameState = GameState.RUNNING;
         statesStack.push(currentGameState);
@@ -135,6 +173,9 @@ public class GameWorld {
         backgroundMusic.play();
     }
 
+    /**
+     * Ставит игру на паузу.
+     */
     public void pause() {
         currentGameState = GameState.PAUSE;
         statesStack.push(currentGameState);
@@ -142,12 +183,18 @@ public class GameWorld {
         menuMusic.play();
     }
 
+    /**
+     * Продолжает игру после паузы.
+     */
     public void resume() {
         back();
         menuMusic.stop();
         backgroundMusic.play();
     }
 
+    /**
+     * Начинает игру заново.
+     */
     public void restart() {
         statesStack.pop();
         back();
@@ -156,10 +203,15 @@ public class GameWorld {
         handler.onRestart();
     }
 
+    /**
+     * Возвращается на состояние назад.
+     */
     public void back() {
         statesStack.pop();
         currentGameState = statesStack.peek();
     }
+
+    //Следующие методы проверяют состояние игры или получают какие-то поля мира.
 
     public boolean isMenu() {
         return  currentGameState == GameState.MENU;

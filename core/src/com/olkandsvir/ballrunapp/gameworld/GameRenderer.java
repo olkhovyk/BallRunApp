@@ -52,7 +52,7 @@ public class GameRenderer {
     private BitmapFont font;
     private FreeTypeFontGenerator generator;
 
-    //Кнопки меню
+    //кнопки меню
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
 
@@ -77,15 +77,10 @@ public class GameRenderer {
         batcher = new SpriteBatch();
         batcher.setProjectionMatrix(camera.combined);
 
-        //инициализируем пакет для рисования счета
-        font = new BitmapFont();
-        //Инициализируем генератор для вставки своего шрифта
-        generator = new FreeTypeFontGenerator(AssetLoader.fontFile);
-        initFont();
-
-
-        initGameObjects();
+        //инициализируем ресурсы, шрифт и игровые объекты
         initAssets();
+        initFont();
+        initGameObjects();
     }
 
     /**
@@ -116,14 +111,26 @@ public class GameRenderer {
         barrierTexture = AssetLoader.barrier;
     }
 
+    /**
+     * Инициализируем шрифт
+     */
     private void initFont(){
+
+        //инициализируем пакет для рисования счета
+        font = new BitmapFont();
+
+        //Инициализируем генератор для вставки своего шрифта
+        generator = new FreeTypeFontGenerator(AssetLoader.fontFile);
 
         //Создаем параметры для шрифта
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
         //Переворачиваем шрифт для правильного отображения
         parameter.flip = true;
+
         //Устанавливаем размер шрифта
         parameter.size = GameScreen.SCREEN_WIDTH / 22;
+
         //Привязываем новый шрифт к BitmapFont
         font = generator.generateFont(parameter);
 
@@ -159,10 +166,16 @@ public class GameRenderer {
         font.draw(batcher, "Score: " + world.getScore(), 0, 0);
     }
 
+    /**
+     * Рисуем кнопку паузы
+     */
     private void drawPause() {
         pauseButton.draw(batcher);
     }
 
+    /**
+     * Рисуем меню паузы
+     */
     private void drawPauseMenu() {
         for (SimpleButton button : pauseMenuButtons) {
             button.draw(batcher);
@@ -178,19 +191,31 @@ public class GameRenderer {
         }
     }
 
+    /**
+     * Рисуем настройки
+     */
     private void drawIfOptions() {
         //TO DO
         backButton.draw(batcher);
     }
 
+    /**
+     * Рисуем страницу авторов
+     */
     private void drawIfAuthors() {
         //TO DO
     }
 
+    /**
+     * Рисуем готовое игровое поле
+     */
     private void drawIfReady() {
         font.draw(batcher, "Touch to start!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
     }
 
+    /**
+     * Рисуем игру в действии
+     */
     private void drawIfRunning() {
         drawScore();
         if(world.isRunning()) {
@@ -200,6 +225,9 @@ public class GameRenderer {
         }
     }
 
+    /**
+     * Рисуем конец игры
+     */
     private void drawIfGameOver() {
         if (world.isGameOver()) {
             font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
@@ -218,6 +246,7 @@ public class GameRenderer {
         world.listScore.add(Integer.valueOf(score));
     }
 
+    //ТРЕБУЕТСЯ ДОРАБОТАТЬ!
     private void drawResults(){
         world.sortBestResult();
         font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 7);
@@ -247,13 +276,16 @@ public class GameRenderer {
         //рисуем фон
         batcher.draw(background, 0, 0);
 
+        //рисуем барьеры
         drawBarriers();
 
         //добавляем прозрачность, она нужна мячику
         batcher.enableBlending();
 
+        //рисуем мячик
         drawBall();
 
+        //рисуем оставшуюся игру в зависимости от ее нынешнего состояния
         if(world.isMenu()) {
             drawIfMenu();
         } else if (world.isOptions()) {

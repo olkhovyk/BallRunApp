@@ -11,15 +11,20 @@ import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
  */
 public class SimpleButton {
 
+    //координаты кнопки, ее ширина и высота
     private float x, y, width, height;
 
+    //текстуры обычного и нажатого состояния кнопки
     private Texture buttonUp;
     private Texture buttonDown;
 
+    //границы кнопки
     private Rectangle bounds;
 
+    //нажатие кнопки
     private boolean isPressed = false;
 
+    //конструктор
     public SimpleButton(float x, float y, float width, float height,
                         Texture buttonUp, Texture buttonDown) {
         this.x = x;
@@ -32,10 +37,20 @@ public class SimpleButton {
         bounds = new Rectangle(x, y, width, height);
     }
 
+    /**
+     * Проверяет, была ли нажата ли кнопка.
+     * @param screenX
+     * @param screenY
+     * @return
+     */
     public boolean isClicked(int screenX, int screenY) {
         return bounds.contains(screenX, screenY);
     }
 
+    /**
+     * Рисование кнопки.
+     * @param batcher
+     */
     public void draw(SpriteBatch batcher) {
         if (isPressed) {
             batcher.draw(buttonDown, x, y, width, height, 0, 0, buttonUp.getWidth(), buttonUp.getHeight(), false, true);
@@ -44,6 +59,12 @@ public class SimpleButton {
         }
     }
 
+    /**
+     * Вызывается при нажатиии на экран.
+     * @param screenX
+     * @param screenY
+     * @return
+     */
     public boolean isTouchDown(int screenX, int screenY) {
 
         if (isClicked(screenX, screenY)) {
@@ -55,6 +76,12 @@ public class SimpleButton {
         return false;
     }
 
+    /**
+     * Вызывается при прекращении нажатия на экран.
+     * @param screenX
+     * @param screenY
+     * @return
+     */
     public boolean isTouchUp(int screenX, int screenY) {
 
         if (isClicked(screenX, screenY) && isPressed) {

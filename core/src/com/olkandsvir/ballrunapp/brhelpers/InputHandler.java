@@ -16,16 +16,27 @@ import java.util.List;
  */
 public class InputHandler implements InputProcessor {
 
+    //игровой мир
     private GameWorld world;
+
+    //мячик игрока
     private Ball ball;
+
+    //кнопки меню
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
+
+    //все кнопки в игре
     private SimpleButton startButton, optionsButton, exitButton, pauseButton, resumeButton, backButton;
 
+    //конструктор
     public InputHandler(GameWorld world) {
+
+        //инициализируем мир и мячик
         this.world = world;
         this.ball = world.getBall();
 
+        //создаем кнопки
         startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 7,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
@@ -35,41 +46,56 @@ public class InputHandler implements InputProcessor {
         exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 7,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
-
-        menuButtons = new ArrayList<SimpleButton>();
-        menuButtons.add(startButton);
-        menuButtons.add(optionsButton);
-        menuButtons.add(exitButton);
-
         pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
                 GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
                 AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
         resumeButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 2,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_WIDTH / 2,
                 AssetLoader.buttonResume, AssetLoader.buttonResumePressed);
+        backButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 2,
+                GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
+                AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
+
+        //записываем кнопки в списки меню
+        menuButtons = new ArrayList<SimpleButton>();
+        menuButtons.add(startButton);
+        menuButtons.add(optionsButton);
+        menuButtons.add(exitButton);
 
         pauseMenuButtons = new ArrayList<SimpleButton>();
         pauseMenuButtons.add(optionsButton);
         pauseMenuButtons.add(exitButton);
         pauseMenuButtons.add(resumeButton);
-
-        backButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 2,
-                GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
-                AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
     }
 
+    /**
+     * Получает кнопки главного меню
+     * @return главное меню
+     */
     public List<SimpleButton> getMenuButtons() {
         return menuButtons;
     }
 
+    /**
+     * Получает кнопки меню паузы
+     * @return меню паузы
+     */
     public List<SimpleButton> getPauseMenuButtons() {
         return pauseMenuButtons;
     }
 
+    /**
+     * Получает кнопку паузы
+     * @return кнопка паузы
+     */
     public SimpleButton getPauseButton() {
         return pauseButton;
     }
 
+    /**
+     * Получает кнопку назад
+     * @return кнопка назад
+     */
     public SimpleButton getBackButton() {
         return backButton;
     }
@@ -89,6 +115,14 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
+    /**
+     * Вызывается при нажатии кнопки мыши или касании экрана
+     * @param screenX
+     * @param screenY
+     * @param pointer
+     * @param button
+     * @return
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (world.isMenu()) {
@@ -111,9 +145,17 @@ public class InputHandler implements InputProcessor {
             world.restart();
         }
 
-        return true;
+        return false;
     }
 
+    /**
+     * Вызывается при отпускании кнопки мыши или прекращению касания экрана
+     * @param screenX
+     * @param screenY
+     * @param pointer
+     * @param button
+     * @return
+     */
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (world.isMenu()) {

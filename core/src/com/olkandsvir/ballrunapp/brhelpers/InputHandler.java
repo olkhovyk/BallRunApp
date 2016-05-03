@@ -38,19 +38,19 @@ public class InputHandler implements InputProcessor {
 
         //создаем кнопки
         startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 7,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
         optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 7,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
                 AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
         exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 7,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
                 AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
         pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
-                GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
+                GameScreen.SCREEN_WIDTH / 6, GameScreen.SCREEN_HEIGHT / 10,
                 AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
-        resumeButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 2,
-                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_WIDTH / 2,
+        resumeButton = new SimpleButton(3 * GameScreen.SCREEN_WIDTH / 8, 4 * GameScreen.SCREEN_HEIGHT / 7,
+                GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_WIDTH / 4,
                 AssetLoader.buttonResume, AssetLoader.buttonResumePressed);
         backButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 2,
                 GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,

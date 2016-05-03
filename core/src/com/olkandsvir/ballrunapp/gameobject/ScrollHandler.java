@@ -39,10 +39,10 @@ public class ScrollHandler {
             if (barriers.get(i).isScrolledBottom()) {
                 world.addScore();
                 AssetLoader.soundScored.play();
-                speedChange(scrollSpeed / 100);
+                speedChange(scrollSpeed / 200);
 
                 if (world.getScore() % 5 == 0 && 4 * world.getBall().getDiameter() < barrierGap) {
-                    gapChange(- barrierGap / 25);
+                    gapChange(- barrierGap / 50);
                 }
 
                 if (i != 0) {
@@ -51,16 +51,16 @@ public class ScrollHandler {
                     barriers.get(i).moveToLast(barriers.get(barriers.size - 1).getPosition().y - barrierGap);
                 }
 
-                if(world.getScore() > 5 && world.getScore() < 11) {
+                if(world.getScore() > 10 && world.getScore() < 16) {
                     barriers.get(i).startMoving();
                 }
 
-                if(world.getScore() > 15 && world.getScore() < 21) {
+                if(world.getScore() > 25 && world.getScore() < 31) {
                     barriers.get(i).stopMoving();
                     barriers.get(i).addPart();
                 }
 
-                if(world.getScore() > 25 && world.getScore() < 31) {
+                if(world.getScore() > 40 && world.getScore() < 46) {
                     barriers.get(i).startMoving();
                 }
             }

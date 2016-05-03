@@ -81,18 +81,7 @@ public class GameRenderer {
         font = new BitmapFont();
         //Инициализируем генератор для вставки своего шрифта
         generator = new FreeTypeFontGenerator(AssetLoader.fontFile);
-        //Создаем параметры для шрифта
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //Переворачиваем шрифт для правильного отображения
-        parameter.flip = true;
-        //Устанавливаем размер шрифта
-        parameter.size = GameScreen.SCREEN_WIDTH / 22;
-        //Привязываем новый шрифт к BitmapFont
-        font = generator.generateFont(parameter);
-
-        font.setColor(0,0,0,1);
-        font.getData().setScale((float) 1.3, (float) 1.3);
-        generator.dispose();
+        initFont();
 
 
         initGameObjects();
@@ -125,6 +114,22 @@ public class GameRenderer {
 
         //загружаем картинку для препятствий
         barrierTexture = AssetLoader.barrier;
+    }
+
+    private void initFont(){
+
+        //Создаем параметры для шрифта
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //Переворачиваем шрифт для правильного отображения
+        parameter.flip = true;
+        //Устанавливаем размер шрифта
+        parameter.size = GameScreen.SCREEN_WIDTH / 22;
+        //Привязываем новый шрифт к BitmapFont
+        font = generator.generateFont(parameter);
+
+        font.setColor(0,0,0,1);
+        font.getData().setScale((float) 1.3, (float) 1.3);
+        generator.dispose();
     }
 
     /**
@@ -210,6 +215,15 @@ public class GameRenderer {
         String score = world.getScore() + "";
         font.draw(batcher, score, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 10 / 20);
         font.draw(batcher, "Try again?", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 11 / 20);
+        world.listScore.add(Integer.valueOf(score));
+    }
+
+    private void drawResults(){
+        world.sortBestResult();
+        font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 7);
+        for(int i = 1; i <= 10; i++){
+            font.draw(batcher, i + ": " + world.listScore.get(i), GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 7 + 20);
+        }
     }
 
 

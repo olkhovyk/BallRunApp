@@ -7,6 +7,8 @@ import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 /**
@@ -26,6 +28,7 @@ public class GameWorld {
     private Music menuMusic;
 
     private Stack<GameState> statesStack;
+    public ArrayList<Integer> listScore;
 
     public enum GameState {
         MENU, OPTIONS, AUTHORS, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
@@ -39,12 +42,16 @@ public class GameWorld {
         score = 0;
 
         statesStack = new Stack<GameState>();
-
+        listScore = new ArrayList<Integer>();
         currentGameState = GameState.MENU;
         statesStack.push(currentGameState);
         menuMusic.setLooping(true);
         backgroundMusic.setLooping(true);
         menuMusic.play();
+    }
+
+    public void sortBestResult(){
+        Arrays.sort(listScore.toArray());
     }
 
     public void update(float delta) {

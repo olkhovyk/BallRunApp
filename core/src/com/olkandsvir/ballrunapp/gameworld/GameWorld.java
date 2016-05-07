@@ -61,10 +61,6 @@ public class GameWorld {
         menuMusic.play();
     }
 
-    //ИЛЬЯ, ПОТЕСТИШЬ!
-    public void sortBestResult(){
-        Arrays.sort(listScore.toArray());
-    }
 
     //Вызывается для обновления игры
     public void update(float delta) {
@@ -122,14 +118,20 @@ public class GameWorld {
                 handler.stop();
                 currentGameState = GameState.GAMEOVER;
                 statesStack.push(currentGameState);
-
+                AssetLoader.setHighScore(score);
                 if (score > AssetLoader.getHighScore()) {
-                    AssetLoader.setHighScore(score);
+                 //   AssetLoader.setHighScore(score);
                     currentGameState = GameState.HIGHSCORE;
                     AssetLoader.soundHighScore.play();
                 } else {
                     AssetLoader.soundDefeat.play();
                 }
+                /* Проверка
+                Gdx.app.log("1",AssetLoader.preferences.getString("resultsOne"));
+                Gdx.app.log("2",AssetLoader.preferences.getString("resultsTwo"));
+                Gdx.app.log("3",AssetLoader.preferences.getString("resultsThree"));
+                Gdx.app.log("4",AssetLoader.preferences.getString("resultsFour"));
+                Gdx.app.log("5",AssetLoader.preferences.getString("resultsFive"));*/
 
                 menuMusic.play();
             }

@@ -248,7 +248,6 @@ public class GameRenderer {
 
     //ТРЕБУЕТСЯ ДОРАБОТАТЬ!
     private void drawResults(){
-        world.sortBestResult();
         font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 7);
         for(int i = 1; i <= 10; i++){
             font.draw(batcher, i + ": " + world.listScore.get(i), GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 7 + 20);

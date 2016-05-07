@@ -52,7 +52,7 @@ public class InputHandler implements InputProcessor {
         resumeButton = new SimpleButton(3 * GameScreen.SCREEN_WIDTH / 8, 4 * GameScreen.SCREEN_HEIGHT / 7,
                 GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_WIDTH / 4,
                 AssetLoader.buttonResume, AssetLoader.buttonResumePressed);
-        backButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 2,
+        backButton = new SimpleButton(4 * GameScreen.SCREEN_WIDTH / 5, 8 * GameScreen.SCREEN_HEIGHT / 9,
                 GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
                 AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
 
@@ -117,11 +117,11 @@ public class InputHandler implements InputProcessor {
 
     /**
      * Вызывается при нажатии кнопки мыши или касании экрана
-     * @param screenX
-     * @param screenY
-     * @param pointer
-     * @param button
-     * @return
+     * @param screenX The x coordinate, origin is in the upper left corner
+     * @param screenY The y coordinate, origin is in the upper left corner
+     * @param pointer the pointer for the event.
+     * @param button the button
+     * @return whether the input was processed
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -150,11 +150,9 @@ public class InputHandler implements InputProcessor {
 
     /**
      * Вызывается при отпускании кнопки мыши или прекращению касания экрана
-     * @param screenX
-     * @param screenY
-     * @param pointer
-     * @param button
-     * @return
+     * @param pointer the pointer for the event.
+     * @param button the button
+     * @return whether the input was processed
      */
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {

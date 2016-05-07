@@ -99,27 +99,18 @@ public class AssetLoader {
 
         preferences = Gdx.app.getPreferences("BallRunApp");
 
-        if (!preferences.contains("highScore")) {
+/*        if (!preferences.contains("highScore")) {
             preferences.putInteger("highScore", 0);
-        }
+        } */
 
         //Быдлокодищеее
         if(!preferences.contains("resultsOne")){
-            preferences.putInteger("resultsOne", preferences.getInteger("highScore"));
-        }
-        if(!preferences.contains("resultsTwo")){
+            preferences.putInteger("resultsOne", 0);
             preferences.putInteger("resultsTwo", 0);
-        }
-        if(!preferences.contains("resultsThree")){
             preferences.putInteger("resultsThree", 0);
-        }
-        if(!preferences.contains("resultsFour")){
             preferences.putInteger("resultsFour", 0);
-        }
-        if(!preferences.contains("resultsFive")){
             preferences.putInteger("resultsFive", 0);
         }
-
     }
 
     public static void dispose() {
@@ -147,10 +138,12 @@ public class AssetLoader {
     }
 
     public static void setHighScore(int val) {
-        if(val > preferences.getInteger("highScore")){
+
+/*        if(val > preferences.getInteger("highScore")){
             preferences.putInteger("highScore", val);
-        }
-        if(val > preferences.getInteger("resultsOne")){
+        } */
+
+/*        if(val > preferences.getInteger("resultsOne")){
             preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
             preferences.putInteger("resultsFour", preferences.getInteger("resultsThree"));
             preferences.putInteger("resultsThree", preferences.getInteger("resultsTwo"));
@@ -172,14 +165,45 @@ public class AssetLoader {
             preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
             preferences.putInteger("resultsFour", val);
         }
-        if(val > preferences.getInteger("resultsFive") && val < preferences.getInteger("resultsFive")){
+        if(val > preferences.getInteger("resultsFive") && val < preferences.getInteger("resultsFour")){
+            preferences.putInteger("resultsFive", val);
+        } */
+
+        if(val > preferences.getInteger("resultsFive")) {
             preferences.putInteger("resultsFive", val);
         }
+
+        if(val > preferences.getInteger("resultsFour")) {
+            swap("resultsFour", "resultsFive");
+        }
+
+        if(val > preferences.getInteger("resultsThree")) {
+            swap("resultsThree", "resultsFour");
+        }
+
+        if(val > preferences.getInteger("resultsTwo")) {
+            swap("resultsTwo", "resultsThree");
+        }
+
+        if(val > preferences.getInteger("resultsFour")) {
+            swap("resultsOne", "resultsTwo");
+        }
+
         preferences.flush();
     }
 
+    private static void swap(String str1, String str2) {
+        int tmp = preferences.getInteger(str1);
+        preferences.putInteger(str1, preferences.getInteger(str2));
+        preferences.putInteger(str2, tmp);
+    }
+
     public static int getHighScore() {
-        return preferences.getInteger("highScore");
+        return preferences.getInteger("resultsOne");
+    }
+
+    public static int getLastHighScore() {
+        return preferences.getInteger("resultsFive");
     }
 
 }

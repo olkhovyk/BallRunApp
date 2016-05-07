@@ -7,8 +7,6 @@ import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
 
 /**
@@ -34,9 +32,6 @@ public class GameWorld {
     //стэк состояний игры
     private Stack<GameState> statesStack;
 
-    //ТЕРБУЕТСЯ ПРОВЕРКА
-    public ArrayList<Integer> listScore;
-
     /**
      * Перечисление состояний игры.
      */
@@ -53,7 +48,6 @@ public class GameWorld {
         score = 0;
 
         statesStack = new Stack<GameState>();
-        listScore = new ArrayList<Integer>();
         currentGameState = GameState.MENU;
         statesStack.push(currentGameState);
         menuMusic.setLooping(true);
@@ -61,8 +55,10 @@ public class GameWorld {
         menuMusic.play();
     }
 
-
-    //Вызывается для обновления игры
+    /**
+     * Вызывается для обновления игры.
+     * @param delta проверяет время после последнего обновления
+     */
     public void update(float delta) {
 
         switch (currentGameState) {
@@ -83,7 +79,7 @@ public class GameWorld {
 
     /**
      * Не уверен в необходимости метода ...
-     * @param delta
+     * @param delta проверяет время после последнего обновления
      */
     private void updateReady(float delta) {
 
@@ -91,7 +87,7 @@ public class GameWorld {
 
     /**
      * Обновляет игру после старта.
-     * @param delta
+     * @param delta проверяет время после последнего обновления
      */
     private void updateRunning(float delta) {
 
@@ -118,20 +114,14 @@ public class GameWorld {
                 handler.stop();
                 currentGameState = GameState.GAMEOVER;
                 statesStack.push(currentGameState);
-                AssetLoader.setHighScore(score);
-                if (score > AssetLoader.getHighScore()) {
-                 //   AssetLoader.setHighScore(score);
+
+                if (score > AssetLoader.getLastHighScore()) {
+                    AssetLoader.setHighScore(score);
                     currentGameState = GameState.HIGHSCORE;
                     AssetLoader.soundHighScore.play();
                 } else {
                     AssetLoader.soundDefeat.play();
                 }
-                /* Проверка
-                Gdx.app.log("1",AssetLoader.preferences.getString("resultsOne"));
-                Gdx.app.log("2",AssetLoader.preferences.getString("resultsTwo"));
-                Gdx.app.log("3",AssetLoader.preferences.getString("resultsThree"));
-                Gdx.app.log("4",AssetLoader.preferences.getString("resultsFour"));
-                Gdx.app.log("5",AssetLoader.preferences.getString("resultsFive"));*/
 
                 menuMusic.play();
             }

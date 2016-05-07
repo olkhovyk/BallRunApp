@@ -196,18 +196,18 @@ public class GameRenderer {
      */
     private void drawIfOptions() {
         //TO DO
-       // backButton.draw(batcher);
-        font.draw(batcher, "Best resuls:", GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT / 10);
+        backButton.draw(batcher);
+        font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT / 10);
         font.draw(batcher, "1 :  " + AssetLoader.preferences.getInteger("resultsOne"),
-                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 2/ 10);
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
         font.draw(batcher, "2 :  " + AssetLoader.preferences.getInteger("resultsTwo"),
-                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 3/ 10);
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
         font.draw(batcher, "3 :  " + AssetLoader.preferences.getInteger("resultsThree"),
-                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 4/ 10);
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 4 / 10);
         font.draw(batcher, "4 :  " + AssetLoader.preferences.getInteger("resultsFour"),
-                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 5/ 10);
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 5 / 10);
         font.draw(batcher, "5 :  " + AssetLoader.preferences.getInteger("resultsFive"),
-                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 6/ 10);
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 6 / 10);
     }
 
     /**
@@ -254,17 +254,7 @@ public class GameRenderer {
         String score = world.getScore() + "";
         font.draw(batcher, score, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 10 / 20);
         font.draw(batcher, "Try again?", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 11 / 20);
-        world.listScore.add(Integer.valueOf(score));
     }
-
-    //ТРЕБУЕТСЯ ДОРАБОТАТЬ!
-    private void drawResults(){
-        font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 7);
-        for(int i = 1; i <= 10; i++){
-            font.draw(batcher, i + ": " + world.listScore.get(i), GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 7 + 20);
-        }
-    }
-
 
     /**
      * Рендерим все, что нам нужно.

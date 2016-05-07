@@ -95,7 +95,7 @@ public class AssetLoader {
         soundDefeat = Gdx.audio.newSound(Gdx.files.internal("data/defeat.wav"));
         soundHighScore = Gdx.audio.newSound(Gdx.files.internal("data/highscore.wav"));
 
-        fontFile = Gdx.files.internal("data/font.ttf");
+        fontFile = Gdx.files.internal("data/fonts.ttf");
 
         preferences = Gdx.app.getPreferences("BallRunApp");
 

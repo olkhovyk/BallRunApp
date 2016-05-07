@@ -196,7 +196,18 @@ public class GameRenderer {
      */
     private void drawIfOptions() {
         //TO DO
-        backButton.draw(batcher);
+       // backButton.draw(batcher);
+        font.draw(batcher, "Best resuls:", GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT / 10);
+        font.draw(batcher, "1 :  " + AssetLoader.preferences.getInteger("resultsOne"),
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 2/ 10);
+        font.draw(batcher, "2 :  " + AssetLoader.preferences.getInteger("resultsTwo"),
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 3/ 10);
+        font.draw(batcher, "3 :  " + AssetLoader.preferences.getInteger("resultsThree"),
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 4/ 10);
+        font.draw(batcher, "4 :  " + AssetLoader.preferences.getInteger("resultsFour"),
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 5/ 10);
+        font.draw(batcher, "5 :  " + AssetLoader.preferences.getInteger("resultsFive"),
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 6/ 10);
     }
 
     /**

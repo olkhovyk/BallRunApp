@@ -27,7 +27,7 @@ public class InputHandler implements InputProcessor {
     private List<SimpleButton> pauseMenuButtons;
 
     //все кнопки в игре
-    private SimpleButton startButton, optionsButton, exitButton, pauseButton, resumeButton, backButton;
+    private SimpleButton startButton, optionsButton, highScoresButton, exitButton, pauseButton, resumeButton, backButton;
 
     //конструктор
     public InputHandler(GameWorld world) {
@@ -37,19 +37,22 @@ public class InputHandler implements InputProcessor {
         this.ball = world.getBall();
 
         //создаем кнопки
-        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 7,
+        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
-        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 7,
+        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 8,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
                 AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
-        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 7,
+        highScoresButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 8,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+                AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
+        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 4 * GameScreen.SCREEN_HEIGHT / 8,
                 GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
                 AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
         pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
                 GameScreen.SCREEN_WIDTH / 6, GameScreen.SCREEN_HEIGHT / 10,
                 AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
-        resumeButton = new SimpleButton(3 * GameScreen.SCREEN_WIDTH / 8, 4 * GameScreen.SCREEN_HEIGHT / 7,
+        resumeButton = new SimpleButton(3 * GameScreen.SCREEN_WIDTH / 8, 5 * GameScreen.SCREEN_HEIGHT / 8,
                 GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_WIDTH / 4,
                 AssetLoader.buttonResume, AssetLoader.buttonResumePressed);
         backButton = new SimpleButton(4 * GameScreen.SCREEN_WIDTH / 5, 8 * GameScreen.SCREEN_HEIGHT / 9,
@@ -60,10 +63,12 @@ public class InputHandler implements InputProcessor {
         menuButtons = new ArrayList<SimpleButton>();
         menuButtons.add(startButton);
         menuButtons.add(optionsButton);
+        menuButtons.add(highScoresButton);
         menuButtons.add(exitButton);
 
         pauseMenuButtons = new ArrayList<SimpleButton>();
         pauseMenuButtons.add(optionsButton);
+        pauseMenuButtons.add(highScoresButton);
         pauseMenuButtons.add(exitButton);
         pauseMenuButtons.add(resumeButton);
     }
@@ -117,19 +122,17 @@ public class InputHandler implements InputProcessor {
 
     /**
      * Вызывается при нажатии кнопки мыши или касании экрана
-     * @param screenX The x coordinate, origin is in the upper left corner
-     * @param screenY The y coordinate, origin is in the upper left corner
-     * @param pointer the pointer for the event.
-     * @param button the button
-     * @return whether the input was processed
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (world.isMenu()) {
             startButton.isTouchDown(screenX, screenY);
             optionsButton.isTouchDown(screenX, screenY);
+            highScoresButton.isTouchDown(screenX, screenY);
             exitButton.isTouchDown(screenX, screenY);
         } else if (world.isOptions()) {
+            backButton.isTouchDown(screenX, screenY);
+        } else if (world.isBestResults()) {
             backButton.isTouchDown(screenX, screenY);
         } else if(world.isRunning()) {
             /* СТРАННО СЕБЯ ВЕДЕТ ...
@@ -138,6 +141,7 @@ public class InputHandler implements InputProcessor {
         } else if(world.isPaused()) {
             resumeButton.isTouchDown(screenX, screenY);
             optionsButton.isTouchDown(screenX, screenY);
+            highScoresButton.isTouchDown(screenX, screenY);
             exitButton.isTouchDown(screenX, screenY);
         } else if (world.isReady()) {
             world.start();
@@ -150,9 +154,6 @@ public class InputHandler implements InputProcessor {
 
     /**
      * Вызывается при отпускании кнопки мыши или прекращению касания экрана
-     * @param pointer the pointer for the event.
-     * @param button the button
-     * @return whether the input was processed
      */
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
@@ -164,13 +165,20 @@ public class InputHandler implements InputProcessor {
                 //TO DO OPTIONS
                 world.goToOptions();
                 return true;
+            } else if(highScoresButton.isTouchUp(screenX, screenY)) {
+                world.goToBestResults();
+                return true;
             } else if(exitButton.isTouchUp(screenX, screenY)) {
                 Gdx.app.exit();
                 return true;
             }
         } else if (world.isOptions()) {
             if(backButton.isTouchUp(screenX, screenY)) {
-                //TO DO BACK
+                world.back();
+                return true;
+            }
+        } else if (world.isBestResults()) {
+            if(backButton.isTouchUp(screenX, screenY)) {
                 world.back();
                 return true;
             }
@@ -186,6 +194,9 @@ public class InputHandler implements InputProcessor {
             } else if (optionsButton.isTouchUp(screenX, screenY)) {
                 //TO DO OPTIONS
                 world.goToOptions();
+                return true;
+            } else if(highScoresButton.isTouchUp(screenX, screenY)) {
+                world.goToBestResults();
                 return true;
             } else if(exitButton.isTouchUp(screenX, screenY)) {
                 Gdx.app.exit();

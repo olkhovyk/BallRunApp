@@ -112,7 +112,7 @@ public class BarrierPart {
     public void moveMidPart(float delta, boolean toTheRight) {
         if (toTheRight && position.x < 2 * GameScreen.SCREEN_WIDTH / 3) {
             position.add(horizontalSpeed.cpy().scl(delta));
-        } else if (position.x > 0) {
+        } else if (!toTheRight && position.x > 0) {
             horizontalSpeed.x = - horizontalSpeed.x;
             position.add(horizontalSpeed.cpy().scl(delta));
         }

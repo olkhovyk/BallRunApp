@@ -197,6 +197,13 @@ public class GameRenderer {
     private void drawIfOptions() {
         //TO DO
         backButton.draw(batcher);
+    }
+
+    /**
+     * Рисуем лучшие результаты
+     */
+    private void drawIfBestResults() {
+        backButton.draw(batcher);
         font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT / 10);
         font.draw(batcher, "1 :  " + AssetLoader.preferences.getInteger("resultsOne"),
                 GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
@@ -292,6 +299,8 @@ public class GameRenderer {
             drawIfOptions();
         } else if(world.isAuthors()) {
             drawIfAuthors();
+        } else if(world.isBestResults()) {
+            drawIfBestResults();
         } else if (world.isReady()) {
             drawIfReady();
         } else if (world.isRunning() || world.isPaused()) {

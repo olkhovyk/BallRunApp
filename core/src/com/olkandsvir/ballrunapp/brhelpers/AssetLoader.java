@@ -20,6 +20,8 @@ public class AssetLoader {
     public static Texture buttonStartPressed;
     public static Texture buttonOptions;
     public static Texture buttonOptionsPressed;
+    public static Texture buttonHighScores;
+    public static Texture buttonHighScoresPressed;
     public static Texture buttonExit;
     public static Texture buttonExitPressed;
     public static Texture buttonPause;
@@ -63,6 +65,12 @@ public class AssetLoader {
         buttonOptionsPressed = new Texture(Gdx.files.internal("data/btnOptionsPressed.png"));
         buttonOptionsPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+        buttonHighScores = new Texture(Gdx.files.internal("data/btnHighScores.png"));
+        buttonHighScores.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonHighScoresPressed = new Texture(Gdx.files.internal("data/btnHighScoresPressed.png"));
+        buttonHighScoresPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         buttonExit = new Texture(Gdx.files.internal("data/btnExit.png"));
         buttonExit.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
@@ -95,7 +103,7 @@ public class AssetLoader {
         soundDefeat = Gdx.audio.newSound(Gdx.files.internal("data/defeat.wav"));
         soundHighScore = Gdx.audio.newSound(Gdx.files.internal("data/highscore.wav"));
 
-        fontFile = Gdx.files.internal("data/fonts.ttf");
+        fontFile = Gdx.files.internal("data/font.ttf");
 
         preferences = Gdx.app.getPreferences("BallRunApp");
 
@@ -121,6 +129,8 @@ public class AssetLoader {
         buttonStartPressed.dispose();
         buttonOptions.dispose();
         buttonOptionsPressed.dispose();
+        buttonHighScores.dispose();
+        buttonHighScoresPressed.dispose();
         buttonExit.dispose();
         buttonExitPressed.dispose();
         buttonPause.dispose();
@@ -185,7 +195,7 @@ public class AssetLoader {
             swap("resultsTwo", "resultsThree");
         }
 
-        if(val > preferences.getInteger("resultsFour")) {
+        if(val > preferences.getInteger("resultsOne")) {
             swap("resultsOne", "resultsTwo");
         }
 

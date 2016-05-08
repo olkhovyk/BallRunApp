@@ -36,7 +36,7 @@ public class GameWorld {
      * Перечисление состояний игры.
      */
     public enum GameState {
-        MENU, OPTIONS, AUTHORS, READY, RUNNING, PAUSE, GAMEOVER, HIGHSCORE
+        MENU, OPTIONS, BEST_RESULTS, AUTHORS, READY, RUNNING, PAUSE, GAME_OVER, HIGH_SCORE
     }
 
     //конструктор
@@ -112,12 +112,12 @@ public class GameWorld {
             if (handler.collides(ball)) {
                 backgroundMusic.stop();
                 handler.stop();
-                currentGameState = GameState.GAMEOVER;
+                currentGameState = GameState.GAME_OVER;
                 statesStack.push(currentGameState);
 
                 if (score > AssetLoader.getLastHighScore()) {
                     AssetLoader.setHighScore(score);
-                    currentGameState = GameState.HIGHSCORE;
+                    currentGameState = GameState.HIGH_SCORE;
                     AssetLoader.soundHighScore.play();
                 } else {
                     AssetLoader.soundDefeat.play();
@@ -141,10 +141,14 @@ public class GameWorld {
     public void goToOptions() {
         currentGameState = GameState.OPTIONS;
         statesStack.push(currentGameState);
-        if(backgroundMusic.isPlaying()) {
-            backgroundMusic.stop();
-            menuMusic.play();
-        }
+    }
+
+    /**
+     * Переход в рекорды.
+     */
+    public void goToBestResults() {
+        currentGameState = GameState.BEST_RESULTS;
+        statesStack.push(currentGameState);
     }
 
     /**
@@ -217,6 +221,10 @@ public class GameWorld {
         return currentGameState == GameState.AUTHORS;
     }
 
+    public boolean isBestResults() {
+        return currentGameState == GameState.BEST_RESULTS;
+    }
+
     public boolean isReady() {
         return currentGameState == GameState.READY;
     }
@@ -230,11 +238,11 @@ public class GameWorld {
     }
 
     public boolean isGameOver() {
-        return currentGameState == GameState.GAMEOVER;
+        return currentGameState == GameState.GAME_OVER;
     }
 
     public boolean isHighScore() {
-        return currentGameState == GameState.HIGHSCORE;
+        return currentGameState == GameState.HIGH_SCORE;
     }
 
     public Ball getBall() {

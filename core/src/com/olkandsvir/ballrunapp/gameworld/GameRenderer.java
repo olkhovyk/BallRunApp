@@ -36,6 +36,7 @@ public class GameRenderer {
 
     //текстуры
     private Texture background;
+    private Texture background2;
     private Texture ballTexture;
     private Texture barrierTexture;
 
@@ -101,8 +102,9 @@ public class GameRenderer {
      */
     private void initAssets() {
 
-        //загружаем картинку фона
+        //загружаем картинки фона
         background = AssetLoader.background;
+        background2 = AssetLoader.background2;
 
         //загружаем картинку для мячика
         ballTexture = AssetLoader.ball;
@@ -177,6 +179,7 @@ public class GameRenderer {
      * Рисуем меню паузы
      */
     private void drawPauseMenu() {
+        batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         for (SimpleButton button : pauseMenuButtons) {
             button.draw(batcher);
         }
@@ -195,7 +198,8 @@ public class GameRenderer {
      * Рисуем настройки
      */
     private void drawIfOptions() {
-        //TO DO
+        //TODO
+        batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         backButton.draw(batcher);
     }
 
@@ -203,6 +207,7 @@ public class GameRenderer {
      * Рисуем лучшие результаты
      */
     private void drawIfBestResults() {
+        batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         backButton.draw(batcher);
 
         font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT / 10);
@@ -222,7 +227,8 @@ public class GameRenderer {
      * Рисуем страницу авторов
      */
     private void drawIfAuthors() {
-        //TO DO
+        //TODO
+        batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
     }
 
     /**
@@ -248,6 +254,7 @@ public class GameRenderer {
      * Рисуем конец игры
      */
     private void drawIfGameOver() {
+        batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         if (world.isGameOver()) {
             font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
             font.draw(batcher, "High Score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 20);

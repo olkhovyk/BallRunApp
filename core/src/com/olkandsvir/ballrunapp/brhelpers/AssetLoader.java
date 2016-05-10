@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class AssetLoader {
 
     public static Texture background;
+    public static Texture background2;
     public static Texture ball;
     public static Texture barrier;
     public static Texture buttonStart;
@@ -46,6 +47,9 @@ public class AssetLoader {
     public static void load() {
         background = new Texture(Gdx.files.internal("data/back.png"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        background2 = new Texture(Gdx.files.internal("data/back2.png"));
+        background2.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         ball = new Texture(Gdx.files.internal("data/circle.png"));
         ball.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -107,11 +111,6 @@ public class AssetLoader {
 
         preferences = Gdx.app.getPreferences("BallRunApp");
 
-/*        if (!preferences.contains("highScore")) {
-            preferences.putInteger("highScore", 0);
-        } */
-
-        //Быдлокодищеее
         if(!preferences.contains("resultsOne")){
             preferences.putInteger("resultsOne", 0);
             preferences.putInteger("resultsTwo", 0);
@@ -123,6 +122,7 @@ public class AssetLoader {
 
     public static void dispose() {
         background.dispose();
+        background2.dispose();
         ball.dispose();
         barrier.dispose();
         buttonStart.dispose();
@@ -148,36 +148,6 @@ public class AssetLoader {
     }
 
     public static void setHighScore(int val) {
-
-/*        if(val > preferences.getInteger("highScore")){
-            preferences.putInteger("highScore", val);
-        } */
-
-/*        if(val > preferences.getInteger("resultsOne")){
-            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
-            preferences.putInteger("resultsFour", preferences.getInteger("resultsThree"));
-            preferences.putInteger("resultsThree", preferences.getInteger("resultsTwo"));
-            preferences.putInteger("resultsTwo", preferences.getInteger("resultsOne"));
-            preferences.putInteger("resultsOne",val);
-        }
-        if(val > preferences.getInteger("resultsTwo") && val < preferences.getInteger("resultsOne")){
-            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
-            preferences.putInteger("resultsFour", preferences.getInteger("resultsThree"));
-            preferences.putInteger("resultsThree", preferences.getInteger("resultsTwo"));
-            preferences.putInteger("resultsTwo", val);
-        }
-        if(val > preferences.getInteger("resultsThree") && val < preferences.getInteger("resultsTwo")){
-            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
-            preferences.putInteger("resultsFour", preferences.getInteger("resultsThree"));
-            preferences.putInteger("resultsThree", val);
-        }
-        if(val > preferences.getInteger("resultsFour") && val < preferences.getInteger("resultsThree")){
-            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
-            preferences.putInteger("resultsFour", val);
-        }
-        if(val > preferences.getInteger("resultsFive") && val < preferences.getInteger("resultsFour")){
-            preferences.putInteger("resultsFive", val);
-        } */
 
         if(val > preferences.getInteger("resultsFive")) {
             preferences.putInteger("resultsFive", val);

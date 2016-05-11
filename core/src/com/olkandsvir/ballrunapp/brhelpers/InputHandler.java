@@ -37,8 +37,8 @@ public class InputHandler implements InputProcessor {
              musicOffButton, soundOffButton;
 
 
-    private boolean musicOn;
-    private int soundOn;
+    private SoundHandler soundHandler = new SoundHandler();
+
 
     //конструктор
     public InputHandler(GameWorld world) {
@@ -92,8 +92,8 @@ public class InputHandler implements InputProcessor {
         optionsMenuButtons = new ArrayList<SimpleButton>();
         optionsMenuButtons.add(musicOffButton);
         optionsMenuButtons.add(soundOffButton);
-        musicOn = true;
-        soundOn = 0;
+
+
 
     }
 
@@ -204,23 +204,10 @@ public class InputHandler implements InputProcessor {
                 return true;
             }
             else if(musicOffButton.isTouchUp(screenX, screenY)){
-                if(musicOn){
-                world.muteMusic();
-                    musicOn = false;
-               }
-                else if(!musicOn){
-                   world.unmuteMusic();
-                    musicOn = true;
-                }
+                soundHandler.setMusicOn();
            }
             else if(soundOffButton.isTouchUp(screenX, screenY)){
-                if(getSoundOn() == 0){
-                    setSoundOn(1);
-                }
-                else if(getSoundOn() == 1){
-                    setSoundOn(0);
-                }
-
+                soundHandler.setSoundOn();
             }
         } else if (world.isBestResults()) {
             if(backButton.isTouchUp(screenX, screenY)) {
@@ -269,11 +256,5 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
-    public int getSoundOn() {
-        return soundOn;
-    }
 
-    public void setSoundOn(int soundOn) {
-        this.soundOn = soundOn;
-    }
 }

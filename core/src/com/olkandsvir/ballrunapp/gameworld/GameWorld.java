@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.audio.Music;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
+import com.olkandsvir.ballrunapp.brhelpers.SoundHandler;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
@@ -21,7 +22,6 @@ public class GameWorld {
     private Ball ball;
     private ScrollHandler handler;
 
-    private InputHandler inputHandler;
 
     //счет нынешней игры
     private int score;
@@ -47,17 +47,18 @@ public class GameWorld {
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
         this.handler = new ScrollHandler(this);
-        this.backgroundMusic = AssetLoader.musicBackground;
-        this.menuMusic = AssetLoader.musicMenu;
-        this.inputHandler = inputHandler;
+      //  this.backgroundMusic = AssetLoader.musicBackground;
+      //  this.menuMusic = AssetLoader.musicMenu;
+
         score = 0;
 
         statesStack = new Stack<GameState>();
         currentGameState = GameState.MENU;
         statesStack.push(currentGameState);
-        menuMusic.setLooping(true);
-        backgroundMusic.setLooping(true);
-        menuMusic.play();
+      //  menuMusic.setLooping(true);
+      //  backgroundMusic.setLooping(true);
+       // menuMusic.play();
+        SoundHandler.playMusicMenu();
     }
 
     /**
@@ -115,7 +116,8 @@ public class GameWorld {
 
             //проверяет столкновения
             if (handler.collides(ball)) {
-                backgroundMusic.stop();
+             //   backgroundMusic.stop();
+                SoundHandler.stopMusicBackground();
 
                 handler.stop();
                 currentGameState = GameState.GAME_OVER;
@@ -124,16 +126,15 @@ public class GameWorld {
                 if (score > AssetLoader.getLastHighScore()) {
                     AssetLoader.setHighScore(score);
                     currentGameState = GameState.HIGH_SCORE;
-                   // if(inputHandler.getSoundOn() == 0){
-                    AssetLoader.soundHighScore.play();
-                  //  }
+                    SoundHandler.playSoundHighScore();
+
                 } else {
-                 //   if(inputHandler.getSoundOn() == 0){
-                    AssetLoader.soundDefeat.play();
-                 //   }
+                    SoundHandler.playSoundDefeat();
+
                 }
 
-                menuMusic.play();
+                // menuMusic.play();
+                SoundHandler.playMusicMenu();
             }
         }
     }
@@ -175,8 +176,10 @@ public class GameWorld {
     public void start() {
         currentGameState = GameState.RUNNING;
         statesStack.push(currentGameState);
-        menuMusic.stop();
-        backgroundMusic.play();
+       // menuMusic.stop();
+        SoundHandler.stopMusicMenu();
+       // backgroundMusic.play();
+        SoundHandler.playMusicBackground();
     }
 
     /**
@@ -185,8 +188,10 @@ public class GameWorld {
     public void pause() {
         currentGameState = GameState.PAUSE;
         statesStack.push(currentGameState);
-        backgroundMusic.pause();
-        menuMusic.play();
+       // backgroundMusic.pause();
+        SoundHandler.pauseMusicBackground();
+       // menuMusic.play();
+        SoundHandler.playMusicMenu();
     }
 
     /**
@@ -194,8 +199,10 @@ public class GameWorld {
      */
     public void resume() {
         back();
-        menuMusic.stop();
-        backgroundMusic.play();
+       // menuMusic.stop();
+        SoundHandler.stopMusicMenu();
+       // backgroundMusic.play();
+        SoundHandler.playMusicBackground();
     }
 
     /**
@@ -267,18 +274,7 @@ public class GameWorld {
         return score;
     }
 
-    public void muteMusic(){
-        //backgroundMusic.stop();
-        //menuMusic.stop();
-        backgroundMusic.setVolume(0);
-        menuMusic.setVolume(0);
-    }
-    public void unmuteMusic(){
-        //backgroundMusic.play();
-        //menuMusic.play();
-        backgroundMusic.setVolume(1);
-        menuMusic.setVolume(1);
-    }
+
     
 
 }

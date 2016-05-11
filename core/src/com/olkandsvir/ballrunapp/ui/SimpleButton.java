@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
+import com.olkandsvir.ballrunapp.brhelpers.SoundHandler;
 
 /**
  * Implementation of Menu Buttons.
@@ -24,6 +25,9 @@ public class SimpleButton {
 
     //нажатие кнопки
     private boolean isPressed = false;
+
+    private boolean soundOn = true;
+
 
 
     //конструктор
@@ -73,9 +77,9 @@ public class SimpleButton {
 
         if (isClicked(screenX, screenY)) {
             isPressed = true;
-         //   if(handler.getSoundOn() == 0){
-            AssetLoader.soundClicked.play();
-          //  }
+            SoundHandler.playSoundClicked();
+
+
             return true;
         }
 
@@ -97,5 +101,17 @@ public class SimpleButton {
 
         isPressed = false;
         return false;
+    }
+
+    public void checkSound(){
+        if(soundOn){
+            soundOn = false;
+            System.out.println("false");
+        }
+        else if (!soundOn){
+            soundOn = true;
+            System.out.println("true");
+        }
+
     }
 }

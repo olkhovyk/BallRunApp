@@ -25,20 +25,14 @@ public class InputHandler implements InputProcessor {
     //кнопки меню
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
-
-    public List<SimpleButton> getOptionsMenuButtons() {
-        return optionsMenuButtons;
-    }
-
     private List<SimpleButton> optionsMenuButtons;
 
     //все кнопки в игре
     private SimpleButton startButton, optionsButton, highScoresButton, exitButton, pauseButton, resumeButton, backButton,
              musicOffButton, soundOffButton;
 
-
+    //проигрыватель
     private SoundHandler soundHandler = new SoundHandler();
-
 
     //конструктор
     public InputHandler(GameWorld world) {
@@ -92,9 +86,6 @@ public class InputHandler implements InputProcessor {
         optionsMenuButtons = new ArrayList<SimpleButton>();
         optionsMenuButtons.add(musicOffButton);
         optionsMenuButtons.add(soundOffButton);
-
-
-
     }
 
     /**
@@ -111,6 +102,14 @@ public class InputHandler implements InputProcessor {
      */
     public List<SimpleButton> getPauseMenuButtons() {
         return pauseMenuButtons;
+    }
+
+    /**
+     * Получает кнопки меню настроек
+     * @return меню настроек
+     */
+    public List<SimpleButton> getOptionsMenuButtons() {
+        return optionsMenuButtons;
     }
 
     /**
@@ -202,12 +201,12 @@ public class InputHandler implements InputProcessor {
             if(backButton.isTouchUp(screenX, screenY)) {
                 world.back();
                 return true;
-            }
-            else if(musicOffButton.isTouchUp(screenX, screenY)){
+            } else if(musicOffButton.isTouchUp(screenX, screenY)){
                 soundHandler.setMusicOn();
-           }
-            else if(soundOffButton.isTouchUp(screenX, screenY)){
+                return true;
+            } else if(soundOffButton.isTouchUp(screenX, screenY)){
                 soundHandler.setSoundOn();
+                return true;
             }
         } else if (world.isBestResults()) {
             if(backButton.isTouchUp(screenX, screenY)) {
@@ -224,7 +223,6 @@ public class InputHandler implements InputProcessor {
                 world.resume();
                 return true;
             } else if (optionsButton.isTouchUp(screenX, screenY)) {
-                //TO DO OPTIONS
                 world.goToOptions();
                 return true;
             } else if(highScoresButton.isTouchUp(screenX, screenY)) {
@@ -241,8 +239,8 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-// СТРАННО СЕБЯ ВЕДЕТ ...
-//        ball.onClick();
+        // СТРАННО СЕБЯ ВЕДЕТ ...
+        // ball.onClick();
         return false;
     }
 

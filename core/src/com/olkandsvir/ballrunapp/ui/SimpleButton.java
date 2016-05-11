@@ -26,10 +26,6 @@ public class SimpleButton {
     //нажатие кнопки
     private boolean isPressed = false;
 
-    private boolean soundOn = true;
-
-
-
     //конструктор
     public SimpleButton(float x, float y, float width, float height,
                         Texture buttonUp, Texture buttonDown) {
@@ -41,15 +37,10 @@ public class SimpleButton {
         this.buttonDown = buttonDown;
 
         bounds = new Rectangle(x, y, width, height);
-
-
     }
 
     /**
      * Проверяет, была ли нажата ли кнопка.
-     * @param screenX
-     * @param screenY
-     * @return
      */
     public boolean isClicked(int screenX, int screenY) {
         return bounds.contains(screenX, screenY);
@@ -57,7 +48,6 @@ public class SimpleButton {
 
     /**
      * Рисование кнопки.
-     * @param batcher
      */
     public void draw(SpriteBatch batcher) {
         if (isPressed) {
@@ -69,28 +59,19 @@ public class SimpleButton {
 
     /**
      * Вызывается при нажатиии на экран.
-     * @param screenX
-     * @param screenY
-     * @return
      */
     public boolean isTouchDown(int screenX, int screenY) {
 
         if (isClicked(screenX, screenY)) {
             isPressed = true;
             SoundHandler.playSoundClicked();
-
-
             return true;
         }
-
         return false;
     }
 
     /**
      * Вызывается при прекращении нажатия на экран.
-     * @param screenX
-     * @param screenY
-     * @return
      */
     public boolean isTouchUp(int screenX, int screenY) {
 
@@ -101,17 +82,5 @@ public class SimpleButton {
 
         isPressed = false;
         return false;
-    }
-
-    public void checkSound(){
-        if(soundOn){
-            soundOn = false;
-            System.out.println("false");
-        }
-        else if (!soundOn){
-            soundOn = true;
-            System.out.println("true");
-        }
-
     }
 }

@@ -3,7 +3,8 @@ package com.olkandsvir.ballrunapp.brhelpers;
 import com.badlogic.gdx.audio.Music;
 
 /**
- * Created by ilya on 11.05.2016.
+ * Plays sounds in the game.
+ * @since 11.05.2016.
  */
 public class SoundHandler {
     private static boolean soundOn = true;
@@ -13,29 +14,24 @@ public class SoundHandler {
     private static Music menuMusic = AssetLoader.musicMenu;
 
     public SoundHandler() {
-     //   this.backgroundMusic = AssetLoader.musicBackground;
-    //    this.menuMusic = AssetLoader.musicMenu;
-
-        //Не работает
         backgroundMusic.setLooping(true);
         menuMusic.setLooping(true);
     }
 
     public static void playMusicMenu(){
         menuMusic.play();
-
     }
+
     public static void stopMusicMenu(){
         menuMusic.stop();
     }
+
     public static void pauseMusicMenu(){
         menuMusic.pause();
     }
 
     public static void playMusicBackground(){
-
-            backgroundMusic.play();
-
+        backgroundMusic.play();
     }
 
     public static void stopMusicBackground(){
@@ -48,35 +44,30 @@ public class SoundHandler {
 
     public static void playSoundScored(){
         if(soundOn){
-        AssetLoader.soundScored.play();
+            AssetLoader.soundScored.play();
         }
     }
 
     public static void playSoundClicked(){
         if(soundOn){
-        AssetLoader.soundClicked.play();
+            AssetLoader.soundClicked.play();
         }
     }
 
     public static void playSoundDefeat(){
         if(soundOn){
-        AssetLoader.soundDefeat.play();
+            AssetLoader.soundDefeat.play();
         }
     }
 
     public static void playSoundHighScore(){
         if(soundOn){
-        AssetLoader.soundHighScore.play();
+            AssetLoader.soundHighScore.play();
         }
     }
 
     public void setSoundOn(){
-        if(soundOn){
-            soundOn = false;
-        }
-        else if(!soundOn){
-            soundOn = true;
-        }
+        soundOn = !soundOn;
     }
 
     public void setMusicOn(){
@@ -84,13 +75,10 @@ public class SoundHandler {
             musicOn = false;
             backgroundMusic.setVolume(0);
             menuMusic.setVolume(0);
-        }
-        else if(!musicOn){
+        } else {
             musicOn = true;
             backgroundMusic.setVolume(1);
             menuMusic.setVolume(1);
-
         }
-
     }
 }

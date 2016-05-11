@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
+import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 
 /**
  * Implementation of Menu Buttons.
@@ -24,6 +25,7 @@ public class SimpleButton {
     //нажатие кнопки
     private boolean isPressed = false;
 
+
     //конструктор
     public SimpleButton(float x, float y, float width, float height,
                         Texture buttonUp, Texture buttonDown) {
@@ -35,6 +37,8 @@ public class SimpleButton {
         this.buttonDown = buttonDown;
 
         bounds = new Rectangle(x, y, width, height);
+
+
     }
 
     /**
@@ -69,7 +73,9 @@ public class SimpleButton {
 
         if (isClicked(screenX, screenY)) {
             isPressed = true;
+         //   if(handler.getSoundOn() == 0){
             AssetLoader.soundClicked.play();
+          //  }
             return true;
         }
 

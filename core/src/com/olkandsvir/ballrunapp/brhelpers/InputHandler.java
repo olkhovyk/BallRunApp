@@ -26,8 +26,19 @@ public class InputHandler implements InputProcessor {
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
 
+    public List<SimpleButton> getOptionsMenuButtons() {
+        return optionsMenuButtons;
+    }
+
+    private List<SimpleButton> optionsMenuButtons;
+
     //все кнопки в игре
-    private SimpleButton startButton, optionsButton, highScoresButton, exitButton, pauseButton, resumeButton, backButton;
+    private SimpleButton startButton, optionsButton, highScoresButton, exitButton, pauseButton, resumeButton, backButton,
+             musicOffButton, soundOffButton;
+
+
+    private boolean musicOn;
+    private int soundOn;
 
     //конструктор
     public InputHandler(GameWorld world) {
@@ -58,6 +69,12 @@ public class InputHandler implements InputProcessor {
         backButton = new SimpleButton(4 * GameScreen.SCREEN_WIDTH / 5, 8 * GameScreen.SCREEN_HEIGHT / 9,
                 GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
                 AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
+        musicOffButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 8,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+                AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
+        soundOffButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 4 * GameScreen.SCREEN_HEIGHT / 8,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+                AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
 
         //записываем кнопки в списки меню
         menuButtons = new ArrayList<SimpleButton>();
@@ -71,6 +88,13 @@ public class InputHandler implements InputProcessor {
         pauseMenuButtons.add(highScoresButton);
         pauseMenuButtons.add(exitButton);
         pauseMenuButtons.add(resumeButton);
+
+        optionsMenuButtons = new ArrayList<SimpleButton>();
+        optionsMenuButtons.add(musicOffButton);
+        optionsMenuButtons.add(soundOffButton);
+        musicOn = true;
+        soundOn = 0;
+
     }
 
     /**
@@ -131,6 +155,8 @@ public class InputHandler implements InputProcessor {
             highScoresButton.isTouchDown(screenX, screenY);
             exitButton.isTouchDown(screenX, screenY);
         } else if (world.isOptions()) {
+            musicOffButton.isTouchDown(screenX, screenY);
+            soundOffButton.isTouchDown(screenX, screenY);
             backButton.isTouchDown(screenX, screenY);
         } else if (world.isBestResults()) {
             backButton.isTouchDown(screenX, screenY);
@@ -177,6 +203,25 @@ public class InputHandler implements InputProcessor {
                 world.back();
                 return true;
             }
+            else if(musicOffButton.isTouchUp(screenX, screenY)){
+                if(musicOn){
+                world.muteMusic();
+                    musicOn = false;
+               }
+                else if(!musicOn){
+                   world.unmuteMusic();
+                    musicOn = true;
+                }
+           }
+            else if(soundOffButton.isTouchUp(screenX, screenY)){
+                if(getSoundOn() == 0){
+                    setSoundOn(1);
+                }
+                else if(getSoundOn() == 1){
+                    setSoundOn(0);
+                }
+
+            }
         } else if (world.isBestResults()) {
             if(backButton.isTouchUp(screenX, screenY)) {
                 world.back();
@@ -222,5 +267,13 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public int getSoundOn() {
+        return soundOn;
+    }
+
+    public void setSoundOn(int soundOn) {
+        this.soundOn = soundOn;
     }
 }

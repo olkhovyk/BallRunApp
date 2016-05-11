@@ -1,8 +1,10 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.audio.Music;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
+import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
@@ -18,6 +20,8 @@ public class GameWorld {
     //игровые объекты
     private Ball ball;
     private ScrollHandler handler;
+
+    private InputHandler inputHandler;
 
     //счет нынешней игры
     private int score;
@@ -45,6 +49,7 @@ public class GameWorld {
         this.handler = new ScrollHandler(this);
         this.backgroundMusic = AssetLoader.musicBackground;
         this.menuMusic = AssetLoader.musicMenu;
+        this.inputHandler = inputHandler;
         score = 0;
 
         statesStack = new Stack<GameState>();
@@ -111,6 +116,7 @@ public class GameWorld {
             //проверяет столкновения
             if (handler.collides(ball)) {
                 backgroundMusic.stop();
+
                 handler.stop();
                 currentGameState = GameState.GAME_OVER;
                 statesStack.push(currentGameState);
@@ -118,9 +124,13 @@ public class GameWorld {
                 if (score > AssetLoader.getLastHighScore()) {
                     AssetLoader.setHighScore(score);
                     currentGameState = GameState.HIGH_SCORE;
+                   // if(inputHandler.getSoundOn() == 0){
                     AssetLoader.soundHighScore.play();
+                  //  }
                 } else {
+                 //   if(inputHandler.getSoundOn() == 0){
                     AssetLoader.soundDefeat.play();
+                 //   }
                 }
 
                 menuMusic.play();
@@ -256,4 +266,19 @@ public class GameWorld {
     public int getScore() {
         return score;
     }
+
+    public void muteMusic(){
+        //backgroundMusic.stop();
+        //menuMusic.stop();
+        backgroundMusic.setVolume(0);
+        menuMusic.setVolume(0);
+    }
+    public void unmuteMusic(){
+        //backgroundMusic.play();
+        //menuMusic.play();
+        backgroundMusic.setVolume(1);
+        menuMusic.setVolume(1);
+    }
+    
+
 }

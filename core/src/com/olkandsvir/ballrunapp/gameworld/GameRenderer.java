@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
@@ -17,6 +19,7 @@ import com.olkandsvir.ballrunapp.gameobject.barriers.BarrierPart;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
 import com.olkandsvir.ballrunapp.ui.SimpleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +36,7 @@ public class GameRenderer {
 
     //рисует картинки для игры
     private SpriteBatch batcher;
+    private ShapeRenderer shapeRenderer;
 
     //текстуры
     private Texture background;
@@ -56,10 +60,13 @@ public class GameRenderer {
     //кнопки меню
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
+    private List<SimpleButton> optionsMenuButtons;
 
     //кнопки
     private SimpleButton pauseButton;
     private SimpleButton backButton;
+
+    private Slider slider;
 
     //конструктор
     public GameRenderer(GameWorld world) {
@@ -78,6 +85,9 @@ public class GameRenderer {
         batcher = new SpriteBatch();
         batcher.setProjectionMatrix(camera.combined);
 
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+
         //инициализируем ресурсы, шрифт и игровые объекты
         initAssets();
         initFont();
@@ -89,12 +99,14 @@ public class GameRenderer {
      */
     private void initGameObjects() {
         menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
+        optionsMenuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getOptionsMenuButtons();
         pauseMenuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getPauseMenuButtons();
         pauseButton = (((InputHandler) Gdx.input.getInputProcessor()).getPauseButton());
         backButton = (((InputHandler) Gdx.input.getInputProcessor()).getBackButton());
         ball = world.getBall();
         handler = world.getHandler();
         barriers = handler.getBarriers();
+
     }
 
     /**
@@ -159,7 +171,12 @@ public class GameRenderer {
     private void drawBall() {
         batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
                 ball.getDiameter(), ball.getDiameter());
+        shapeRenderer.setColor(0, 0, 0, 1);
+        shapeRenderer.point(ball.getPosition().x - ball.getDiameter() / 5, ball.getPosition().y, 0);
+
     }
+
+
 
     /**
      * Рисуем счет
@@ -201,6 +218,13 @@ public class GameRenderer {
         //TODO
         batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         backButton.draw(batcher);
+        for(SimpleButton button : optionsMenuButtons){
+            button.draw(batcher);
+        }
+
+
+
+
     }
 
     /**
@@ -284,6 +308,7 @@ public class GameRenderer {
 
         //запускаем пакет рисования
         batcher.begin();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Point);
 
         //убираем прозрачность, полезно для производительности
         batcher.disableBlending();
@@ -299,6 +324,7 @@ public class GameRenderer {
 
         //рисуем мячик
         drawBall();
+
 
         //рисуем оставшуюся игру в зависимости от ее нынешнего состояния
         if(world.isMenu()) {
@@ -319,10 +345,12 @@ public class GameRenderer {
 
         //закрываем пакет
         batcher.end();
+        shapeRenderer.end();
     }
 
     public void dispose() {
         batcher.dispose();
         font.dispose();
+       // shapeRenderer.dispose();
     }
 }

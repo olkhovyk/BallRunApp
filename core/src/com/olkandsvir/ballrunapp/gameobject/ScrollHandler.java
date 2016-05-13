@@ -24,7 +24,7 @@ public class ScrollHandler {
 
     public ScrollHandler(GameWorld world) {
         this.world = world;
-        this.handler = handler;
+
 
         barriers = new Array<Barrier>();
         for(int i = 0; i < ARRAY_SIZE; i++){

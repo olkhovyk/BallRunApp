@@ -47,18 +47,19 @@ public class GameWorld {
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
         this.handler = new ScrollHandler(this);
-      //  this.backgroundMusic = AssetLoader.musicBackground;
-      //  this.menuMusic = AssetLoader.musicMenu;
+        this.backgroundMusic = AssetLoader.musicBackground;
+        this.menuMusic = AssetLoader.musicMenu;
 
         score = 0;
 
         statesStack = new Stack<GameState>();
         currentGameState = GameState.MENU;
         statesStack.push(currentGameState);
-      //  menuMusic.setLooping(true);
-      //  backgroundMusic.setLooping(true);
+        menuMusic.setLooping(true);
+        backgroundMusic.setLooping(true);
        // menuMusic.play();
-        SoundHandler.playMusicMenu();
+       // SoundHandler.playMusicMenu();
+        SoundHandler.playMusic(menuMusic);
     }
 
     /**
@@ -117,7 +118,8 @@ public class GameWorld {
             //проверяет столкновения
             if (handler.collides(ball)) {
              //   backgroundMusic.stop();
-                SoundHandler.stopMusicBackground();
+               // SoundHandler.stopMusicBackground();
+                SoundHandler.stopMusic(backgroundMusic);
 
                 handler.stop();
                 currentGameState = GameState.GAME_OVER;
@@ -134,7 +136,8 @@ public class GameWorld {
                 }
 
                 // menuMusic.play();
-                SoundHandler.playMusicMenu();
+               // SoundHandler.playMusicMenu();
+                SoundHandler.playMusic(menuMusic);
             }
         }
     }
@@ -177,9 +180,12 @@ public class GameWorld {
         currentGameState = GameState.RUNNING;
         statesStack.push(currentGameState);
        // menuMusic.stop();
-        SoundHandler.stopMusicMenu();
+     //   SoundHandler.stopMusicMenu();
+        SoundHandler.stopMusic(menuMusic);
+
        // backgroundMusic.play();
-        SoundHandler.playMusicBackground();
+       // SoundHandler.playMusicBackground();
+        SoundHandler.playMusic(backgroundMusic);
     }
 
     /**
@@ -189,9 +195,11 @@ public class GameWorld {
         currentGameState = GameState.PAUSE;
         statesStack.push(currentGameState);
        // backgroundMusic.pause();
-        SoundHandler.pauseMusicBackground();
+      //  SoundHandler.pauseMusicBackground();
+        SoundHandler.pauseMusic(backgroundMusic);
        // menuMusic.play();
-        SoundHandler.playMusicMenu();
+     //   SoundHandler.playMusicMenu();
+        SoundHandler.playMusic(menuMusic);
     }
 
     /**
@@ -200,9 +208,11 @@ public class GameWorld {
     public void resume() {
         back();
        // menuMusic.stop();
-        SoundHandler.stopMusicMenu();
+      //  SoundHandler.stopMusicMenu();
+        SoundHandler.stopMusic(menuMusic);
        // backgroundMusic.play();
-        SoundHandler.playMusicBackground();
+       // SoundHandler.playMusicBackground();
+        SoundHandler.playMusic(backgroundMusic);
     }
 
     /**

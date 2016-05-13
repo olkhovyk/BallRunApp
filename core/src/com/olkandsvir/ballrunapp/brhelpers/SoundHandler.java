@@ -14,32 +14,9 @@ public class SoundHandler {
     private static Music menuMusic = AssetLoader.musicMenu;
 
     public SoundHandler() {
-        backgroundMusic.setLooping(true);
-        menuMusic.setLooping(true);
-    }
+      //  backgroundMusic.setLooping(true);
+     //   menuMusic.setLooping(true);
 
-    public static void playMusicMenu(){
-        menuMusic.play();
-    }
-
-    public static void stopMusicMenu(){
-        menuMusic.stop();
-    }
-
-    public static void pauseMusicMenu(){
-        menuMusic.pause();
-    }
-
-    public static void playMusicBackground(){
-        backgroundMusic.play();
-    }
-
-    public static void stopMusicBackground(){
-        backgroundMusic.stop();
-    }
-
-    public static void pauseMusicBackground(){
-        backgroundMusic.pause();
     }
 
     public static void playSoundScored(){
@@ -75,10 +52,24 @@ public class SoundHandler {
             musicOn = false;
             backgroundMusic.setVolume(0);
             menuMusic.setVolume(0);
+
         } else {
             musicOn = true;
             backgroundMusic.setVolume(1);
             menuMusic.setVolume(1);
+
         }
+    }
+
+    public static void playMusic(Music music){
+        music.play();
+    }
+
+    public static void stopMusic(Music music){
+        music.stop();
+    }
+
+    public static void pauseMusic(Music music){
+        music.pause();
     }
 }

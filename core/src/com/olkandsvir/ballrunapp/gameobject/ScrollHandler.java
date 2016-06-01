@@ -1,8 +1,6 @@
 package com.olkandsvir.ballrunapp.gameobject;
 
 import com.badlogic.gdx.utils.Array;
-import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
-import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 import com.olkandsvir.ballrunapp.brhelpers.SoundHandler;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
@@ -20,11 +18,9 @@ public class ScrollHandler {
     private static int barrierGap = 4 * GameScreen.SCREEN_HEIGHT / 10;
 
     private final GameWorld world;
-    private InputHandler handler;
 
     public ScrollHandler(GameWorld world) {
         this.world = world;
-
 
         barriers = new Array<Barrier>();
         for(int i = 0; i < ARRAY_SIZE; i++){

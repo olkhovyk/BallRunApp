@@ -2,10 +2,11 @@ package com.olkandsvir.ballrunapp.brhelpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameworld.GameWorld;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
+import com.olkandsvir.ballrunapp.ui.AbstractButton;
 import com.olkandsvir.ballrunapp.ui.SimpleButton;
+import com.olkandsvir.ballrunapp.ui.SimpleSwitchButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +20,16 @@ public class InputHandler implements InputProcessor {
     //игровой мир
     private GameWorld world;
 
-    //мячик игрока
-    private Ball ball;
-
     //кнопки меню
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
-    private List<SimpleButton> optionsMenuButtons;
+    private List<AbstractButton> optionsMenuButtons;
+    private List<SimpleButton> gameOverButtons;
 
     //все кнопки в игре
-    private SimpleButton startButton, optionsButton, highScoresButton, exitButton, pauseButton, resumeButton, backButton,
-             musicOffButton, soundOffButton;
+    private SimpleButton startButton, optionsButton, highScoresButton, exitButton, mainMenuButton, optionsPauseButton, highScoresPauseButton,
+            pauseButton, resumeButton, backButton, creditsButton, mainMenuGameOverButton, highScoresGameOverButton, tryAgainButton;
+    private SimpleSwitchButton musicOffButton, soundOffButton;
 
     //проигрыватель
     private SoundHandler soundHandler = new SoundHandler();
@@ -39,36 +39,56 @@ public class InputHandler implements InputProcessor {
 
         //инициализируем мир и мячик
         this.world = world;
-        this.ball = world.getBall();
 
         //создаем кнопки
-        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 8,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 12,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
-        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 8,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 12,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
-        highScoresButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 3 * GameScreen.SCREEN_HEIGHT / 8,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+        highScoresButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 5 * GameScreen.SCREEN_HEIGHT / 12,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
-        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 4 * GameScreen.SCREEN_HEIGHT / 8,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 7 * GameScreen.SCREEN_HEIGHT / 12,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
-        pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 4 / 5, 0,
-                GameScreen.SCREEN_WIDTH / 6, GameScreen.SCREEN_HEIGHT / 10,
-                AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
-        resumeButton = new SimpleButton(3 * GameScreen.SCREEN_WIDTH / 8, 5 * GameScreen.SCREEN_HEIGHT / 8,
+        mainMenuButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 6,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonMainMenu, AssetLoader.buttonMainMenuPressed);
+        optionsPauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 2 * GameScreen.SCREEN_HEIGHT / 6,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
+        highScoresPauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 6,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
+        pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 3 / 4, 0,
                 GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_WIDTH / 4,
+                AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
+        resumeButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 4 * GameScreen.SCREEN_HEIGHT / 6,
+                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_WIDTH / 3,
                 AssetLoader.buttonResume, AssetLoader.buttonResumePressed);
         backButton = new SimpleButton(4 * GameScreen.SCREEN_WIDTH / 5, 8 * GameScreen.SCREEN_HEIGHT / 9,
                 GameScreen.SCREEN_WIDTH / 5, GameScreen.SCREEN_HEIGHT / 9,
                 AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
-        musicOffButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 2 * GameScreen.SCREEN_HEIGHT / 8,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
+        musicOffButton = new SimpleSwitchButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 12,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
-        soundOffButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 3, 4 * GameScreen.SCREEN_HEIGHT / 8,
-                GameScreen.SCREEN_WIDTH / 3, GameScreen.SCREEN_HEIGHT / 12,
-                AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
+        soundOffButton = new SimpleSwitchButton(GameScreen.SCREEN_WIDTH / 4, 5 * GameScreen.SCREEN_HEIGHT / 12,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonSoundOn, AssetLoader.buttonSoundOff);
+        creditsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 7 * GameScreen.SCREEN_HEIGHT / 12,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonCredits, AssetLoader.buttonCreditsPressed);
+        mainMenuGameOverButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 2 * GameScreen.SCREEN_HEIGHT / 6,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonMainMenu, AssetLoader.buttonMainMenuPressed);
+        highScoresGameOverButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 6,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
+        tryAgainButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 4 * GameScreen.SCREEN_HEIGHT / 6,
+                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
+                AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
 
         //записываем кнопки в списки меню
         menuButtons = new ArrayList<SimpleButton>();
@@ -78,14 +98,20 @@ public class InputHandler implements InputProcessor {
         menuButtons.add(exitButton);
 
         pauseMenuButtons = new ArrayList<SimpleButton>();
-        pauseMenuButtons.add(optionsButton);
-        pauseMenuButtons.add(highScoresButton);
-        pauseMenuButtons.add(exitButton);
+        pauseMenuButtons.add(mainMenuButton);
+        pauseMenuButtons.add(optionsPauseButton);
+        pauseMenuButtons.add(highScoresPauseButton);
         pauseMenuButtons.add(resumeButton);
 
-        optionsMenuButtons = new ArrayList<SimpleButton>();
+        optionsMenuButtons = new ArrayList<AbstractButton>();
         optionsMenuButtons.add(musicOffButton);
         optionsMenuButtons.add(soundOffButton);
+        optionsMenuButtons.add(creditsButton);
+
+        gameOverButtons = new ArrayList<SimpleButton>();
+        gameOverButtons.add(mainMenuGameOverButton);
+        gameOverButtons.add(highScoresGameOverButton);
+        gameOverButtons.add(tryAgainButton);
     }
 
     /**
@@ -108,8 +134,16 @@ public class InputHandler implements InputProcessor {
      * Получает кнопки меню настроек
      * @return меню настроек
      */
-    public List<SimpleButton> getOptionsMenuButtons() {
+    public List<AbstractButton> getOptionsMenuButtons() {
         return optionsMenuButtons;
+    }
+
+    /**
+     * Получает кнопки меню в конце игры.
+     * @return меню конца игры
+     */
+    public List<SimpleButton> getGameOverButtons() {
+        return gameOverButtons;
     }
 
     /**
@@ -156,22 +190,25 @@ public class InputHandler implements InputProcessor {
         } else if (world.isOptions()) {
             musicOffButton.isTouchDown(screenX, screenY);
             soundOffButton.isTouchDown(screenX, screenY);
+            creditsButton.isTouchDown(screenX, screenY);
             backButton.isTouchDown(screenX, screenY);
         } else if (world.isBestResults()) {
             backButton.isTouchDown(screenX, screenY);
+        } else if (world.isAuthors()) {
+            backButton.isTouchDown(screenX, screenY);
         } else if(world.isRunning()) {
-            /* СТРАННО СЕБЯ ВЕДЕТ ...
-            ball.onClick(); */
             pauseButton.isTouchDown(screenX, screenY);
         } else if(world.isPaused()) {
+            mainMenuButton.isTouchDown(screenX, screenY);
+            optionsPauseButton.isTouchDown(screenX, screenY);
+            highScoresPauseButton.isTouchDown(screenX, screenY);
             resumeButton.isTouchDown(screenX, screenY);
-            optionsButton.isTouchDown(screenX, screenY);
-            highScoresButton.isTouchDown(screenX, screenY);
-            exitButton.isTouchDown(screenX, screenY);
         } else if (world.isReady()) {
             world.start();
         } else if (world.isGameOver() || world.isHighScore()) {
-            world.restart();
+            mainMenuGameOverButton.isTouchDown(screenX, screenY);
+            highScoresGameOverButton.isTouchDown(screenX, screenY);
+            tryAgainButton.isTouchDown(screenX, screenY);
         }
 
         return false;
@@ -198,22 +235,30 @@ public class InputHandler implements InputProcessor {
                 return true;
             }
         } else if (world.isOptions()) {
-            if(backButton.isTouchUp(screenX, screenY)) {
+            if (backButton.isTouchUp(screenX, screenY)) {
                 world.back();
                 return true;
-            } else if(musicOffButton.isTouchUp(screenX, screenY)){
-                soundHandler.setMusicOn();
+            } else if (musicOffButton.isTouchUp(screenX, screenY)){
+                soundHandler.changeMusic();
                 return true;
-            } else if(soundOffButton.isTouchUp(screenX, screenY)){
-                soundHandler.setSoundOn();
+            } else if (soundOffButton.isTouchUp(screenX, screenY)){
+                soundHandler.changeSound();
+                return true;
+            } else if (creditsButton.isTouchUp(screenX, screenY)) {
+                world.goToAuthors();
                 return true;
             }
         } else if (world.isBestResults()) {
-            if(backButton.isTouchUp(screenX, screenY)) {
+            if (backButton.isTouchUp(screenX, screenY)) {
                 world.back();
                 return true;
             }
-        } else if (world.isRunning()) {
+        } else if (world.isAuthors()) {
+            if (backButton.isTouchUp(screenX, screenY)) {
+                world.back();
+                return true;
+            }
+        }else if (world.isRunning()) {
             if (pauseButton.isTouchUp(screenX, screenY)) {
                 world.pause();
                 return true;
@@ -222,15 +267,23 @@ public class InputHandler implements InputProcessor {
             if(resumeButton.isTouchUp(screenX, screenY)) {
                 world.resume();
                 return true;
-            } else if (optionsButton.isTouchUp(screenX, screenY)) {
+            } else if (mainMenuButton.isTouchUp(screenX, screenY)) {
+                world.goToMainMenu();
+                return true;
+            } else if (optionsPauseButton.isTouchUp(screenX, screenY)) {
                 world.goToOptions();
                 return true;
-            } else if(highScoresButton.isTouchUp(screenX, screenY)) {
+            } else if(highScoresPauseButton.isTouchUp(screenX, screenY)) {
                 world.goToBestResults();
                 return true;
-            } else if(exitButton.isTouchUp(screenX, screenY)) {
-                Gdx.app.exit();
-                return true;
+            }
+        } else if (world.isGameOver() || world.isHighScore()) {
+            if (mainMenuGameOverButton.isTouchUp(screenX, screenY)) {
+                world.goToMainMenu();
+            } else if (highScoresGameOverButton.isTouchUp(screenX, screenY)) {
+                world.goToBestResults();
+            } else if(tryAgainButton.isTouchDown(screenX, screenY)) {
+                world.restart();
             }
         }
 
@@ -239,8 +292,6 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        // СТРАННО СЕБЯ ВЕДЕТ ...
-        // ball.onClick();
         return false;
     }
 

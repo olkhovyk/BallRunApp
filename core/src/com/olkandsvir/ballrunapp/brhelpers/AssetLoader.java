@@ -31,6 +31,14 @@ public class AssetLoader {
     public static Texture buttonResumePressed;
     public static Texture buttonBack;
     public static Texture buttonBackPressed;
+    public static Texture buttonSoundOn;
+    public static Texture buttonSoundOff;
+    public static Texture buttonMusicOn;
+    public static Texture buttonMusicOff;
+    public static Texture buttonCredits;
+    public static Texture buttonCreditsPressed;
+    public static Texture buttonMainMenu;
+    public static Texture buttonMainMenuPressed;
 
     public static Music musicMenu;
     public static Music musicBackground;
@@ -99,6 +107,24 @@ public class AssetLoader {
         buttonBackPressed = new Texture(Gdx.files.internal("data/btnBackPressed.png"));
         buttonBackPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+        buttonSoundOn = new Texture(Gdx.files.internal("data/btnSoundOn.png"));
+        buttonSoundOn.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonSoundOff = new Texture(Gdx.files.internal("data/btnSoundOff.png"));
+        buttonSoundOff.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonCredits = new Texture(Gdx.files.internal("data/btnCredits.png"));
+        buttonCredits.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonCreditsPressed = new Texture(Gdx.files.internal("data/btnCreditsPressed.png"));
+        buttonCreditsPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonMainMenu = new Texture(Gdx.files.internal("data/btnMainMenu.png"));
+        buttonMainMenu.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonMainMenuPressed = new Texture(Gdx.files.internal("data/btnMainMenuPressed.png"));
+        buttonMainMenuPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         musicMenu = Gdx.audio.newMusic(Gdx.files.internal("data/sleepingfairy.wav"));
         musicBackground = Gdx.audio.newMusic(Gdx.files.internal("data/background.wav"));
 
@@ -139,6 +165,12 @@ public class AssetLoader {
         buttonResumePressed.dispose();
         buttonBack.dispose();
         buttonBackPressed.dispose();
+        buttonSoundOn.dispose();
+        buttonSoundOff.dispose();
+        buttonMainMenu.dispose();
+        buttonMainMenuPressed.dispose();
+        buttonCredits.dispose();
+        buttonCreditsPressed.dispose();
         musicMenu.dispose();
         musicBackground.dispose();
         soundScored.dispose();

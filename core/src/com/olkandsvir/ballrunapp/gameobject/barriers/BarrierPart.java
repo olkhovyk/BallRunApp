@@ -91,8 +91,7 @@ public class BarrierPart {
     }
 
     public void moveHorizontally(float delta, boolean toTheRight) {
-        //как определить скорость?
-        horizontalSpeed.x = barrier.getSpeed().y * GameScreen.SCREEN_WIDTH / 750000 * GameScreen.SCREEN_HEIGHT;
+        horizontalSpeed.x = barrier.getSpeed().y / 4;
 
         if(orientation == partOrientation.LEFT) {
             moveLeftPart(delta);
@@ -144,9 +143,5 @@ public class BarrierPart {
 
     public partOrientation getOrientation() {
         return orientation;
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
     }
 }

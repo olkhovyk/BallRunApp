@@ -1,10 +1,8 @@
 package com.olkandsvir.ballrunapp.gameworld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.audio.Music;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
-import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
 import com.olkandsvir.ballrunapp.brhelpers.SoundHandler;
 import com.olkandsvir.ballrunapp.gameobject.Ball;
 import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
@@ -111,14 +109,12 @@ public class GameWorld {
             //ПЕРЕНЕСТИ ОКОНЧАТЕЛЬНО В InputHandler
             //отвечает за передвижение мяча
             if (Gdx.input.isTouched() &&
-                    !((Gdx.input.getX() > GameScreen.SCREEN_WIDTH * 4 / 5) && (Gdx.input.getY() < GameScreen.SCREEN_HEIGHT / 9))) {
+                    !((Gdx.input.getX() > GameScreen.SCREEN_WIDTH * 3 / 4) && (Gdx.input.getY() < GameScreen.SCREEN_HEIGHT / 8))) {
                 ball.onClick();
             }
 
             //проверяет столкновения
             if (handler.collides(ball)) {
-             //   backgroundMusic.stop();
-               // SoundHandler.stopMusicBackground();
                 SoundHandler.stopMusic(backgroundMusic);
 
                 handler.stop();
@@ -135,8 +131,6 @@ public class GameWorld {
 
                 }
 
-                // menuMusic.play();
-               // SoundHandler.playMusicMenu();
                 SoundHandler.playMusic(menuMusic);
             }
         }
@@ -147,6 +141,16 @@ public class GameWorld {
      */
     public void addScore() {
         score++;
+    }
+
+    /**
+     * Переход в главное меню.
+     */
+    public void goToMainMenu() {
+        handler.onRestart();
+        statesStack.clear();
+        currentGameState = GameState.MENU;
+        statesStack.push(currentGameState);
     }
 
     /**
@@ -162,6 +166,14 @@ public class GameWorld {
      */
     public void goToBestResults() {
         currentGameState = GameState.BEST_RESULTS;
+        statesStack.push(currentGameState);
+    }
+
+    /**
+     * Переход к авторам.
+     */
+    public void goToAuthors() {
+        currentGameState = GameState.AUTHORS;
         statesStack.push(currentGameState);
     }
 
@@ -194,11 +206,7 @@ public class GameWorld {
     public void pause() {
         currentGameState = GameState.PAUSE;
         statesStack.push(currentGameState);
-       // backgroundMusic.pause();
-      //  SoundHandler.pauseMusicBackground();
         SoundHandler.pauseMusic(backgroundMusic);
-       // menuMusic.play();
-     //   SoundHandler.playMusicMenu();
         SoundHandler.playMusic(menuMusic);
     }
 
@@ -207,11 +215,7 @@ public class GameWorld {
      */
     public void resume() {
         back();
-       // menuMusic.stop();
-      //  SoundHandler.stopMusicMenu();
         SoundHandler.stopMusic(menuMusic);
-       // backgroundMusic.play();
-       // SoundHandler.playMusicBackground();
         SoundHandler.playMusic(backgroundMusic);
     }
 
@@ -283,8 +287,4 @@ public class GameWorld {
     public int getScore() {
         return score;
     }
-
-
-    
-
 }

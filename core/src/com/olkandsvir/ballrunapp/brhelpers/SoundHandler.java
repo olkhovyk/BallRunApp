@@ -14,9 +14,6 @@ public class SoundHandler {
     private static Music menuMusic = AssetLoader.musicMenu;
 
     public SoundHandler() {
-      //  backgroundMusic.setLooping(true);
-     //   menuMusic.setLooping(true);
-
     }
 
     public static void playSoundScored(){
@@ -43,21 +40,19 @@ public class SoundHandler {
         }
     }
 
-    public void setSoundOn(){
+    public void changeSound(){
         soundOn = !soundOn;
     }
 
-    public void setMusicOn(){
+    public void changeMusic(){
         if(musicOn){
             musicOn = false;
             backgroundMusic.setVolume(0);
             menuMusic.setVolume(0);
-
         } else {
             musicOn = true;
             backgroundMusic.setVolume(1);
             menuMusic.setVolume(1);
-
         }
     }
 

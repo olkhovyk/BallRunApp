@@ -17,9 +17,9 @@ import com.olkandsvir.ballrunapp.gameobject.ScrollHandler;
 import com.olkandsvir.ballrunapp.gameobject.barriers.Barrier;
 import com.olkandsvir.ballrunapp.gameobject.barriers.BarrierPart;
 import com.olkandsvir.ballrunapp.screens.GameScreen;
+import com.olkandsvir.ballrunapp.ui.AbstractButton;
 import com.olkandsvir.ballrunapp.ui.SimpleButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,13 +60,12 @@ public class GameRenderer {
     //кнопки меню
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> pauseMenuButtons;
-    private List<SimpleButton> optionsMenuButtons;
+    private List<AbstractButton> optionsMenuButtons;
+    private List<SimpleButton> gameOverMenuButtons;
 
     //кнопки
     private SimpleButton pauseButton;
     private SimpleButton backButton;
-
-    private Slider slider;
 
     //конструктор
     public GameRenderer(GameWorld world) {
@@ -102,6 +101,7 @@ public class GameRenderer {
         optionsMenuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getOptionsMenuButtons();
         pauseMenuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getPauseMenuButtons();
         pauseButton = (((InputHandler) Gdx.input.getInputProcessor()).getPauseButton());
+        gameOverMenuButtons = (((InputHandler)Gdx.input.getInputProcessor()).getGameOverButtons());
         backButton = (((InputHandler) Gdx.input.getInputProcessor()).getBackButton());
         ball = world.getBall();
         handler = world.getHandler();
@@ -215,16 +215,11 @@ public class GameRenderer {
      * Рисуем настройки
      */
     private void drawIfOptions() {
-        //TODO
         batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         backButton.draw(batcher);
-        for(SimpleButton button : optionsMenuButtons){
+        for(AbstractButton button : optionsMenuButtons){
             button.draw(batcher);
         }
-
-
-
-
     }
 
     /**
@@ -234,7 +229,7 @@ public class GameRenderer {
         batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         backButton.draw(batcher);
 
-        font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT / 10);
+        font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT / 10);
         font.draw(batcher, "1 :  " + AssetLoader.preferences.getInteger("resultsOne"),
                 GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
         font.draw(batcher, "2 :  " + AssetLoader.preferences.getInteger("resultsTwo"),
@@ -251,8 +246,18 @@ public class GameRenderer {
      * Рисуем страницу авторов
      */
     private void drawIfAuthors() {
-        //TODO
         batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+        font.draw(batcher, "Hello!", GameScreen.SCREEN_WIDTH * 4 / 10, GameScreen.SCREEN_HEIGHT / 10);
+        font.draw(batcher, "Here you can find", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 4 / 20);
+        font.draw(batcher, "the list of game's creators!", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 5 / 20);
+        font.draw(batcher, "Programmers:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 5 / 15);
+        font.draw(batcher, "Vsevolod Svirin", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 15);
+        font.draw(batcher, "Ilya Olkhovik", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 15);
+        font.draw(batcher, "Artist:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 8 / 15);
+        font.draw(batcher, "Daniel Bulavsky", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 9 / 15);
+        font.draw(batcher, "Thank you for choosing", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 14 / 20);
+        font.draw(batcher, "our app! Cheers!", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 15 / 20);
+        backButton.draw(batcher);
     }
 
     /**
@@ -279,20 +284,20 @@ public class GameRenderer {
      */
     private void drawIfGameOver() {
         batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
-        if (world.isGameOver()) {
-            font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
-            font.draw(batcher, "High Score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 20);
-            String highScore = AssetLoader.getHighScore() + "";
-            font.draw(batcher, highScore, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 8 / 20);
-        } else {
-            font.draw(batcher, "Congratulations!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
-            font.draw(batcher, "High Score!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 20);
+        for (SimpleButton button : gameOverMenuButtons) {
+            button.draw(batcher);
         }
 
-        font.draw(batcher, "Your score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 9 / 20);
+        if (world.isGameOver()) {
+            font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT / 10);
+        } else {
+            font.draw(batcher, "High Score!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT / 10);
+            font.draw(batcher, "Congratulations!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
+        }
+
+        font.draw(batcher, "Your score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 5 / 20);
         String score = world.getScore() + "";
-        font.draw(batcher, score, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 10 / 20);
-        font.draw(batcher, "Try again?", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 11 / 20);
+        font.draw(batcher, score, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
     }
 
     /**
@@ -324,7 +329,6 @@ public class GameRenderer {
 
         //рисуем мячик
         drawBall();
-
 
         //рисуем оставшуюся игру в зависимости от ее нынешнего состояния
         if(world.isMenu()) {

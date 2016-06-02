@@ -39,6 +39,8 @@ public class AssetLoader {
     public static Texture buttonCreditsPressed;
     public static Texture buttonMainMenu;
     public static Texture buttonMainMenuPressed;
+    public static Texture buttonTryAgain;
+    public static Texture buttonTryAgainPressed;
 
     public static Music musicMenu;
     public static Music musicBackground;
@@ -113,6 +115,12 @@ public class AssetLoader {
         buttonSoundOff = new Texture(Gdx.files.internal("data/btnSoundOff.png"));
         buttonSoundOff.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+        buttonMusicOn = new Texture(Gdx.files.internal("data/btnMusicOn.png"));
+        buttonMusicOn.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonMusicOff = new Texture(Gdx.files.internal("data/btnMusicOff.png"));
+        buttonMusicOff.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         buttonCredits = new Texture(Gdx.files.internal("data/btnCredits.png"));
         buttonCredits.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
@@ -124,6 +132,12 @@ public class AssetLoader {
 
         buttonMainMenuPressed = new Texture(Gdx.files.internal("data/btnMainMenuPressed.png"));
         buttonMainMenuPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonTryAgain = new Texture(Gdx.files.internal("data/btnTryAgain.png"));
+        buttonTryAgain.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        buttonTryAgainPressed = new Texture(Gdx.files.internal("data/btnTryAgainPressed.png"));
+        buttonTryAgainPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         musicMenu = Gdx.audio.newMusic(Gdx.files.internal("data/sleepingfairy.wav"));
         musicBackground = Gdx.audio.newMusic(Gdx.files.internal("data/background.wav"));
@@ -190,6 +204,8 @@ public class AssetLoader {
         buttonBackPressed.dispose();
         buttonSoundOn.dispose();
         buttonSoundOff.dispose();
+        buttonMusicOn.dispose();
+        buttonMusicOff.dispose();
         buttonMainMenu.dispose();
         buttonMainMenuPressed.dispose();
         buttonCredits.dispose();
@@ -260,12 +276,12 @@ public class AssetLoader {
         preferences.flush();
     }
 
-    private static void swap(String str1, String str2) {
+/*    private static void swap(String str1, String str2) {
         int tmp = preferences.getInteger(str1);
         preferences.putInteger(str1, preferences.getInteger(str2));
         preferences.putInteger(str2, tmp);
     }
-
+*/
     public static int getHighScore() {
         //return preferences.getInteger("resultsOne");
         return preferences.getInteger("highScore");

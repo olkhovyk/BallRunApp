@@ -73,7 +73,7 @@ public class InputHandler implements InputProcessor {
                 AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
         musicOffButton = new SimpleSwitchButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
-                AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
+                AssetLoader.buttonMusicOn, AssetLoader.buttonMusicOff);
         soundOffButton = new SimpleSwitchButton(GameScreen.SCREEN_WIDTH / 4, 5 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonSoundOn, AssetLoader.buttonSoundOff);
@@ -88,7 +88,7 @@ public class InputHandler implements InputProcessor {
                 AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
         tryAgainButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 4 * GameScreen.SCREEN_HEIGHT / 6,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
-                AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
+                AssetLoader.buttonTryAgain, AssetLoader.buttonTryAgainPressed);
 
         //записываем кнопки в списки меню
         menuButtons = new ArrayList<SimpleButton>();

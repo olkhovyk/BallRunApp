@@ -136,12 +136,35 @@ public class AssetLoader {
         fontFile = Gdx.files.internal("data/Ilya_font2.ttf");
 
         preferences = Gdx.app.getPreferences("BallRunApp");
-
+        /*
         if(!preferences.contains("resultsOne")){
             preferences.putInteger("resultsOne", 0);
             preferences.putInteger("resultsTwo", 0);
             preferences.putInteger("resultsThree", 0);
             preferences.putInteger("resultsFour", 0);
+            preferences.putInteger("resultsFive", 0);
+        } */
+        if (!preferences.contains("highScore")) {
+            preferences.putInteger("highScore", 0);
+        }
+
+
+
+        //Быдлокодищеее
+        if(!preferences.contains("resultsOne")){
+                       preferences.putInteger("resultsOne", preferences.getInteger("highScore"));
+                    }
+               if(!preferences.contains("resultsTwo")){
+
+            preferences.putInteger("resultsTwo", 0);
+                    }
+               if(!preferences.contains("resultsThree")){
+            preferences.putInteger("resultsThree", 0);
+               }
+               if(!preferences.contains("resultsFour")){
+            preferences.putInteger("resultsFour", 0);
+                    }
+                if(!preferences.contains("resultsFive")){
             preferences.putInteger("resultsFive", 0);
         }
     }
@@ -178,7 +201,7 @@ public class AssetLoader {
         soundDefeat.dispose();
         soundHighScore.dispose();
     }
-
+    /*
     public static void setHighScore(int val) {
 
         if(val > preferences.getInteger("resultsFive")) {
@@ -203,6 +226,39 @@ public class AssetLoader {
 
         preferences.flush();
     }
+    */
+    public static void setHighScore(int val){
+        if(val > preferences.getInteger("highScore")){
+            preferences.putInteger("highScore", val);
+        }
+        if(val > preferences.getInteger("resultsOne")){
+            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
+            preferences.putInteger("resultsFour", preferences.getInteger("resultsThree"));
+            preferences.putInteger("resultsThree", preferences.getInteger("resultsTwo"));
+            preferences.putInteger("resultsTwo", preferences.getInteger("resultsOne"));
+            preferences.putInteger("resultsOne",val);
+        }
+        if(val > preferences.getInteger("resultsTwo") && val < preferences.getInteger("resultsOne")){
+            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
+            preferences.putInteger("resultsFour", preferences.getInteger("resultsThree"));
+            preferences.putInteger("resultsThree", preferences.getInteger("resultsTwo"));
+            preferences.putInteger("resultsTwo", val);
+        }
+        if(val > preferences.getInteger("resultsThree") && val < preferences.getInteger("resultsTwo")){
+            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
+            preferences.putInteger("resultsFour", preferences.getInteger("resultsThree"));
+            preferences.putInteger("resultsThree", val);
+
+        }
+        if(val > preferences.getInteger("resultsFour") && val < preferences.getInteger("resultsThree")){
+            preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
+            preferences.putInteger("resultsFour", val);
+        }
+        if(val > preferences.getInteger("resultsFive") && val < preferences.getInteger("resultsFive")){
+            preferences.putInteger("resultsFive", val);
+        }
+        preferences.flush();
+    }
 
     private static void swap(String str1, String str2) {
         int tmp = preferences.getInteger(str1);
@@ -211,7 +267,8 @@ public class AssetLoader {
     }
 
     public static int getHighScore() {
-        return preferences.getInteger("resultsOne");
+        //return preferences.getInteger("resultsOne");
+        return preferences.getInteger("highScore");
     }
 
     public static int getLastHighScore() {

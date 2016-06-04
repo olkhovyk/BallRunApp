@@ -44,9 +44,9 @@ public class GameWorld {
     //конструктор
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
-        this.handler = new ScrollHandler(this);
-        this.backgroundMusic = AssetLoader.musicBackground;
-        this.menuMusic = AssetLoader.musicMenu;
+        handler = new ScrollHandler(this);
+        backgroundMusic = AssetLoader.musicBackground;
+        menuMusic = AssetLoader.musicMenu;
 
         score = 0;
 
@@ -148,6 +148,7 @@ public class GameWorld {
      */
     public void goToMainMenu() {
         handler.onRestart();
+        resetScore();
         statesStack.clear();
         currentGameState = GameState.MENU;
         statesStack.push(currentGameState);
@@ -225,7 +226,7 @@ public class GameWorld {
     public void restart() {
         statesStack.pop();
         back();
-        score = 0;
+        resetScore();
         ball.onRestart();
         handler.onRestart();
     }
@@ -236,6 +237,13 @@ public class GameWorld {
     public void back() {
         statesStack.pop();
         currentGameState = statesStack.peek();
+    }
+
+    /**
+     * Сбрасывает счет.
+     */
+    public void resetScore() {
+        score = 0;
     }
 
     //Следующие методы проверяют состояние игры или получают какие-то поля мира.

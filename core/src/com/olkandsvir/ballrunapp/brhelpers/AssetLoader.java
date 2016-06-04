@@ -210,6 +210,8 @@ public class AssetLoader {
         buttonMainMenuPressed.dispose();
         buttonCredits.dispose();
         buttonCreditsPressed.dispose();
+        buttonTryAgain.dispose();
+        buttonTryAgainPressed.dispose();
         musicMenu.dispose();
         musicBackground.dispose();
         soundScored.dispose();

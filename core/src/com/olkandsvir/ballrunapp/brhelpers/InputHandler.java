@@ -282,7 +282,7 @@ public class InputHandler implements InputProcessor {
                 world.goToMainMenu();
             } else if (highScoresGameOverButton.isTouchUp(screenX, screenY)) {
                 world.goToBestResults();
-            } else if(tryAgainButton.isTouchDown(screenX, screenY)) {
+            } else if(tryAgainButton.isTouchUp(screenX, screenY)) {
                 world.restart();
             }
         }

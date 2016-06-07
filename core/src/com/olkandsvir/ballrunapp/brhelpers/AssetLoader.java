@@ -67,28 +67,28 @@ public class AssetLoader {
         barrier = new Texture(Gdx.files.internal("data/rect.png"));
         barrier.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonStart = new Texture(Gdx.files.internal("data/btnStart.png"));
+        buttonStart = new Texture(Gdx.files.internal("data/texture_button/btnStartText_text.png"));
         buttonStart.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonStartPressed = new Texture(Gdx.files.internal("data/btnStartPressed.png"));
+        buttonStartPressed = new Texture(Gdx.files.internal("data/texture_button/btnStartTextPressed_text.png"));
         buttonStartPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonOptions = new Texture(Gdx.files.internal("data/btnOptions.png"));
+        buttonOptions = new Texture(Gdx.files.internal("data/texture_button/btnOptionsText_text.png"));
         buttonOptions.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonOptionsPressed = new Texture(Gdx.files.internal("data/btnOptionsPressed.png"));
+        buttonOptionsPressed = new Texture(Gdx.files.internal("data/texture_button/btnOptionsTextPressed_text.png"));
         buttonOptionsPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonHighScores = new Texture(Gdx.files.internal("data/btnHighScores.png"));
+        buttonHighScores = new Texture(Gdx.files.internal("data/texture_button/btnHighScoresText_text.png"));
         buttonHighScores.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonHighScoresPressed = new Texture(Gdx.files.internal("data/btnHighScoresPressed.png"));
+        buttonHighScoresPressed = new Texture(Gdx.files.internal("data/texture_button/btnHighScoresTextPressed_text.png"));
         buttonHighScoresPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonExit = new Texture(Gdx.files.internal("data/btnExit.png"));
+        buttonExit = new Texture(Gdx.files.internal("data/texture_button/btnExitText_text.png"));
         buttonExit.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonExitPressed = new Texture(Gdx.files.internal("data/btnExitPressed.png"));
+        buttonExitPressed = new Texture(Gdx.files.internal("data/texture_button/btnExitTextPressed_text.png"));
         buttonExitPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         buttonPause = new Texture(Gdx.files.internal("data/btnPause.png"));
@@ -97,10 +97,10 @@ public class AssetLoader {
         buttonPausePressed = new Texture(Gdx.files.internal("data/btnPausePressed.png"));
         buttonPausePressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonResume = new Texture(Gdx.files.internal("data/btnResume.png"));
+        buttonResume = new Texture(Gdx.files.internal("data/texture_button/btnPlayText.png"));
         buttonResume.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonResumePressed = new Texture(Gdx.files.internal("data/btnResumePressed.png"));
+        buttonResumePressed = new Texture(Gdx.files.internal("data/texture_button/btnPlayTextPressed.png"));
         buttonResumePressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         buttonBack = new Texture(Gdx.files.internal("data/btnBack.png"));
@@ -109,34 +109,34 @@ public class AssetLoader {
         buttonBackPressed = new Texture(Gdx.files.internal("data/btnBackPressed.png"));
         buttonBackPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonSoundOn = new Texture(Gdx.files.internal("data/btnSoundOn.png"));
+        buttonSoundOn = new Texture(Gdx.files.internal("data/texture_button/SoundOn_text.png"));
         buttonSoundOn.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonSoundOff = new Texture(Gdx.files.internal("data/btnSoundOff.png"));
+        buttonSoundOff = new Texture(Gdx.files.internal("data/texture_button/SoundOff_text.png"));
         buttonSoundOff.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonMusicOn = new Texture(Gdx.files.internal("data/btnMusicOn.png"));
+        buttonMusicOn = new Texture(Gdx.files.internal("data/texture_button/MusicOn_text.png"));
         buttonMusicOn.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonMusicOff = new Texture(Gdx.files.internal("data/btnMusicOff.png"));
+        buttonMusicOff = new Texture(Gdx.files.internal("data/texture_button/MusicOff_text.png"));
         buttonMusicOff.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonCredits = new Texture(Gdx.files.internal("data/btnCredits.png"));
+        buttonCredits = new Texture(Gdx.files.internal("data/texture_button/btnCredits_text.png"));
         buttonCredits.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonCreditsPressed = new Texture(Gdx.files.internal("data/btnCreditsPressed.png"));
+        buttonCreditsPressed = new Texture(Gdx.files.internal("data/texture_button/btnCreditsPressed_text.png"));
         buttonCreditsPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonMainMenu = new Texture(Gdx.files.internal("data/btnMainMenu.png"));
+        buttonMainMenu = new Texture(Gdx.files.internal("data/texture_button/btnNewMainMenu.png"));
         buttonMainMenu.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonMainMenuPressed = new Texture(Gdx.files.internal("data/btnMainMenuPressed.png"));
+        buttonMainMenuPressed = new Texture(Gdx.files.internal("data/texture_button/btnNewMainMenuPressed.png"));
         buttonMainMenuPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonTryAgain = new Texture(Gdx.files.internal("data/btnTryAgain.png"));
+        buttonTryAgain = new Texture(Gdx.files.internal("data/texture_button/btnTryAgain.png"));
         buttonTryAgain.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        buttonTryAgainPressed = new Texture(Gdx.files.internal("data/btnTryAgainPressed.png"));
+        buttonTryAgainPressed = new Texture(Gdx.files.internal("data/texture_button/btnTryAgainPressed.png"));
         buttonTryAgainPressed.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         musicMenu = Gdx.audio.newMusic(Gdx.files.internal("data/sleepingfairy.wav"));

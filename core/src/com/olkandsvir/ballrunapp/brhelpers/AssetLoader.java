@@ -147,7 +147,7 @@ public class AssetLoader {
         soundDefeat = Gdx.audio.newSound(Gdx.files.internal("data/defeat.wav"));
         soundHighScore = Gdx.audio.newSound(Gdx.files.internal("data/highscore.wav"));
 
-        fontFile = Gdx.files.internal("data/Ilya_font2.ttf");
+        fontFile = Gdx.files.internal("data/segoesc.ttf");
 
         preferences = Gdx.app.getPreferences("BallRunApp");
         /*
@@ -272,7 +272,7 @@ public class AssetLoader {
             preferences.putInteger("resultsFive", preferences.getInteger("resultsFour"));
             preferences.putInteger("resultsFour", val);
         }
-        if(val > preferences.getInteger("resultsFive") && val < preferences.getInteger("resultsFive")){
+        if(val > preferences.getInteger("resultsFive") && val < preferences.getInteger("resultsFour")){
             preferences.putInteger("resultsFive", val);
         }
         preferences.flush();

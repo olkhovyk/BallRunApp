@@ -27,7 +27,7 @@ public class InputHandler implements InputProcessor {
     private List<SimpleButton> gameOverButtons;
 
     //все кнопки в игре
-    private SimpleButton startButton, optionsButton, highScoresButton, exitButton, mainMenuButton, optionsPauseButton, highScoresPauseButton,
+    private SimpleButton startButton, optionsButton, highScoresButton, exitButton, mainMenuButton,
             pauseButton, resumeButton, backButton, creditsButton, mainMenuGameOverButton, highScoresGameOverButton, tryAgainButton;
     private SimpleSwitchButton musicOffButton, soundOffButton;
 
@@ -41,27 +41,21 @@ public class InputHandler implements InputProcessor {
         this.world = world;
 
         //создаем кнопки
-        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 12,
+        startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 6,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonStart, AssetLoader.buttonStartPressed);
-        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 12,
+        optionsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 2 * GameScreen.SCREEN_HEIGHT / 6,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
-        highScoresButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 5 * GameScreen.SCREEN_HEIGHT / 12,
+        highScoresButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 6,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
-        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 7 * GameScreen.SCREEN_HEIGHT / 12,
+        exitButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 4 * GameScreen.SCREEN_HEIGHT / 6,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonExit, AssetLoader.buttonExitPressed);
         mainMenuButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 6,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonMainMenu, AssetLoader.buttonMainMenuPressed);
-        optionsPauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 2 * GameScreen.SCREEN_HEIGHT / 6,
-                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
-                AssetLoader.buttonOptions, AssetLoader.buttonOptionsPressed);
-        highScoresPauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 6,
-                GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
-                AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
         pauseButton = new SimpleButton(GameScreen.SCREEN_WIDTH * 3 / 4, 0,
                 GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_WIDTH / 4,
                 AssetLoader.buttonPause, AssetLoader.buttonPausePressed);
@@ -80,13 +74,13 @@ public class InputHandler implements InputProcessor {
         creditsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 7 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonCredits, AssetLoader.buttonCreditsPressed);
-        mainMenuGameOverButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 2 * GameScreen.SCREEN_HEIGHT / 6,
+        mainMenuGameOverButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 5 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonMainMenu, AssetLoader.buttonMainMenuPressed);
-        highScoresGameOverButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 6,
+        highScoresGameOverButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 7 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonHighScores, AssetLoader.buttonHighScoresPressed);
-        tryAgainButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 4 * GameScreen.SCREEN_HEIGHT / 6,
+        tryAgainButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 9 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonTryAgain, AssetLoader.buttonTryAgainPressed);
 
@@ -99,8 +93,8 @@ public class InputHandler implements InputProcessor {
 
         pauseMenuButtons = new ArrayList<SimpleButton>();
         pauseMenuButtons.add(mainMenuButton);
-        pauseMenuButtons.add(optionsPauseButton);
-        pauseMenuButtons.add(highScoresPauseButton);
+        pauseMenuButtons.add(optionsButton);
+        pauseMenuButtons.add(highScoresButton);
         pauseMenuButtons.add(resumeButton);
 
         optionsMenuButtons = new ArrayList<AbstractButton>();
@@ -200,8 +194,8 @@ public class InputHandler implements InputProcessor {
             pauseButton.isTouchDown(screenX, screenY);
         } else if(world.isPaused()) {
             mainMenuButton.isTouchDown(screenX, screenY);
-            optionsPauseButton.isTouchDown(screenX, screenY);
-            highScoresPauseButton.isTouchDown(screenX, screenY);
+            optionsButton.isTouchDown(screenX, screenY);
+            highScoresButton.isTouchDown(screenX, screenY);
             resumeButton.isTouchDown(screenX, screenY);
         } else if (world.isReady()) {
             world.start();
@@ -270,10 +264,10 @@ public class InputHandler implements InputProcessor {
             } else if (mainMenuButton.isTouchUp(screenX, screenY)) {
                 world.goToMainMenu();
                 return true;
-            } else if (optionsPauseButton.isTouchUp(screenX, screenY)) {
+            } else if (optionsButton.isTouchUp(screenX, screenY)) {
                 world.goToOptions();
                 return true;
-            } else if(highScoresPauseButton.isTouchUp(screenX, screenY)) {
+            } else if(highScoresButton.isTouchUp(screenX, screenY)) {
                 world.goToBestResults();
                 return true;
             }

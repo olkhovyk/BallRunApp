@@ -148,6 +148,7 @@ public class GameWorld {
      */
     public void goToMainMenu() {
         handler.onRestart();
+        ball.onRestart();
         resetScore();
         statesStack.clear();
         currentGameState = GameState.MENU;

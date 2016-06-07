@@ -176,8 +176,6 @@ public class GameRenderer {
 
     }
 
-
-
     /**
      * Рисуем счет
      */
@@ -206,6 +204,7 @@ public class GameRenderer {
      * Рисуем меню.
      */
     private void drawIfMenu() {
+        batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         for(SimpleButton button : menuButtons) {
             button.draw(batcher);
         }
@@ -229,17 +228,17 @@ public class GameRenderer {
         batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
         backButton.draw(batcher);
 
-        font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT / 10);
+        font.draw(batcher, "Best results:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
         font.draw(batcher, "1 :  " + AssetLoader.preferences.getInteger("resultsOne"),
-                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
-        font.draw(batcher, "2 :  " + AssetLoader.preferences.getInteger("resultsTwo"),
                 GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 3 / 10);
-        font.draw(batcher, "3 :  " + AssetLoader.preferences.getInteger("resultsThree"),
+        font.draw(batcher, "2 :  " + AssetLoader.preferences.getInteger("resultsTwo"),
                 GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 4 / 10);
-        font.draw(batcher, "4 :  " + AssetLoader.preferences.getInteger("resultsFour"),
+        font.draw(batcher, "3 :  " + AssetLoader.preferences.getInteger("resultsThree"),
                 GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 5 / 10);
-        font.draw(batcher, "5 :  " + AssetLoader.preferences.getInteger("resultsFive"),
+        font.draw(batcher, "4 :  " + AssetLoader.preferences.getInteger("resultsFour"),
                 GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 6 / 10);
+        font.draw(batcher, "5 :  " + AssetLoader.preferences.getInteger("resultsFive"),
+                GameScreen.SCREEN_WIDTH * 2/ 10, GameScreen.SCREEN_HEIGHT * 7 / 10);
     }
 
     /**
@@ -247,16 +246,15 @@ public class GameRenderer {
      */
     private void drawIfAuthors() {
         batcher.draw(background2, 0, 0, GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
-        font.draw(batcher, "Hello!", GameScreen.SCREEN_WIDTH * 4 / 10, GameScreen.SCREEN_HEIGHT / 10);
-        font.draw(batcher, "Here you can find", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 4 / 20);
-        font.draw(batcher, "the list of game's creators!", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 5 / 20);
-        font.draw(batcher, "Programmers:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 5 / 15);
-        font.draw(batcher, "Vsevolod Svirin", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 15);
-        font.draw(batcher, "Ilya Olkhovik", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 7 / 15);
-        font.draw(batcher, "Artist:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 8 / 15);
-        font.draw(batcher, "Daniel Bulavsky", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 9 / 15);
-        font.draw(batcher, "Thank you for choosing", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 14 / 20);
-        font.draw(batcher, "our app! Cheers!", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 15 / 20);
+        font.draw(batcher, "Credits", GameScreen.SCREEN_WIDTH * 4 / 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
+        font.draw(batcher, "Programming:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
+        font.draw(batcher, "Vsevolod Svirin", GameScreen.SCREEN_WIDTH * 5 / 20, GameScreen.SCREEN_HEIGHT * 7 / 20);
+        font.draw(batcher, "Ilya Olkhovik", GameScreen.SCREEN_WIDTH * 5 / 20, GameScreen.SCREEN_HEIGHT * 8 / 20);
+        font.draw(batcher, "Design:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 10 / 20);
+        font.draw(batcher, "Daniel Bulavsky", GameScreen.SCREEN_WIDTH * 5 / 20, GameScreen.SCREEN_HEIGHT * 11 / 20);
+        font.draw(batcher, "Thank you for", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 13 / 20);
+        font.draw(batcher, "choosing our app!", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 14 / 20);
+        font.draw(batcher, "Cheers!", GameScreen.SCREEN_WIDTH * 4 / 10, GameScreen.SCREEN_HEIGHT * 16 / 20);
         backButton.draw(batcher);
     }
 
@@ -289,15 +287,14 @@ public class GameRenderer {
         }
 
         if (world.isGameOver()) {
-            font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT / 10);
+            font.draw(batcher, "Game Over", GameScreen.SCREEN_WIDTH * 4 / 15, GameScreen.SCREEN_HEIGHT * 3 / 15);
         } else {
-            font.draw(batcher, "High Score!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT / 10);
-            font.draw(batcher, "Congratulations!", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 2 / 10);
+            font.draw(batcher, "High Score!", GameScreen.SCREEN_WIDTH * 4 / 15, GameScreen.SCREEN_HEIGHT * 3 / 15);
+            font.draw(batcher, "Congratulations!", GameScreen.SCREEN_WIDTH * 4 / 15, GameScreen.SCREEN_HEIGHT * 4 / 15);
         }
 
-        font.draw(batcher, "Your score:", GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 5 / 20);
         String score = world.getScore() + "";
-        font.draw(batcher, score, GameScreen.SCREEN_WIDTH * 3 / 10, GameScreen.SCREEN_HEIGHT * 6 / 20);
+        font.draw(batcher, "Your score:  " + score, GameScreen.SCREEN_WIDTH * 4 / 15, GameScreen.SCREEN_HEIGHT * 5 / 15);
     }
 
     /**

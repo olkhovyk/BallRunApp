@@ -7,8 +7,8 @@ import com.badlogic.gdx.audio.Music;
  * @since 11.05.2016.
  */
 public class SoundHandler {
-    private static boolean soundOn = true;
-    private static boolean musicOn = true;
+    private static boolean soundOn = AssetLoader.isSoundOn();
+    private static boolean musicOn = AssetLoader.isMusicOn();
 
     private static Music backgroundMusic = AssetLoader.musicBackground;
     private static Music menuMusic = AssetLoader.musicMenu;
@@ -42,18 +42,23 @@ public class SoundHandler {
 
     public void changeSound(){
         soundOn = !soundOn;
+        AssetLoader.putSoundValue(soundOn);
     }
 
-    public void changeMusic(){
-        if(musicOn){
-            musicOn = false;
+    public static void setMusicVolume() {
+        if(!musicOn){
             backgroundMusic.setVolume(0);
             menuMusic.setVolume(0);
         } else {
-            musicOn = true;
             backgroundMusic.setVolume(1);
             menuMusic.setVolume(1);
         }
+    }
+
+    public void changeMusic(){
+        musicOn = !musicOn;
+        setMusicVolume();
+        AssetLoader.putMusicValue(musicOn);
     }
 
     public static void playMusic(Music music){

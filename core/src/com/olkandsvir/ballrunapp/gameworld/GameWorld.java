@@ -20,7 +20,6 @@ public class GameWorld {
     private Ball ball;
     private ScrollHandler handler;
 
-
     //счет нынешней игры
     private int score;
 
@@ -55,8 +54,7 @@ public class GameWorld {
         statesStack.push(currentGameState);
         menuMusic.setLooping(true);
         backgroundMusic.setLooping(true);
-       // menuMusic.play();
-       // SoundHandler.playMusicMenu();
+        SoundHandler.setMusicVolume();
         SoundHandler.playMusic(menuMusic);
     }
 
@@ -193,12 +191,8 @@ public class GameWorld {
     public void start() {
         currentGameState = GameState.RUNNING;
         statesStack.push(currentGameState);
-       // menuMusic.stop();
-     //   SoundHandler.stopMusicMenu();
-        SoundHandler.stopMusic(menuMusic);
 
-       // backgroundMusic.play();
-       // SoundHandler.playMusicBackground();
+        SoundHandler.stopMusic(menuMusic);
         SoundHandler.playMusic(backgroundMusic);
     }
 

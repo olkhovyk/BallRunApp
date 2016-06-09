@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.Array;
 import com.olkandsvir.ballrunapp.brhelpers.AssetLoader;
 import com.olkandsvir.ballrunapp.brhelpers.InputHandler;
@@ -36,7 +34,6 @@ public class GameRenderer {
 
     //рисует картинки для игры
     private SpriteBatch batcher;
-    private ShapeRenderer shapeRenderer;
 
     //текстуры
     private Texture background;
@@ -83,9 +80,6 @@ public class GameRenderer {
         //инициализируем пакет для рисования
         batcher = new SpriteBatch();
         batcher.setProjectionMatrix(camera.combined);
-
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
 
         //инициализируем ресурсы, шрифт и игровые объекты
         initAssets();
@@ -171,9 +165,6 @@ public class GameRenderer {
     private void drawBall() {
         batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
                 ball.getDiameter(), ball.getDiameter());
-       // shapeRenderer.setColor(0, 0, 0, 1);
-       // shapeRenderer.point(ball.getPosition().x - ball.getDiameter() / 5, ball.getPosition().y, 0);
-
     }
 
     /**
@@ -310,7 +301,6 @@ public class GameRenderer {
 
         //запускаем пакет рисования
         batcher.begin();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Point);
 
         //убираем прозрачность, полезно для производительности
         batcher.disableBlending();
@@ -346,12 +336,10 @@ public class GameRenderer {
 
         //закрываем пакет
         batcher.end();
-        shapeRenderer.end();
     }
 
     public void dispose() {
         batcher.dispose();
         font.dispose();
-       // shapeRenderer.dispose();
     }
 }

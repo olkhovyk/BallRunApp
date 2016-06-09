@@ -150,36 +150,28 @@ public class AssetLoader {
         fontFile = Gdx.files.internal("data/segoesc.ttf");
 
         preferences = Gdx.app.getPreferences("BallRunApp");
-        /*
-        if(!preferences.contains("resultsOne")){
-            preferences.putInteger("resultsOne", 0);
-            preferences.putInteger("resultsTwo", 0);
-            preferences.putInteger("resultsThree", 0);
-            preferences.putInteger("resultsFour", 0);
-            preferences.putInteger("resultsFive", 0);
-        } */
+
         if (!preferences.contains("highScore")) {
             preferences.putInteger("highScore", 0);
-        }
-
-
+//        }
 
         //Быдлокодищеее
-        if(!preferences.contains("resultsOne")){
-                       preferences.putInteger("resultsOne", preferences.getInteger("highScore"));
-                    }
-               if(!preferences.contains("resultsTwo")){
-
+//        if(!preferences.contains("resultsOne")){
+            preferences.putInteger("resultsOne", preferences.getInteger("highScore"));
+//        }
+//        if(!preferences.contains("resultsTwo")){
             preferences.putInteger("resultsTwo", 0);
-                    }
-               if(!preferences.contains("resultsThree")){
+//        }
+//        if(!preferences.contains("resultsThree")){
             preferences.putInteger("resultsThree", 0);
-               }
-               if(!preferences.contains("resultsFour")){
+//        }
+//        if(!preferences.contains("resultsFour")){
             preferences.putInteger("resultsFour", 0);
-                    }
-                if(!preferences.contains("resultsFive")){
+//        }
+//       if(!preferences.contains("resultsFive")){
             preferences.putInteger("resultsFive", 0);
+            preferences.putBoolean("Sound", true);
+            preferences.putBoolean("Music", true);
         }
     }
 
@@ -219,32 +211,7 @@ public class AssetLoader {
         soundDefeat.dispose();
         soundHighScore.dispose();
     }
-    /*
-    public static void setHighScore(int val) {
 
-        if(val > preferences.getInteger("resultsFive")) {
-            preferences.putInteger("resultsFive", val);
-        }
-
-        if(val > preferences.getInteger("resultsFour")) {
-            swap("resultsFour", "resultsFive");
-        }
-
-        if(val > preferences.getInteger("resultsThree")) {
-            swap("resultsThree", "resultsFour");
-        }
-
-        if(val > preferences.getInteger("resultsTwo")) {
-            swap("resultsTwo", "resultsThree");
-        }
-
-        if(val > preferences.getInteger("resultsOne")) {
-            swap("resultsOne", "resultsTwo");
-        }
-
-        preferences.flush();
-    }
-    */
     public static void setHighScore(int val){
         if(val > preferences.getInteger("highScore")){
             preferences.putInteger("highScore", val);
@@ -278,19 +245,25 @@ public class AssetLoader {
         preferences.flush();
     }
 
-/*    private static void swap(String str1, String str2) {
-        int tmp = preferences.getInteger(str1);
-        preferences.putInteger(str1, preferences.getInteger(str2));
-        preferences.putInteger(str2, tmp);
-    }
-*/
-    public static int getHighScore() {
-        //return preferences.getInteger("resultsOne");
-        return preferences.getInteger("highScore");
-    }
-
     public static int getLastHighScore() {
         return preferences.getInteger("resultsFive");
     }
 
+    public static void putSoundValue(boolean val) {
+        preferences.putBoolean("Sound", val);
+        preferences.flush();
+    }
+
+    public static void putMusicValue(boolean val) {
+        preferences.putBoolean("Music", val);
+        preferences.flush();
+    }
+
+    public static boolean isSoundOn() {
+        return preferences.getBoolean("Sound");
+    }
+
+    public static boolean isMusicOn() {
+        return preferences.getBoolean("Music");
+    }
 }

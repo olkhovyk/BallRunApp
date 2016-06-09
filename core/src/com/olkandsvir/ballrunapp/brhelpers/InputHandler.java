@@ -67,10 +67,10 @@ public class InputHandler implements InputProcessor {
                 AssetLoader.buttonBack, AssetLoader.buttonBackPressed);
         musicOffButton = new SimpleSwitchButton(GameScreen.SCREEN_WIDTH / 4, 3 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
-                AssetLoader.buttonMusicOn, AssetLoader.buttonMusicOff);
+                AssetLoader.buttonMusicOn, AssetLoader.buttonMusicOff, AssetLoader.isMusicOn());
         soundOffButton = new SimpleSwitchButton(GameScreen.SCREEN_WIDTH / 4, 5 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
-                AssetLoader.buttonSoundOn, AssetLoader.buttonSoundOff);
+                AssetLoader.buttonSoundOn, AssetLoader.buttonSoundOff, AssetLoader.isSoundOn());
         creditsButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, 7 * GameScreen.SCREEN_HEIGHT / 12,
                 GameScreen.SCREEN_WIDTH / 2, GameScreen.SCREEN_HEIGHT / 8,
                 AssetLoader.buttonCredits, AssetLoader.buttonCreditsPressed);
@@ -218,7 +218,6 @@ public class InputHandler implements InputProcessor {
                 world.ready();
                 return true;
             } else if (optionsButton.isTouchUp(screenX, screenY)) {
-                //TO DO OPTIONS
                 world.goToOptions();
                 return true;
             } else if(highScoresButton.isTouchUp(screenX, screenY)) {
@@ -252,7 +251,7 @@ public class InputHandler implements InputProcessor {
                 world.back();
                 return true;
             }
-        }else if (world.isRunning()) {
+        } else if (world.isRunning()) {
             if (pauseButton.isTouchUp(screenX, screenY)) {
                 world.pause();
                 return true;
@@ -274,10 +273,13 @@ public class InputHandler implements InputProcessor {
         } else if (world.isGameOver() || world.isHighScore()) {
             if (mainMenuGameOverButton.isTouchUp(screenX, screenY)) {
                 world.goToMainMenu();
+                return true;
             } else if (highScoresGameOverButton.isTouchUp(screenX, screenY)) {
                 world.goToBestResults();
+                return true;
             } else if(tryAgainButton.isTouchUp(screenX, screenY)) {
                 world.restart();
+                return true;
             }
         }
 
@@ -298,6 +300,4 @@ public class InputHandler implements InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
-
-
 }

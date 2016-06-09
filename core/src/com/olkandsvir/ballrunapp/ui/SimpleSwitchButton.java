@@ -18,12 +18,12 @@ public class SimpleSwitchButton extends AbstractButton {
 
     //конструктор
     public SimpleSwitchButton(float x, float y, float width, float height,
-                        Texture switchOn, Texture switchOff) {
+                        Texture switchOn, Texture switchOff, boolean on) {
         super(x, y, width, height);
         this.switchOn = switchOn;
         this.switchOff = switchOff;
 
-        on = true;
+        this.on = on;
     }
 
     @Override

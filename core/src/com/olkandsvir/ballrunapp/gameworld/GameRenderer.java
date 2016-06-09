@@ -129,7 +129,7 @@ public class GameRenderer {
      * Инициализируем шрифт
      */
     private void initFont(){
-
+        /*
         //инициализируем пакет для рисования счета
         font = new BitmapFont();
 
@@ -151,6 +151,12 @@ public class GameRenderer {
         font.setColor(0,0,0,1);
         font.getData().setScale((float) 1.3, (float) 1.3);
         generator.dispose();
+        */
+        font = new BitmapFont(AssetLoader.fontFile, true);
+        //font.setColor(0,0,0,1);
+        font.getData().setScale((float) 1.3, (float) 1.3);
+        //font.dispose();
+
     }
 
     /**

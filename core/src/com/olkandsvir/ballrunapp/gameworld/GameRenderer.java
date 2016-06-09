@@ -172,7 +172,7 @@ public class GameRenderer {
         batcher.draw(ballTexture, ball.getPosition().x - ball.getDiameter() / 2, ball.getPosition().y,
                 ball.getDiameter(), ball.getDiameter());
         shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.point(ball.getPosition().x - ball.getDiameter() / 5, ball.getPosition().y, 0);
+       // shapeRenderer.point(ball.getPosition().x - ball.getDiameter() / 5, ball.getPosition().y, 0);
 
     }
 

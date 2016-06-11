@@ -45,8 +45,8 @@ public class GameWorld {
     //конструктор
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
-        handler = new ScrollHandler(this);
         soundHandler = new SoundHandler();
+        handler = new ScrollHandler(this);
         backgroundMusic = soundHandler.getBackgroundMusic();
         menuMusic = soundHandler.getMenuMusic();
 

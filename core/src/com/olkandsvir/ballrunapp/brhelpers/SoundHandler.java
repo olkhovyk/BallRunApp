@@ -7,8 +7,8 @@ import com.badlogic.gdx.audio.Music;
  * @since 11.05.2016.
  */
 public class SoundHandler {
-    private boolean soundOn = AssetLoader.isSoundOn();
-    private boolean musicOn = AssetLoader.isMusicOn();
+    private boolean soundOn;
+    private boolean musicOn;
 
     private Music backgroundMusic;
     private Music menuMusic;

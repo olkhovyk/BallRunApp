@@ -142,7 +142,7 @@ public class AssetLoader {
         musicMenu = Gdx.audio.newMusic(Gdx.files.internal("data/sleepingfairy.wav"));
         musicBackground = Gdx.audio.newMusic(Gdx.files.internal("data/background.wav"));
 
-        soundScored = Gdx.audio.newSound(Gdx.files.internal("data/scoreCoin.mp3"));
+        soundScored = Gdx.audio.newSound(Gdx.files.internal("data/scoreCoin.wav"));
         soundClicked = Gdx.audio.newSound(Gdx.files.internal("data/buttonClicked.wav"));
         soundDefeat = Gdx.audio.newSound(Gdx.files.internal("data/defeat.wav"));
         soundHighScore = Gdx.audio.newSound(Gdx.files.internal("data/highscore.wav"));

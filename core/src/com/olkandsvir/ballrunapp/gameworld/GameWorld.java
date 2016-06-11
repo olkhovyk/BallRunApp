@@ -44,16 +44,16 @@ public class GameWorld {
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
         handler = new ScrollHandler(this);
-        backgroundMusic = AssetLoader.musicBackground;
-        menuMusic = AssetLoader.musicMenu;
+        backgroundMusic = SoundHandler.getBackgroundMusic();
+        menuMusic = SoundHandler.getMenuMusic();
 
         score = 0;
 
         statesStack = new Stack<GameState>();
         currentGameState = GameState.MENU;
         statesStack.push(currentGameState);
-        menuMusic.setLooping(true);
-        backgroundMusic.setLooping(true);
+        SoundHandler.setLooping(backgroundMusic, true);
+        SoundHandler.setLooping(menuMusic, true);
         SoundHandler.setMusicVolume();
         SoundHandler.playMusic(menuMusic);
     }

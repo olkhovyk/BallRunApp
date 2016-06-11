@@ -72,4 +72,16 @@ public class SoundHandler {
     public static void pauseMusic(Music music){
         music.pause();
     }
+
+    public static Music getBackgroundMusic() {
+        return backgroundMusic;
+    }
+
+    public static Music getMenuMusic() {
+        return menuMusic;
+    }
+
+    public static void setLooping(Music music, boolean val) {
+        music.setLooping(val);
+    }
 }

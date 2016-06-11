@@ -148,7 +148,8 @@ public class GameRenderer {
         */
         font = new BitmapFont(AssetLoader.fontFile, true);
         //font.setColor(0,0,0,1);
-        font.getData().setScale((float) 1.3, (float) 1.3);
+       // font.getData().setScale((float) 1.3, (float) 1.3);
+        font.getData().setScale((float)Gdx.graphics.getHeight() /850,(float) Gdx.graphics.getWidth() / 670);
         //font.dispose();
 
     }

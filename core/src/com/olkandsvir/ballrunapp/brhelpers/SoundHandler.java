@@ -7,34 +7,45 @@ import com.badlogic.gdx.audio.Music;
  * @since 11.05.2016.
  */
 public class SoundHandler {
-    private static boolean soundOn = AssetLoader.isSoundOn();
-    private static boolean musicOn = AssetLoader.isMusicOn();
+    private boolean soundOn = AssetLoader.isSoundOn();
+    private boolean musicOn = AssetLoader.isMusicOn();
 
-    private static Music backgroundMusic = AssetLoader.musicBackground;
-    private static Music menuMusic = AssetLoader.musicMenu;
+    private Music backgroundMusic;
+    private Music menuMusic;
 
     public SoundHandler() {
+
+        soundOn = AssetLoader.isSoundOn();
+        musicOn = AssetLoader.isMusicOn();
+
+        backgroundMusic = AssetLoader.musicBackground;
+        menuMusic = AssetLoader.musicMenu;
+
+        setMusicVolume();
+
+        backgroundMusic.setLooping(true);
+        menuMusic.setLooping(true);
     }
 
-    public static void playSoundScored(){
+    public void playSoundScored(){
         if(soundOn){
             AssetLoader.soundScored.play();
         }
     }
 
-    public static void playSoundClicked(){
+    public void playSoundClicked(){
         if(soundOn){
             AssetLoader.soundClicked.play();
         }
     }
 
-    public static void playSoundDefeat(){
+    public void playSoundDefeat(){
         if(soundOn){
             AssetLoader.soundDefeat.play();
         }
     }
 
-    public static void playSoundHighScore(){
+    public void playSoundHighScore(){
         if(soundOn){
             AssetLoader.soundHighScore.play();
         }
@@ -45,7 +56,7 @@ public class SoundHandler {
         AssetLoader.putSoundValue(soundOn);
     }
 
-    public static void setMusicVolume() {
+    public void setMusicVolume() {
         if(!musicOn){
             backgroundMusic.setVolume(0);
             menuMusic.setVolume(0);
@@ -61,27 +72,23 @@ public class SoundHandler {
         AssetLoader.putMusicValue(musicOn);
     }
 
-    public static void playMusic(Music music){
+    public void playMusic(Music music){
         music.play();
     }
 
-    public static void stopMusic(Music music){
+    public void stopMusic(Music music){
         music.stop();
     }
 
-    public static void pauseMusic(Music music){
+    public void pauseMusic(Music music){
         music.pause();
     }
 
-    public static Music getBackgroundMusic() {
+    public Music getBackgroundMusic() {
         return backgroundMusic;
     }
 
-    public static Music getMenuMusic() {
+    public Music getMenuMusic() {
         return menuMusic;
-    }
-
-    public static void setLooping(Music music, boolean val) {
-        music.setLooping(val);
     }
 }

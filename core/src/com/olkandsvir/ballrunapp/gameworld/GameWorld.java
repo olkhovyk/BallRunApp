@@ -20,6 +20,8 @@ public class GameWorld {
     private Ball ball;
     private ScrollHandler handler;
 
+    SoundHandler soundHandler;
+
     //счет нынешней игры
     private int score;
 
@@ -44,18 +46,16 @@ public class GameWorld {
     public GameWorld() {
         ball = new Ball(GameScreen.SCREEN_WIDTH / 2, (int) (GameScreen.SCREEN_HEIGHT /1.2));
         handler = new ScrollHandler(this);
-        backgroundMusic = SoundHandler.getBackgroundMusic();
-        menuMusic = SoundHandler.getMenuMusic();
+        soundHandler = new SoundHandler();
+        backgroundMusic = soundHandler.getBackgroundMusic();
+        menuMusic = soundHandler.getMenuMusic();
 
         score = 0;
 
         statesStack = new Stack<GameState>();
         currentGameState = GameState.MENU;
         statesStack.push(currentGameState);
-        SoundHandler.setLooping(backgroundMusic, true);
-        SoundHandler.setLooping(menuMusic, true);
-        SoundHandler.setMusicVolume();
-        SoundHandler.playMusic(menuMusic);
+        soundHandler.playMusic(menuMusic);
     }
 
     /**
@@ -113,7 +113,7 @@ public class GameWorld {
 
             //проверяет столкновения
             if (handler.collides(ball)) {
-                SoundHandler.stopMusic(backgroundMusic);
+                soundHandler.stopMusic(backgroundMusic);
 
                 handler.stop();
                 currentGameState = GameState.GAME_OVER;
@@ -122,14 +122,14 @@ public class GameWorld {
                 if (score > AssetLoader.getLastHighScore()) {
                     AssetLoader.setHighScore(score);
                     currentGameState = GameState.HIGH_SCORE;
-                    SoundHandler.playSoundHighScore();
+                    soundHandler.playSoundHighScore();
 
                 } else {
-                    SoundHandler.playSoundDefeat();
+                    soundHandler.playSoundDefeat();
 
                 }
 
-                SoundHandler.playMusic(menuMusic);
+                soundHandler.playMusic(menuMusic);
             }
         }
     }
@@ -192,8 +192,8 @@ public class GameWorld {
         currentGameState = GameState.RUNNING;
         statesStack.push(currentGameState);
 
-        SoundHandler.stopMusic(menuMusic);
-        SoundHandler.playMusic(backgroundMusic);
+        soundHandler.stopMusic(menuMusic);
+        soundHandler.playMusic(backgroundMusic);
     }
 
     /**
@@ -202,8 +202,8 @@ public class GameWorld {
     public void pause() {
         currentGameState = GameState.PAUSE;
         statesStack.push(currentGameState);
-        SoundHandler.pauseMusic(backgroundMusic);
-        SoundHandler.playMusic(menuMusic);
+        soundHandler.pauseMusic(backgroundMusic);
+        soundHandler.playMusic(menuMusic);
     }
 
     /**
@@ -211,8 +211,8 @@ public class GameWorld {
      */
     public void resume() {
         back();
-        SoundHandler.stopMusic(menuMusic);
-        SoundHandler.playMusic(backgroundMusic);
+        soundHandler.stopMusic(menuMusic);
+        soundHandler.playMusic(backgroundMusic);
     }
 
     /**
@@ -289,5 +289,9 @@ public class GameWorld {
 
     public int getScore() {
         return score;
+    }
+
+    public SoundHandler getSoundHandler() {
+        return soundHandler;
     }
 }

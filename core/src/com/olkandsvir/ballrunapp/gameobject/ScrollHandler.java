@@ -18,9 +18,11 @@ public class ScrollHandler {
     private static int barrierGap = 4 * GameScreen.SCREEN_HEIGHT / 10;
 
     private final GameWorld world;
+    private SoundHandler soundHandler;
 
     public ScrollHandler(GameWorld world) {
         this.world = world;
+        soundHandler = world.getSoundHandler();
 
         barriers = new Array<Barrier>();
         for(int i = 0; i < ARRAY_SIZE; i++){
@@ -38,7 +40,7 @@ public class ScrollHandler {
             barriers.get(i).update(delta);
             if (barriers.get(i).isScrolledBottom()) {
                 world.addScore();
-                SoundHandler.playSoundScored();
+                soundHandler.playSoundScored();
                 speedChange(scrollSpeed / 200);
 
                 if (world.getScore() % 5 == 0 && 4 * world.getBall().getDiameter() < barrierGap) {

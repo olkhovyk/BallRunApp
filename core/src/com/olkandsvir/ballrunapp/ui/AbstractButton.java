@@ -60,13 +60,17 @@ public abstract class AbstractButton {
     /**
      * Вызывается при нажатиии на экран.
      */
-    public boolean isTouchDown(int screenX, int screenY) {
+    public boolean isTouchDown(int screenX, int screenY, SoundHandler soundHandler) {
 
         if (isClicked(screenX, screenY)) {
             pressed = true;
-            SoundHandler.playSoundClicked();
+            playSoundClicked(soundHandler);
             return true;
         }
         return false;
+    }
+
+    private void playSoundClicked(SoundHandler soundHandler) {
+        soundHandler.playSoundClicked();
     }
 }

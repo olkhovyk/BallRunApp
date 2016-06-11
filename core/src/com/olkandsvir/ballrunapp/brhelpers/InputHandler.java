@@ -32,13 +32,14 @@ public class InputHandler implements InputProcessor {
     private SimpleSwitchButton musicOffButton, soundOffButton;
 
     //проигрыватель
-    private SoundHandler soundHandler = new SoundHandler();
+    private SoundHandler soundHandler;
 
     //конструктор
     public InputHandler(GameWorld world) {
 
         //инициализируем мир и мячик
         this.world = world;
+        soundHandler = world.getSoundHandler();
 
         //создаем кнопки
         startButton = new SimpleButton(GameScreen.SCREEN_WIDTH / 4, GameScreen.SCREEN_HEIGHT / 6,
@@ -177,32 +178,32 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (world.isMenu()) {
-            startButton.isTouchDown(screenX, screenY);
-            optionsButton.isTouchDown(screenX, screenY);
-            highScoresButton.isTouchDown(screenX, screenY);
-            exitButton.isTouchDown(screenX, screenY);
+            startButton.isTouchDown(screenX, screenY, soundHandler);
+            optionsButton.isTouchDown(screenX, screenY, soundHandler);
+            highScoresButton.isTouchDown(screenX, screenY, soundHandler);
+            exitButton.isTouchDown(screenX, screenY, soundHandler);
         } else if (world.isOptions()) {
-            musicOffButton.isTouchDown(screenX, screenY);
-            soundOffButton.isTouchDown(screenX, screenY);
-            creditsButton.isTouchDown(screenX, screenY);
-            backButton.isTouchDown(screenX, screenY);
+            musicOffButton.isTouchDown(screenX, screenY, soundHandler);
+            soundOffButton.isTouchDown(screenX, screenY, soundHandler);
+            creditsButton.isTouchDown(screenX, screenY, soundHandler);
+            backButton.isTouchDown(screenX, screenY, soundHandler);
         } else if (world.isBestResults()) {
-            backButton.isTouchDown(screenX, screenY);
+            backButton.isTouchDown(screenX, screenY, soundHandler);
         } else if (world.isAuthors()) {
-            backButton.isTouchDown(screenX, screenY);
+            backButton.isTouchDown(screenX, screenY, soundHandler);
         } else if(world.isRunning()) {
-            pauseButton.isTouchDown(screenX, screenY);
+            pauseButton.isTouchDown(screenX, screenY, soundHandler);
         } else if(world.isPaused()) {
-            mainMenuButton.isTouchDown(screenX, screenY);
-            optionsButton.isTouchDown(screenX, screenY);
-            highScoresButton.isTouchDown(screenX, screenY);
-            resumeButton.isTouchDown(screenX, screenY);
+            mainMenuButton.isTouchDown(screenX, screenY, soundHandler);
+            optionsButton.isTouchDown(screenX, screenY, soundHandler);
+            highScoresButton.isTouchDown(screenX, screenY, soundHandler);
+            resumeButton.isTouchDown(screenX, screenY, soundHandler);
         } else if (world.isReady()) {
             world.start();
         } else if (world.isGameOver() || world.isHighScore()) {
-            mainMenuGameOverButton.isTouchDown(screenX, screenY);
-            highScoresGameOverButton.isTouchDown(screenX, screenY);
-            tryAgainButton.isTouchDown(screenX, screenY);
+            mainMenuGameOverButton.isTouchDown(screenX, screenY, soundHandler);
+            highScoresGameOverButton.isTouchDown(screenX, screenY, soundHandler);
+            tryAgainButton.isTouchDown(screenX, screenY, soundHandler);
         }
 
         return false;

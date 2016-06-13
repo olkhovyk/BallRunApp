@@ -250,8 +250,9 @@ public class GameRenderer {
         font.draw(batcher, "Ilya Olkhovik", GameScreen.SCREEN_WIDTH * 5 / 20, GameScreen.SCREEN_HEIGHT * 8 / 20);
         font.draw(batcher, "Design:", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 10 / 20);
         font.draw(batcher, "Daniel Bulavsky", GameScreen.SCREEN_WIDTH * 5 / 20, GameScreen.SCREEN_HEIGHT * 11 / 20);
-        font.draw(batcher, "Thank you for", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 13 / 20);
-        font.draw(batcher, "choosing our app!", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 14 / 20);
+        font.draw(batcher, "IconMinds", GameScreen.SCREEN_WIDTH * 5 / 20, GameScreen.SCREEN_HEIGHT * 12 / 20);
+        font.draw(batcher, "Thank you for", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 14 / 20);
+        font.draw(batcher, "choosing our app!", GameScreen.SCREEN_WIDTH * 2 / 10, GameScreen.SCREEN_HEIGHT * 15 / 20);
         font.draw(batcher, "Cheers!", GameScreen.SCREEN_WIDTH * 4 / 10, GameScreen.SCREEN_HEIGHT * 16 / 20);
         backButton.draw(batcher);
     }
